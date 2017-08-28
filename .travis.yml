@@ -418,29 +418,161 @@ matrix:
     #    CPP_STD=c++1z
     #    USE_STDLIB=libc++
 
-# Activate when we are allowed to use MacOS X
-#    - os: osx
-#      compiler: clang
-#      env:
-#        COMPILER=clang++
-#        CPP_STD=c++11
-#        USE_STDLIB=libc++
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc@5 || brew link --overwrite --force gcc@5
+      env:
+        COMPILER=g++-5
+        CPP_STD=c++11
+        USE_OLD_MAC_GCC_HACK=true
 
-# Activate when we are allowed to use MacOS X
-#    - os: osx
-#      compiler: clang
-#      env:
-#        COMPILER=clang++
-#        CPP_STD=c++14
-#        USE_STDLIB=libc++
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc@5 || brew link --overwrite --force gcc@5
+      env:
+        COMPILER=g++-5
+        CPP_STD=c++14
+        USE_OLD_MAC_GCC_HACK=true
 
-# Activate when we are allowed to use MacOS X
-#    - os: osx
-#      compiler: clang
-#      env:
-#        COMPILER=clang++
-#        CPP_STD=c++1z
-#        USE_STDLIB=libc++
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc@5 || brew link --overwrite --force gcc@5
+      env:
+        COMPILER=g++-5
+        CPP_STD=c++1z
+        USE_OLD_MAC_GCC_HACK=true
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc@6 || brew link --overwrite --force gcc@6
+      env:
+        COMPILER=g++-6
+        CPP_STD=c++11
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc@6 || brew link --overwrite --force gcc@6
+      env:
+        COMPILER=g++-6
+        CPP_STD=c++14
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc@6 || brew link --overwrite --force gcc@6
+      env:
+        COMPILER=g++-6
+        CPP_STD=c++1z
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc || brew link --overwrite --force gcc
+      env:
+        COMPILER=g++-7
+        CPP_STD=c++11
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc || brew link --overwrite --force gcc
+      env:
+        COMPILER=g++-7
+        CPP_STD=c++14
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: gcc
+      before_install: brew install gcc || brew link --overwrite --force gcc
+      env:
+        COMPILER=g++-7
+        CPP_STD=c++1z
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.7 gcc || brew link --overwrite --force llvm@3.7
+      env:
+        COMPILER=clang-3.7
+        CPP_STD=c++11
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.7 gcc || brew link --overwrite --force llvm@3.7
+      env:
+        COMPILER=clang-3.7
+        CPP_STD=c++14
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.7 gcc || brew link --overwrite --force llvm@3.7
+      env:
+        COMPILER=clang-3.7
+        CPP_STD=c++1z
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.8 gcc || brew link --overwrite --force llvm@3.8
+      env:
+        COMPILER=clang-3.8
+        CPP_STD=c++11
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.8 gcc || brew link --overwrite --force llvm@3.8
+      env:
+        COMPILER=clang-3.8
+        CPP_STD=c++14
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.8 gcc || brew link --overwrite --force llvm@3.8
+      env:
+        COMPILER=clang-3.8
+        CPP_STD=c++1z
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.9 gcc || brew link --overwrite --force llvm@3.9
+      env:
+        COMPILER=clang-3.9
+        CPP_STD=c++11
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.9 gcc || brew link --overwrite --force llvm@3.9
+      env:
+        COMPILER=clang-3.9
+        CPP_STD=c++14
+        #USE_STDLIB=libc++
+
+    - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      before_install: brew install llvm@3.9 gcc || brew link --overwrite --force llvm@3.9
+      env:
+        COMPILER=clang-3.9
+        CPP_STD=c++1z
+        #USE_STDLIB=libc++
 
 addons:
   apt:
@@ -451,9 +583,8 @@ addons:
 before_script:
   - echo $LANG
   - echo $LC_ALL
-  - lsb_release -a
+  - lsb_release -a || true
   - uname -a
-  - apt-cache search '^g\+\+|^clang'
   - which clang++ && clang++ --version || true
   - which g++ && g++ --version || true
 
