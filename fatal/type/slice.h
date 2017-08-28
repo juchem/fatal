@@ -84,6 +84,12 @@ using try_index = i_at::ti<
   make_index_sequence<size<Container>::value>
 >;
 
+template <typename Container>
+using try_index = i_at::ti<
+  Container,
+  make_index_sequence<size<Container>::value>
+>;
+
 template <typename T0, typename...>
 using first_argument = T0;
 
