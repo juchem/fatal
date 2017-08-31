@@ -112,11 +112,15 @@ public:
 
   template <typename T, typename... UArgs>
   static constexpr inline auto call(T &&subject, UArgs &&...args)
+    noexcept(noexcept(subject(std::forward<UArgs>(args)...)))
     -> decltype(subject(std::forward<UArgs>(args)...))
   { return subject(std::forward<UArgs>(args)...); }
 
   template <typename T, typename... UArgs>
   constexpr inline auto operator ()(T &&subject, UArgs &&...args) const
+    noexcept(
+      noexcept(call(std::forward<T>(subject), std::forward<UArgs>(args)...))
+    )
     -> decltype(call(std::forward<T>(subject), std::forward<UArgs>(args)...))
   { return call(std::forward<T>(subject), std::forward<UArgs>(args)...); }
 
@@ -232,9 +236,22 @@ public:
       using supports = typename bind<U>::template supports<UArgs...>; \
       \
       template <typename U, typename... UArgs> \
+      using result = decltype( \
+        ::std::declval<U>().__VA_ARGS__(::std::declval<UArgs>()...) \
+      ); \
+      \
+      template <typename U, typename... UArgs> \
       static constexpr inline auto call(U &&subject, UArgs &&...args) \
-        -> decltype(subject.__VA_ARGS__(::std::forward<UArgs>(args)...)) \
-      { return subject.__VA_ARGS__(::std::forward<UArgs>(args)...); } \
+        -> decltype( \
+          ::std::forward<U>(subject).__VA_ARGS__( \
+            ::std::forward<UArgs>(args)... \
+          ) \
+        ) \
+      { \
+        return ::std::forward<U>(subject).__VA_ARGS__( \
+          ::std::forward<UArgs>(args)... \
+        ); \
+      } \
       \
       template <typename U, typename... UArgs> \
       constexpr inline auto operator ()(U &&subject, UArgs &&...args) const \
@@ -272,6 +289,9 @@ public:
         ); \
         \
         template <typename... UArgs> \
+        using result = decltype(call_impl<type>(::std::declval<UArgs>()...)); \
+        \
+        template <typename... UArgs> \
         static constexpr inline auto call(UArgs &&...args) \
           -> decltype(call_impl<type>(::std::forward<UArgs>(args)...)) \
         { return call_impl<type>(::std::forward<UArgs>(args)...); } \
@@ -288,11 +308,10 @@ public:
       { return bind<U>::call(::std::forward<UArgs>(args)...); } \
       \
       template <typename U, typename... UArgs> \
-      using supports = decltype( \
-        static_member_supports_impl<UArgs...>::sfinae( \
-          static_cast<U *>(nullptr) \
-        ) \
-      ); \
+      using supports = typename bind<U>::template supports<UArgs...>; \
+      \
+      template <typename U, typename... UArgs> \
+      using result = typename bind<U>::template result<UArgs...>; \
     }; \
   }; \
   \
@@ -323,6 +342,8 @@ struct call_traits {
   FATAL_CALL_TRAITS_IMPL(binary_search);
   FATAL_CALL_TRAITS_IMPL(bind);
   FATAL_CALL_TRAITS_IMPL(bootstrap);
+  FATAL_CALL_TRAITS_IMPL(byte);
+  FATAL_CALL_TRAITS_IMPL(bytes);
   FATAL_CALL_TRAITS_IMPL(c_str);
   FATAL_CALL_TRAITS_IMPL(call);
   FATAL_CALL_TRAITS_IMPL(cancel);
