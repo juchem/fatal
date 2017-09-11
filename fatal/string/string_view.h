@@ -12,7 +12,9 @@
 
 #include <fatal/math/hash.h>
 #include <fatal/portability.h>
+#include <fatal/type/array.h>
 #include <fatal/type/call_traits.h>
+#include <fatal/type/size.h>
 #include <fatal/type/traits.h>
 
 #include <algorithm>
@@ -99,7 +101,7 @@ struct string_view {
   }
 
   template <typename T>
-  explicit string_view(T *begin, T *end):
+  explicit constexpr string_view(T *begin, T *end):
     string_view(
       reinterpret_cast<value_type const *>(begin),
       reinterpret_cast<value_type const *>(end)
@@ -107,7 +109,7 @@ struct string_view {
   {}
 
   template <typename T>
-  explicit string_view(T *s, std::size_t size):
+  explicit constexpr string_view(T *s, std::size_t size):
     string_view(reinterpret_cast<value_type const *>(s), size)
   {}
 
@@ -531,6 +533,11 @@ struct string_view_from_type {
     return string_view(String::data(), String::size);
   }
 };
+
+template <typename String>
+string_view as_string_view() noexcept {
+  return string_view(z_data<String>(), size<String>::value);
+}
 
 /////////////////
 // operator == //
