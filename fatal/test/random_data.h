@@ -111,7 +111,7 @@ struct random_data {
       }
     );
   }
-  
+
   std::vector<std::string> chop(std::string const &s) {
     std::vector<std::string> result;
 
@@ -124,6 +124,7 @@ struct random_data {
     );
 
     assert(result.size() == chunks);
+    (void)chunks;
     return result;
   }
 

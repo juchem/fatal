@@ -637,7 +637,7 @@ template <
 struct i<Sequence<T, Values...>, index_sequence<Indexes...>> {
   template <T Value>
   using apply = decltype(
-    IV<sizeof...(Values), T, Value>(inherit<vi<T, Values, Indexes>...>())
+    TIV<sizeof...(Values), T, Value>(inherit<vi<T, Values, Indexes>...>())
   );
 };
 
