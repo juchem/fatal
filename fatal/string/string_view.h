@@ -98,6 +98,24 @@ struct string_view {
 #   endif // __cplusplus > 201400
   }
 
+  template <typename T>
+  explicit string_view(T *begin, T *end):
+    string_view(
+      reinterpret_cast<value_type const *>(begin),
+      reinterpret_cast<value_type const *>(end)
+    )
+  {}
+
+  template <typename T>
+  explicit string_view(T *s, std::size_t size):
+    string_view(reinterpret_cast<value_type const *>(s), size)
+  {}
+
+  template <typename T, std::size_t N>
+  explicit string_view(T const (&s)[N]):
+    string_view(s, N)
+  {}
+
   constexpr explicit string_view(value_type const &c):
     begin_(&c),
     end_(&c + 1)
