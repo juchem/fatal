@@ -110,7 +110,7 @@ to_integral(T const value) {
 
 /**
  * Merges the bits of all integral parameters. This is equivalent to a bitwise
- * OR of all the parameters.
+ * OR of all the parameters without any type promotion or other implicit conversions.
  *
  * This is particularly useful when dealing with type-safe enumerations.
  *
@@ -140,7 +140,8 @@ static constexpr T bitwise_merge(T const lhs, T const rhs, Args... args) {
 
 /**
  * Returns an intersection of the bits of all parameters. This is equivalent to
- * a bitwise AND of all the parameters.
+ * a bitwise AND of all the parameters without any type promotion or other implicit
+ * conversions.
  *
  * This is particularly useful when dealing with type-safe enumerations.
  *
@@ -218,6 +219,56 @@ static constexpr bool bitwise_has_all(T const value, Args... args) {
 template <typename T, typename... Args>
 static constexpr bool bitwise_has_any(T const value, Args... args) {
   return to_integral(bitwise_filter(value, bitwise_merge(args...))) != 0;
+}
+
+/**
+ * Returns the bitwise complement of the input without any type promotion or other implicit
+ * conversions.
+ *
+ * Example:
+ *
+ *  // yields `0xffffffff00000000`
+ *  auto result1 = bitwise_complement(0xffffffffu);
+ *
+ *  // yields a `short` with value `-2` in two's complement
+ *  auto result2 = bitwise_complement(static_cast<short>(1));
+ *
+ *  // yields a `bool` with value `false`
+ *  auto result3 = bitwise_complement(true);
+ *
+ *  enum class E: unsigned char { a = 1, b = 254 };
+ *
+ *  // yields `E::b`
+ *  auto result4 = bitwise_complement(E::a);
+ *
+ * @author: Marcelo Juchem <marcelo@fb.com>
+ */
+template <typename T>
+static constexpr T bitwise_complement(T const value) {
+  return static_cast<T>(~to_integral(value));
+}
+/**
+ * Disables all `value` bits which are enabled in `disable` without any type promotion or other
+ * implicit conversions. The remaining bits are unnafected.
+ *
+ * Example:
+ *
+ *  // yields `1`
+ *  auto result1 = bitwise_disable(7, 6);
+ *
+ *  // yields a `short` with value `7`
+ *  auto result2 = bitwise_disable(static_cast<short>(7), static_cast<short>(0));
+ *
+ *  enum class E: char { a = 1, b = 2, c = 4, d = 7 };
+ *
+ *  // yields `E::c`
+ *  auto result3 = bitwise_disable(E::d, E::a, E::b);
+ *
+ * @author: Marcelo Juchem <marcelo@fb.com>
+ */
+template <typename T, typename... Args>
+static constexpr T bitwise_disable(T const value, Args... disable) {
+  return static_cast<T>(bitwise_filter(value, bitwise_complement(bitwise_merge(disable...))));
 }
 
 ////////////////////////////
