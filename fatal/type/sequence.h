@@ -14,6 +14,8 @@
 #include <fatal/preprocessor.h>
 #include <fatal/type/debug.h>
 
+#include <utility>
+
 #include <cstdlib>
 
 #include <fatal/type/impl/sequence.h>
@@ -21,26 +23,14 @@
 namespace fatal {
 
 template <typename T, T... Values>
-struct sequence {
-  using value_type = T;
-};
-
-#if FATAL_HAS_BUILTIN(__make_integer_seq) || _MSC_FULL_VER >= 190023918
+using sequence = std::integer_sequence<T, Values...>;
 
 template <typename T, std::size_t Size>
-using make_sequence = __make_integer_seq<sequence, T, Size>;
+using make_sequence = std::make_integer_sequence<T, Size>;
 
-#else
-
-template <typename T, std::size_t Size>
-using make_sequence =
-  typename impl_seq::make<Size>::template apply<sequence<T>, sequence<T, 0>>;
-
-#endif
-
-template <typename T, T Begin, T End>
-using make_interval = typename impl_seq::offset<
-  T, Begin, make_sequence<T, End - Begin>
+template <typename T, T Begin, T End, T Step = 1>
+using make_interval = typename impl_seq::i<
+  T, Begin, Step, make_sequence<T, End - Begin>
 >::type;
 
 template <std::size_t... Values>
@@ -49,8 +39,8 @@ using index_sequence = sequence<std::size_t, Values...>;
 template <std::size_t Size>
 using make_index_sequence = make_sequence<std::size_t, Size>;
 
-template <std::size_t Begin, std::size_t End>
-using make_index_interval = make_interval<std::size_t, Begin, End>;
+template <std::size_t Begin, std::size_t End, std::size_t Step = 1>
+using make_index_interval = make_interval<std::size_t, Begin, End, Step>;
 
 template <bool... Values>
 using bool_sequence = sequence<bool, Values...>;
@@ -63,7 +53,7 @@ using int_sequence = sequence<int, Values...>;
 
 #define FATAL_S(Id, String) \
   FATAL_IMPL_BUILD_STRING( \
-    ::fatal::sequence, \
+    ::std::integer_sequence, \
     Id, \
     FATAL_UID(FATAL_CAT(fatal_str_, Id)), \
     FATAL_UID(Indexes), \

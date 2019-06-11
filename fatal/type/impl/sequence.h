@@ -54,14 +54,14 @@ using make_sequence = typename make<Size>::template apply<
   Sequence<T>, Sequence<T, 0>
 >;
 
-template <typename T, T Offset, typename> struct offset;
+template <typename T, T, T, typename> struct i;
 
 template <
   template <typename T, T...> class Sequence,
-  typename T, T Offset, T... Values
+  typename T, T Offset, T Multiplier, T... Values
 >
-struct offset<T, Offset, Sequence<T, Values...>> {
-  using type = Sequence<T, (Offset + Values)...>;
+struct i<T, Offset, Multiplier, Sequence<T, Values...>> {
+  using type = Sequence<T, (Offset + (Values * Multiplier))...>;
 };
 
 template <typename T, std::size_t Size>
