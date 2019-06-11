@@ -69,13 +69,13 @@ else
   fi
   if [ "$USE_OLD_MAC_GCC_HACK" == true ]; then
     set -x
-    time "$USE_CC" $CC_ARGS -Wall -Werror -Wextra "-std=$USE_STD" $CC_STDLIB -I . "$file_name" 2>&1 \
+    time "$USE_CC" $CC_ARGS -Wall -Werror -Wextra -Wno-gnu-string-literal-operator-template "-std=$USE_STD" $CC_STDLIB -I . "$file_name" 2>&1 \
       | sed -e '/^.*: warning: section ".*" is deprecated.*$/ { N; N; d; }' \
         -e '/^.*: note: change section name to ".*".*$/ { N; N; d; }'
     set +x
   else
     set -x
-    time "$USE_CC" $CC_ARGS -Wall -Werror -Wextra "-std=$USE_STD" $CC_STDLIB -I . "$file_name" 2>&1
+    time "$USE_CC" $CC_ARGS -Wall -Werror -Wextra -Wno-gnu-string-literal-operator-template "-std=$USE_STD" $CC_STDLIB -I . "$file_name" 2>&1
     set +x
   fi
   set -e
