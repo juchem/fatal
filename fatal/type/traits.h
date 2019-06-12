@@ -28,17 +28,13 @@
 #include <type_traits>
 #include <utility>
 
+#include <fatal/type/impl/traits.h>
+
 namespace fatal {
 
 /////////////////
 // is_template //
 /////////////////
-
-namespace detail {
-namespace traits_impl {
-template <template <typename...> class, typename> struct is_template;
-} // namespace traits_impl {
-} // namespace detail {
 
 /**
  * Checks whether a given type is an instantiation of at least one of a list of
@@ -72,7 +68,7 @@ template <template <typename...> class, typename> struct is_template;
 template <template <typename...> class... TTemplates>
 class is_template {
   template <template <typename...> class TTemplate, typename T>
-  using impl = is_complete<detail::traits_impl::is_template<TTemplate, T>>;
+  using impl = is_complete<impl_trt::ist<TTemplate, T>>;
 
 public:
   template <typename T>
@@ -607,13 +603,6 @@ struct enable_when {
 
 namespace detail {
 namespace traits_impl {
-
-/////////////////
-// is_template //
-/////////////////
-
-template <template <typename...> class T, typename... Args>
-struct is_template<T, T<Args...>> {};
 
 /////////////////
 // integral_of //

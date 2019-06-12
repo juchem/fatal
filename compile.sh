@@ -54,6 +54,8 @@ CC_ARGS="-o $out_binary $CC_ARGS $CC_OPT -g -pthread -ftemplate-depth-1024 -ftem
 
 if [ "$CC_IS_CLANG" == true ]; then
   CC_ARGS="$CC_ARGS -ferror-limit=1"
+else
+  CC_ARGS="$CC_ARGS -fmax-errors=1"
 fi
 
 if [ "$PRE_PROC" = "true" ]; then
