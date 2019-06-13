@@ -7,14 +7,14 @@
  *  of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <fatal/time/time.h>
+#include <fatal/time/units.h>
+#include <fatal/time/print.h>
 
 #include <fatal/test/driver.h>
 
 #include <sstream>
 
-namespace fatal {
-namespace time {
+namespace fatal::time {
 
 FATAL_TEST(time, pretty_print) {
 # define TEST_IMPL(Expected, Value) \
@@ -45,5 +45,4 @@ FATAL_TEST(time, pretty_print) {
 # undef TEST_IMPL
 }
 
-} // namespace time {
-} // namespace fatal {
+} // namespace fatal::time {

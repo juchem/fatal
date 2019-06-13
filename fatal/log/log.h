@@ -11,7 +11,7 @@
 #define FATAL_INCLUDE_fatal_log_log_h
 
 #include <fatal/preprocessor.h>
-#include <fatal/time/time.h>
+#include <fatal/time/print.h>
 
 #include <atomic>
 #include <chrono>

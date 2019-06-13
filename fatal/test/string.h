@@ -11,7 +11,7 @@
 #define FATAL_INCLUDE_fatal_test_string_h
 
 #include <fatal/string/string_view.h>
-#include <fatal/time/time.h>
+#include <fatal/time/units.h>
 #include <fatal/type/tag.h>
 
 #include <chrono>
@@ -35,7 +35,7 @@ void append(std::string &out, T from) {
 template <typename R, typename P>
 void append(std::string &out, std::chrono::duration<R, P> from) {
   append(out, from.count());
-  out.append(time::suffix(from));
+  out.append(time::suffix_of(from));
 }
 
 inline void append(std::string &out, std::string const &from) {

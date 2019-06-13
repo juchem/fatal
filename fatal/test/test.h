@@ -14,7 +14,7 @@
 #include <fatal/preprocessor.h>
 #include <fatal/test/string.h>
 #include <fatal/test/type.h>
-#include <fatal/time/time.h>
+#include <fatal/time/print.h>
 #include <fatal/type/call_traits.h>
 #include <fatal/type/traits.h>
 
