@@ -98,17 +98,17 @@ namespace test {
 #define FATAL_WARN_UNREACHABLE() \
   FATAL_IMPL_NULLARY_TEST(warning, unreachable())
 
-#define FATAL_WARN_TRUE(Expression) \
-  FATAL_IMPL_UNARY_TEST(warning, is_true(), Expression)
+#define FATAL_WARN_TRUE(...) \
+  FATAL_IMPL_UNARY_TEST(warning, is_true(), __VA_ARGS__)
 
-#define FATAL_WARN_FALSE(Expression) \
-  FATAL_IMPL_UNARY_TEST(warning, is_false(), Expression)
+#define FATAL_WARN_FALSE(...) \
+  FATAL_IMPL_UNARY_TEST(warning, is_false(), __VA_ARGS__)
 
-#define FATAL_WARN_NULL(Expression) \
-  FATAL_IMPL_UNARY_TEST(warning, is_null(), Expression)
+#define FATAL_WARN_NULL(...) \
+  FATAL_IMPL_UNARY_TEST(warning, is_null(), __VA_ARGS__)
 
-#define FATAL_WARN_NOT_NULL(Expression) \
-  FATAL_IMPL_UNARY_TEST(warning, not_null(), Expression)
+#define FATAL_WARN_NOT_NULL(...) \
+  FATAL_IMPL_UNARY_TEST(warning, not_null(), __VA_ARGS__)
 
 #define FATAL_WARN_NO_THROW \
   FATAL_IMPL_BODY_TEST(warning, no_throw())
@@ -151,17 +151,17 @@ namespace test {
 #define FATAL_EXPECT_UNREACHABLE() \
   FATAL_IMPL_NULLARY_TEST(expectation, unreachable())
 
-#define FATAL_EXPECT_TRUE(Expression) \
-  FATAL_IMPL_UNARY_TEST(expectation, is_true(), Expression)
+#define FATAL_EXPECT_TRUE(...) \
+  FATAL_IMPL_UNARY_TEST(expectation, is_true(), __VA_ARGS__)
 
-#define FATAL_EXPECT_FALSE(Expression) \
-  FATAL_IMPL_UNARY_TEST(expectation, is_false(), Expression)
+#define FATAL_EXPECT_FALSE(...) \
+  FATAL_IMPL_UNARY_TEST(expectation, is_false(), __VA_ARGS__)
 
-#define FATAL_EXPECT_NULL(Expression) \
-  FATAL_IMPL_UNARY_TEST(expectation, is_null(), Expression)
+#define FATAL_EXPECT_NULL(...) \
+  FATAL_IMPL_UNARY_TEST(expectation, is_null(), __VA_ARGS__)
 
-#define FATAL_EXPECT_NOT_NULL(Expression) \
-  FATAL_IMPL_UNARY_TEST(expectation, not_null(), Expression)
+#define FATAL_EXPECT_NOT_NULL(...) \
+  FATAL_IMPL_UNARY_TEST(expectation, not_null(), __VA_ARGS__)
 
 #define FATAL_EXPECT_NO_THROW \
   FATAL_IMPL_BODY_TEST(expectation, no_throw())
@@ -206,17 +206,17 @@ namespace test {
 #define FATAL_ASSERT_UNREACHABLE() \
   FATAL_IMPL_NULLARY_TEST(assertion, unreachable())
 
-#define FATAL_ASSERT_TRUE(Expression) \
-  FATAL_IMPL_UNARY_TEST(assertion, is_true(), Expression)
+#define FATAL_ASSERT_TRUE(...) \
+  FATAL_IMPL_UNARY_TEST(assertion, is_true(), __VA_ARGS__)
 
-#define FATAL_ASSERT_FALSE(Expression) \
-  FATAL_IMPL_UNARY_TEST(assertion, is_false(), Expression)
+#define FATAL_ASSERT_FALSE(...) \
+  FATAL_IMPL_UNARY_TEST(assertion, is_false(), __VA_ARGS__)
 
-#define FATAL_ASSERT_NULL(Expression) \
-  FATAL_IMPL_UNARY_TEST(assertion, is_null(), Expression)
+#define FATAL_ASSERT_NULL(...) \
+  FATAL_IMPL_UNARY_TEST(assertion, is_null(), __VA_ARGS__)
 
-#define FATAL_ASSERT_NOT_NULL(Expression) \
-  FATAL_IMPL_UNARY_TEST(assertion, not_null(), Expression)
+#define FATAL_ASSERT_NOT_NULL(...) \
+  FATAL_IMPL_UNARY_TEST(assertion, not_null(), __VA_ARGS__)
 
 #define FATAL_ASSERT_NO_THROW \
   FATAL_IMPL_BODY_TEST(assertion, no_throw())
@@ -388,11 +388,11 @@ struct abort_test_run_exception {};
     ::std::tuple<>() \
   ).check()
 
-#define FATAL_IMPL_UNARY_TEST(Category, Predicate, Expression) \
+#define FATAL_IMPL_UNARY_TEST(Category, Predicate, ...) \
   FATAL_IMPL_TEST_WRAP_CHECK( \
     Category, Predicate, \
-    ::std::tuple<char const *>(FATAL_TO_STR(Expression)) \
-  ).check(Expression)
+    ::std::tuple<char const *>(FATAL_TO_STR(__VA_ARGS__)) \
+  ).check(__VA_ARGS__)
 
 #define FATAL_IMPL_BINARY_TEST(Category, Predicate, LHS, ...) \
   FATAL_IMPL_TEST_WRAP_CHECK( \

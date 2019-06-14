@@ -32,7 +32,7 @@ template <typename T, bool Expected, template <typename...> class... TTemplates>
 void check_is_template() {
   bool expected = Expected;
   using checker = is_template<TTemplates...>;
-  bool actual = checker::template type<T>::value;
+  bool actual = checker::template apply<T>::value;
   if (expected != actual) {
     FATAL_LOG(ERROR) << "checker: " << type_str<checker>();
     FATAL_LOG(ERROR) << "type: " << type_str<T>();
@@ -122,6 +122,472 @@ FATAL_TEST(traits, is_template) {
     std::tuple<int, double>, true,
     std::tuple, std::basic_string
   >();
+
+
+
+  FATAL_EXPECT_FALSE(is_template<std::tuple>::apply<std::basic_string<char>>::value);
+  FATAL_EXPECT_FALSE(is_template<std::basic_string>::apply<std::tuple<int>>::value);
+  FATAL_EXPECT_TRUE(is_template<std::tuple>::apply<std::tuple<int>>::value);
+  FATAL_EXPECT_TRUE(is_template<std::basic_string>::apply<std::basic_string<char>>::value);
+}
+
+FATAL_TEST(traits, is_template_any) {
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::any<
+      std::basic_string<char>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<std::basic_string>::any<
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::any<
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::basic_string>::any<
+      std::basic_string<char>
+    >::value
+  );
+
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::any<
+      std::tuple<int>,
+      std::basic_string<char>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::any<
+      std::basic_string<char>,
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::any<
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::any<
+      std::vector<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::any<
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::any<
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>,
+      std::vector<int>
+    >::value
+  );
+
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::basic_string<char>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::tuple<int>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::basic_string<char>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::basic_string<char>,
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::vector<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::any<
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>,
+      std::vector<int>
+    >::value
+  );
+}
+
+FATAL_TEST(traits, is_template_all) {
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::all<
+      std::basic_string<char>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<std::basic_string>::all<
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::all<
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::basic_string>::all<
+      std::basic_string<char>
+    >::value
+  );
+
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::all<
+      std::tuple<int>,
+      std::basic_string<char>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::all<
+      std::basic_string<char>,
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::all<
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::all<
+      std::vector<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<std::tuple>::all<
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<std::tuple>::all<
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>,
+      std::vector<int>
+    >::value
+  );
+
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::basic_string<char>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::tuple<int>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::basic_string<char>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::basic_string<char>,
+      std::tuple<int>
+    >::value
+  );
+  FATAL_EXPECT_TRUE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::vector<int>
+    >::value
+  );
+  FATAL_EXPECT_FALSE(
+    is_template<
+      std::tuple,
+      std::basic_string,
+      std::optional
+    >::all<
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>,
+      std::vector<int>
+    >::value
+  );
+}
+
+FATAL_TEST(traits, is_template_v) {
+  FATAL_EXPECT_FALSE(is_template_v<std::tuple, std::basic_string<char>>);
+  FATAL_EXPECT_FALSE(is_template_v<std::basic_string, std::tuple<int>>);
+  FATAL_EXPECT_TRUE(is_template_v<std::tuple, std::tuple<int>>);
+  FATAL_EXPECT_TRUE(is_template_v<std::basic_string, std::basic_string<char>>);
+}
+
+FATAL_TEST(traits, is_template_any_v) {
+  FATAL_EXPECT_FALSE(
+    is_template_any_v<
+      std::tuple,
+      std::basic_string<char>
+    >
+  );
+  FATAL_EXPECT_FALSE(
+    is_template_any_v<
+      std::basic_string,
+      std::tuple<int>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_any_v<
+      std::tuple,
+      std::tuple<int>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_any_v<
+      std::basic_string,
+      std::basic_string<char>
+    >
+  );
+
+  FATAL_EXPECT_TRUE(
+    is_template_any_v<
+      std::tuple,
+      std::tuple<int>,
+      std::basic_string<char>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_any_v<
+      std::tuple,
+      std::basic_string<char>,
+      std::tuple<int>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_any_v<
+      std::tuple,
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>
+    >
+  );
+  FATAL_EXPECT_FALSE(
+    is_template_any_v<
+      std::tuple,
+      std::vector<int>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_any_v<
+      std::tuple,
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_any_v<
+      std::tuple,
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>,
+      std::vector<int>
+    >
+  );
+}
+
+FATAL_TEST(traits, is_template_all_v) {
+  FATAL_EXPECT_FALSE(
+    is_template_all_v<
+      std::tuple,
+      std::basic_string<char>
+    >
+  );
+  FATAL_EXPECT_FALSE(
+    is_template_all_v<
+      std::basic_string,
+      std::tuple<int>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_all_v<
+      std::tuple,
+      std::tuple<int>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_all_v<
+      std::basic_string,
+      std::basic_string<char>
+    >
+  );
+
+  FATAL_EXPECT_FALSE(
+    is_template_all_v<
+      std::tuple,
+      std::tuple<int>,
+      std::basic_string<char>
+    >
+  );
+  FATAL_EXPECT_FALSE(
+    is_template_all_v<
+      std::tuple,
+      std::basic_string<char>,
+      std::tuple<int>
+    >
+  );
+  FATAL_EXPECT_FALSE(
+    is_template_all_v<
+      std::tuple,
+      std::basic_string<char>,
+      std::tuple<int>,
+      std::optional<int>
+    >
+  );
+  FATAL_EXPECT_FALSE(
+    is_template_all_v<
+      std::tuple,
+      std::vector<int>
+    >
+  );
+  FATAL_EXPECT_TRUE(
+    is_template_all_v<
+      std::tuple,
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>
+    >
+  );
+  FATAL_EXPECT_FALSE(
+    is_template_all_v<
+      std::tuple,
+      std::tuple<char>,
+      std::tuple<int>,
+      std::tuple<int, double>,
+      std::vector<int>
+    >
+  );
 }
 
 /////////////////

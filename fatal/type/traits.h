@@ -65,18 +65,33 @@ namespace fatal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-template <template <typename...> class... TTemplates>
+template <template <typename...> class... Templates>
 class is_template {
-  template <template <typename...> class TTemplate, typename T>
-  using impl = is_complete<impl_trt::ist<TTemplate, T>>;
+  template <template <typename...> class Template, typename T>
+  using impl = is_complete<impl_trt::ist<Template, T>>;
 
 public:
   template <typename T>
-  using apply = logical_or<impl<TTemplates, T>...>;
+  constexpr static bool apply_v = (false || ... || impl<Templates, T>::value);
 
   template <typename T>
-  using type = logical_or<impl<TTemplates, T>...>;
+  using apply = std::bool_constant<apply_v<T>>;
+
+  template <typename... T>
+  using any = std::bool_constant<(false || ... || apply_v<T>)>;
+
+  template <typename... T>
+  using all = std::bool_constant<(sizeof...(T) && ... && apply_v<T>)>;
 };
+
+template <template <typename...> class Template, typename T>
+constexpr bool is_template_v = is_template<Template>::template apply<T>::value;
+
+template <template <typename...> class Template, typename... T>
+constexpr bool is_template_any_v = is_template<Template>::template any<T...>::value;
+
+template <template <typename...> class Template, typename... T>
+constexpr bool is_template_all_v = is_template<Template>::template all<T...>::value;
 
 /////////////////
 // integral_of //
