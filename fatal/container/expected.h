@@ -33,7 +33,7 @@ namespace fatal {
  * Author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <typename Error>
-struct throwable_expect_error_policy {
+struct throwable_expected_error_policy {
   using error_type = Error;
 
   /**
@@ -59,7 +59,7 @@ struct throwable_expect_error_policy {
  * Author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <typename Error>
-struct error_value_expect_error_policy {
+struct error_value_expected_error_policy {
   using error_type = Error;
 
   /**
@@ -69,16 +69,16 @@ struct error_value_expect_error_policy {
 };
 
 /**
- * Resolves to either `throwable_expect_error_policy` if `Error` is a subclass of `std::exception`
- * or `error_value_expect_error_policy` otherwise.
+ * Resolves to either `throwable_expected_error_policy` if `Error` is a subclass of `std::exception`
+ * or `error_value_expected_error_policy` otherwise.
  *
  * Author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <typename Error>
-using default_expect_error_policy = std::conditional_t<
+using default_expected_error_policy = std::conditional_t<
   std::is_base_of_v<std::exception, Error>,
-  throwable_expect_error_policy<Error>,
-  error_value_expect_error_policy<Error>
+  throwable_expected_error_policy<Error>,
+  error_value_expected_error_policy<Error>
 >;
 
 ////////////////////
@@ -90,7 +90,7 @@ using default_expect_error_policy = std::conditional_t<
  *
  * Author: Marcelo Juchem <juchem at gmail dot com>
  */
-struct assert_expect_check_policy {
+struct assert_expected_check_policy {
   /**
    * Asserts that `expected` contains a value.
    */
@@ -113,7 +113,7 @@ struct assert_expect_check_policy {
  *
  * Author: Marcelo Juchem <juchem at gmail dot com>
  */
-struct throwing_expect_check_policy {
+struct throwing_expected_check_policy {
   template <typename Expected>
   /**
    * Checks that `expected` contains a value and throws a `std::logic_error` if not.
@@ -134,6 +134,8 @@ struct throwing_expect_check_policy {
     }
   }
 };
+
+using default_expected_check_policy = assert_expected_check_policy;
 
 /**
  * A tag for unexcpected error conditions.
@@ -156,8 +158,8 @@ constexpr unexpected_t unexpected = {};
 template <
   typename T,
   typename Error,
-  template <typename> typename ErrorPolicy = default_expect_error_policy,
-  typename CheckPolicy = assert_expect_check_policy
+  typename CheckPolicy = default_expected_check_policy,
+  template <typename> typename ErrorPolicy = default_expected_error_policy
 >
 struct expected {
   using value_type = T;
@@ -304,7 +306,7 @@ public:
   bool has_value() const { return !data_.index(); }
 
   /**
-   * This method can't be called on non-throwable 
+   * This method can't be called on non-throwable error policies.
    */
   [[ noreturn ]]
   void raise() const {
@@ -334,16 +336,16 @@ private:
 };
 
 /**
- * Convenient alias for an `expected` that uses `throwing_expect_check_policy`.
+ * Convenient alias for an `expected` that uses `throwing_expected_check_policy`.
  *
  * Author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <
   typename T,
   typename Error,
-  template <typename> typename ErrorPolicy = default_expect_error_policy
+  template <typename> typename ErrorPolicy = default_expected_error_policy
 >
-using checked_expected = expected<T, Error, ErrorPolicy, throwing_expect_check_policy>;
+using checked_expected = expected<T, Error, throwing_expected_check_policy, ErrorPolicy>;
 
 } // namespace fatal {
 

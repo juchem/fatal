@@ -28,101 +28,158 @@ struct parser {
   using value_type = T;
 
 private:
-  template <typename Char, Char Head, Char... Tail>
-  struct hexadecimal_parser {
-    static_assert(
-      std::is_signed_v<value_type> || Head != static_cast<Char>('-'),
-      "can't parse a negative number as an unsigned type"
-    );
+  template <typename Char, Char Acc, Char Head, Char... Tail>
+  static constexpr value_type parse_octal_digits() {
+    static_assert(Head >= '0' && Head <= '7', "invalid octal digit");
 
-    static_assert(
-      (
-        Head == static_cast<Char>('-') || Head == static_cast<Char>('+')
-          || (Head >= static_cast<Char>('0') && Head <= static_cast<Char>('9'))
-          || (Head >= static_cast<Char>('a') && Head <= static_cast<Char>('f'))
-          || (Head >= static_cast<Char>('A') && Head <= static_cast<Char>('F'))
-      ),
-      "character is not a valid digit"
-    );
+    constexpr value_type Result = Acc * 8
+      + static_cast<value_type>(Head - static_cast<Char>('0'));
 
-    static_assert(
-      ((
-        (Tail >= static_cast<Char>('0') && Tail <= static_cast<Char>('9'))
-          || (Tail >= static_cast<Char>('a') && Tail <= static_cast<Char>('f'))
-          || (Tail >= static_cast<Char>('A') && Tail <= static_cast<Char>('F'))
-      ) && ...),
-      "character is not a valid digit"
-    );
-
-    constexpr static value_type base() { return 16; }
-
-    constexpr static auto convert(Char digit) {
-      return digit >= static_cast<Char>('a') && digit <= static_cast<Char>('f')
-        ? static_cast<value_type>(digit - static_cast<Char>('a') + 10)
-        : digit >= static_cast<Char>('A') && digit <= static_cast<Char>('F')
-          ? static_cast<value_type>(digit - static_cast<Char>('A') + 10)
-          : static_cast<value_type>(digit - static_cast<Char>('0'));
+    if constexpr (!sizeof...(Tail)) {
+      return Result;
+    } else {
+      return parse_octal_digits<Char, Result, Tail...>();
     }
-  };
-
-  template <typename Char, Char Head, Char... Tail>
-  struct decimal_parser {
-    static_assert(
-      std::is_signed_v<value_type> || Head != static_cast<Char>('-'),
-      "can't parse a negative number as an unsigned type"
-    );
-
-    static_assert(
-      (
-        Head == static_cast<Char>('-') || Head == static_cast<Char>('+')
-          || (Head >= static_cast<Char>('0') && Head <= static_cast<Char>('9'))
-      ),
-      "character is not a valid digit"
-    );
-
-    static_assert(
-      ((Tail >= static_cast<Char>('0') && Tail <= static_cast<Char>('9')) && ...),
-      "character is not a valid digit"
-    );
-
-    constexpr static value_type base() { return 10; }
-
-    constexpr static auto convert(Char digit) {
-      return static_cast<value_type>(digit - static_cast<Char>('0'));
-    }
-  };
-
-  template <typename Parser>
-  constexpr static value_type parse_tail(value_type number) {
-    return number;
   }
 
-  template <typename Parser, typename Char, typename... Tail>
-  constexpr static value_type parse_tail(value_type number, Char head, Tail... tail) {
-    return parse_tail<Parser>(number * Parser::base() + Parser::convert(head), tail...);
+  template <typename Char, Char Acc, Char Head, Char... Tail>
+  static constexpr value_type parse_decimal_digits() {
+    static_assert(Head >= '0' && Head <= '9', "invalid decimal digit");
+
+    constexpr value_type Result = Acc * 10
+      + static_cast<value_type>(Head - static_cast<Char>('0'));
+
+    if constexpr (!sizeof...(Tail)) {
+      return Result;
+    } else {
+      return parse_decimal_digits<Char, Result, Tail...>();
+    }
+  }
+
+  template <typename Char, Char Acc, Char Head, Char... Tail>
+  static constexpr value_type parse_hexadecimal_digits() {
+    static_assert(
+      (Head >= '0' && Head <= '9')
+       || (Head >= 'a' && Head <= 'f')
+       || (Head >= 'A' && Head <= 'F'),
+      "invalid hexadecimal digit"
+    );
+
+    constexpr value_type Result = Acc * 16 + (
+      Head >= static_cast<Char>('a') && Head <= static_cast<Char>('f')
+        ? static_cast<value_type>(Head - static_cast<Char>('a') + 10)
+        : Head >= static_cast<Char>('A') && Head <= static_cast<Char>('F')
+          ? static_cast<value_type>(Head - static_cast<Char>('A') + 10)
+          : static_cast<value_type>(Head - static_cast<Char>('0'))
+    );
+
+    if constexpr (!sizeof...(Tail)) {
+      return Result;
+    } else {
+      return parse_hexadecimal_digits<Char, Result, Tail...>();
+    }
+
+  }
+
+  template <typename Char, std::size_t Depth, Char Head, Char... Tail>
+  static constexpr value_type parse_literal_digits() {
+    // first character being parsed
+    if constexpr (Depth == 0) {
+      if constexpr (Head == '0') {
+        if constexpr (!sizeof...(Tail)) {
+          return 0;
+        } else {
+          return parse_literal_digits<Char, 1, Tail...>();
+        }
+      } else {
+        return parse_decimal_digits<Char, 0, Head, Tail...>();
+      }
+    // initial zero, checking whether octal or hexadecimal
+    } else {
+      if constexpr (Head == 'x' || Head == 'X') {
+        return parse_hexadecimal_digits<Char, 0, Tail...>();
+      } else {
+        return parse_octal_digits<Char, 0, Head, Tail...>();
+      }
+    }
   }
 
 public:
-  template <typename Parser, typename Char, typename... Tail>
-  constexpr static value_type parse(Char head, Tail... tail) {
-    return head == static_cast<Char>('-')
-      ? -parse_tail<Parser>(0, tail...)
-      : head == static_cast<Char>('+')
-        ? parse_tail<Parser>(0, tail...)
-        : parse_tail<Parser>(0, head, tail...);
+  template <typename Char, Char Head, Char... Tail>
+  static constexpr value_type parse_octal() {
+    if constexpr (Head == '+') {
+      return parse_octal_digits<Char, 0, Tail...>();
+    } else if constexpr (Head == '-') {
+      static_assert(
+        std::is_signed_v<value_type>,
+        "can't parse a negative number as an unsigned type"
+      );
+
+      return -parse_octal_digits<Char, 0, Tail...>();
+    } else {
+      return parse_octal_digits<Char, 0, Head, Tail...>();
+    }
   }
 
   template <typename Char, Char... Digits>
-  using hexadecimal = std::integral_constant<
-    value_type,
-    parse<hexadecimal_parser<Char, Digits...>>(Digits...)
-  >;
+  using octal = std::integral_constant<value_type, parse_octal<Char, Digits...>()>;
+
+  template <typename Char, Char Head, Char... Tail>
+  static constexpr value_type parse_decimal() {
+    if constexpr (Head == '+') {
+      return parse_decimal_digits<Char, 0, Tail...>();
+    } else if constexpr (Head == '-') {
+      static_assert(
+        std::is_signed_v<value_type>,
+        "can't parse a negative number as an unsigned type"
+      );
+
+      return -parse_decimal_digits<Char, 0, Tail...>();
+    } else {
+      return parse_decimal_digits<Char, 0, Head, Tail...>();
+    }
+  }
 
   template <typename Char, Char... Digits>
-  using decimal = std::integral_constant<
-    value_type,
-    parse<decimal_parser<Char, Digits...>>(Digits...)
-  >;
+  using decimal = std::integral_constant<value_type, parse_decimal<Char, Digits...>()>;
+
+  template <typename Char, Char Head, Char... Tail>
+  static constexpr value_type parse_hexadecimal() {
+    if constexpr (Head == '+') {
+      return parse_hexadecimal_digits<Char, 0, Tail...>();
+    } else if constexpr (Head == '-') {
+      static_assert(
+        std::is_signed_v<value_type>,
+        "can't parse a negative number as an unsigned type"
+      );
+
+      return -parse_hexadecimal_digits<Char, 0, Tail...>();
+    } else {
+      return parse_hexadecimal_digits<Char, 0, Head, Tail...>();
+    }
+  }
+
+  template <typename Char, Char... Digits>
+  using hexadecimal = std::integral_constant<value_type, parse_hexadecimal<Char, Digits...>()>;
+
+  template <typename Char, Char Head, Char... Tail>
+  static constexpr value_type parse_literal() {
+    if constexpr (Head == '+') {
+      return parse_literal_digits<Char, 0, Tail...>();
+    } else if constexpr (Head == '-') {
+      static_assert(
+        std::is_signed_v<value_type>,
+        "can't parse a negative number as an unsigned type"
+      );
+
+      return -parse_literal_digits<Char, 0, Tail...>();
+    } else {
+      return parse_literal_digits<Char, 0, Head, Tail...>();
+    }
+  }
+
+  template <typename Char, Char... Digits>
+  using literal = std::integral_constant<value_type, parse_literal<Char, Digits...>()>;
 };
 
 } // namespace fatal {
