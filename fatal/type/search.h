@@ -63,6 +63,29 @@ template <
   typename Filter = get_identity,
   typename Comparer = value_comparer,
   typename Needle,
+  typename Fallback,
+  typename Visitor,
+  typename... Args
+>
+static inline constexpr decltype(auto) sorted_find(
+  Needle &&needle,
+  Fallback &&fallback,
+  Visitor &&visitor,
+  Args &&...args
+) {
+  return i_S::f<T>::template S<Comparer, Filter>(
+    std::forward<Needle>(needle),
+    std::forward<Fallback>(fallback),
+    std::forward<Visitor>(visitor),
+    std::forward<Args>(args)...
+  );
+}
+
+template <
+  typename T,
+  typename Filter = get_identity,
+  typename Comparer = value_comparer,
+  typename Needle,
   typename Visitor,
   typename... Args
 >
@@ -91,6 +114,29 @@ static inline constexpr bool scalar_search(Needle &&needle) {
   );
 }
 
+template <
+  typename T,
+  typename Filter = get_identity,
+  typename Comparer = value_comparer,
+  typename Needle,
+  typename Fallback,
+  typename Visitor,
+  typename... Args
+>
+static inline constexpr decltype(auto) scalar_find(
+  Needle &&needle,
+  Fallback &&fallback,
+  Visitor &&visitor,
+  Args &&...args
+) {
+  return sorted_find<sort<T, Comparer, Filter>, Filter, Comparer>(
+    std::forward<Needle>(needle),
+    std::forward<Fallback>(fallback),
+    std::forward<Visitor>(visitor),
+    std::forward<Args>(args)...
+  );
+}
+
 template <typename T, typename Visitor, typename... Args>
 static inline constexpr bool index_search(
   std::size_t needle,
@@ -99,6 +145,21 @@ static inline constexpr bool index_search(
 ) {
   return sorted_search<T, index<T>>(
     needle,
+    std::forward<Visitor>(visitor),
+    std::forward<Args>(args)...
+  );
+}
+
+template <typename T, typename Fallback, typename Visitor, typename... Args>
+static inline constexpr decltype(auto) index_find(
+  std::size_t needle,
+  Fallback &&fallback,
+  Visitor &&visitor,
+  Args &&...args
+) {
+  return sorted_find<T, index<T>>(
+    needle,
+    std::forward<Fallback>(fallback),
     std::forward<Visitor>(visitor),
     std::forward<Args>(args)...
   );

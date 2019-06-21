@@ -29,102 +29,139 @@ struct s {
     typename Visitor,
     typename... Args
   >
-  static constexpr inline bool S(
-    Needle &&needle,
-    Visitor &&visitor,
-    Args &&...args
-  ) {
-    static_assert(Offset + (Size / 2) < size<T>::value, "");
-    using pivot = at<T, Offset + (Size / 2)>;
-    using filtered = typename Filter::template apply<pivot>;
-    return Comparer::template greater<filtered>(needle)
-      ? s<T, Offset, Size / 2>::template S<Comparer, Filter>(
-        std::forward<Needle>(needle),
-        std::forward<Visitor>(visitor),
-        std::forward<Args>(args)...
-      )
-      : Comparer::template less<filtered>(needle)
-        ? s<T, (Offset + Size / 2) + 1, Size / 2 - !(Size & 1)>
-          ::template S<Comparer, Filter>(
-            std::forward<Needle>(needle),
-            std::forward<Visitor>(visitor),
-            std::forward<Args>(args)...
-          )
-        : (
-          visitor(
-            indexed<pivot, Offset + (Size / 2)>(),
-            std::forward<Args>(args)...
-          ), true
-        );
-  }
-};
-
-template <typename T, std::size_t Offset>
-struct s<T, Offset, 0> {
-  template <typename, typename, typename... Args>
-  static constexpr inline bool S(Args &&...) {
-    return false;
-  }
-};
-
-template <typename T, std::size_t Offset>
-struct s<T, Offset, 1> {
-  template <
-    typename Comparer,
-    typename Filter,
-    typename Needle,
-    typename Visitor,
-    typename... Args
-  >
-  static constexpr inline bool S(
-    Needle &&needle,
-    Visitor &&visitor,
-    Args &&...args
-  ) {
-    static_assert(Offset < size<T>::value,  "");
-    using filtered = typename Filter::template apply<at<T, Offset>>;
-    return Comparer::template equal<filtered>(needle) && (
-      visitor(
-        indexed<at<T, Offset>, Offset>(),
-        std::forward<Args>(args)...
-      ),
-      true
-    );
-  }
-};
-
-template <typename T, std::size_t Offset>
-struct s<T, Offset, 2> {
-  template <
-    typename Comparer,
-    typename Filter,
-    typename Needle,
-    typename Visitor,
-    typename... Args
-  >
-  static constexpr inline bool S(
-    Needle &&needle,
-    Visitor &&visitor,
-    Args &&...args
-  ) {
-    static_assert(Offset + 1 < size<T>::value,  "");
-    using filtered = typename Filter::template apply<at<T, Offset>>;
-    using filtered_next = typename Filter::template apply<at<T, Offset + 1>>;
-    return (
-      Comparer::template equal<filtered>(needle) && (
+  static constexpr inline bool S(Needle &&needle, Visitor &&visitor, Args &&...args) {
+    if constexpr (Size == 0) {
+      return false;
+    } else if constexpr (Size == 1) {
+      static_assert(Offset < size<T>::value,  "");
+      using filtered = typename Filter::template apply<at<T, Offset>>;
+      if (Comparer::template equal<filtered>(needle)) {
         visitor(
           indexed<at<T, Offset>, Offset>(),
           std::forward<Args>(args)...
-        ), true
-      )
-    ) || (
-      Comparer::template equal<filtered_next>(needle) && (
+        );
+        return true;
+      } else {
+        return false;
+      }
+    } else if constexpr (Size == 2) {
+      static_assert(Offset + 1 < size<T>::value,  "");
+      using filtered = typename Filter::template apply<at<T, Offset>>;
+      using filtered_next = typename Filter::template apply<at<T, Offset + 1>>;
+      if (Comparer::template equal<filtered>(needle)) {
+        visitor(
+          indexed<at<T, Offset>, Offset>(),
+          std::forward<Args>(args)...
+        );
+        return true;
+      } else if (Comparer::template equal<filtered_next>(needle)) {
         visitor(
           indexed<at<T, Offset + 1>, Offset + 1>(),
           std::forward<Args>(args)...
-        ), true
-      )
-    );
+        );
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      static_assert(Offset + (Size / 2) < size<T>::value, "");
+      using pivot = at<T, Offset + (Size / 2)>;
+      using filtered = typename Filter::template apply<pivot>;
+
+      if (Comparer::template greater<filtered>(needle)) {
+        return s<T, Offset, Size / 2>::template S<Comparer, Filter>(
+          std::forward<Needle>(needle),
+          std::forward<Visitor>(visitor),
+          std::forward<Args>(args)...
+        );
+      } else if (Comparer::template less<filtered>(needle)) {
+        return s<T, (Offset + Size / 2) + 1, Size / 2 - !(Size & 1)>::template S<Comparer, Filter>(
+          std::forward<Needle>(needle),
+          std::forward<Visitor>(visitor),
+          std::forward<Args>(args)...
+        );
+      } else {
+        visitor(
+          indexed<pivot, Offset + (Size / 2)>(),
+          std::forward<Args>(args)...
+        );
+        return true;
+      }
+    }
+  }
+};
+
+template <typename T, std::size_t Offset = 0, std::size_t Size = size<T>::value>
+struct f {
+  template <
+    typename Comparer,
+    typename Filter,
+    typename Needle,
+    typename Fallback,
+    typename Visitor,
+    typename... Args
+  >
+  static constexpr inline decltype(auto) S(
+    Needle &&needle,
+    Fallback &&fallback,
+    Visitor &&visitor,
+    Args &&...args
+  ) {
+    if constexpr (Size == 0) {
+      return std::forward<Fallback>(fallback);
+    } else if constexpr (Size == 1) {
+      static_assert(Offset < size<T>::value,  "");
+      using filtered = typename Filter::template apply<at<T, Offset>>;
+      if (Comparer::template equal<filtered>(needle)) {
+        return visitor(
+          indexed<at<T, Offset>, Offset>(),
+          std::forward<Args>(args)...
+        );
+      } else {
+        return std::forward<Fallback>(fallback);
+      }
+    } else if constexpr (Size == 2) {
+      static_assert(Offset + 1 < size<T>::value,  "");
+      using filtered = typename Filter::template apply<at<T, Offset>>;
+      using filtered_next = typename Filter::template apply<at<T, Offset + 1>>;
+      if (Comparer::template equal<filtered>(needle)) {
+        return visitor(
+          indexed<at<T, Offset>, Offset>(),
+          std::forward<Args>(args)...
+        );
+      } else if (Comparer::template equal<filtered_next>(needle)) {
+        return visitor(
+          indexed<at<T, Offset + 1>, Offset + 1>(),
+          std::forward<Args>(args)...
+        );
+      } else {
+        return std::forward<Fallback>(fallback);
+      }
+    } else {
+      static_assert(Offset + (Size / 2) < size<T>::value, "");
+      using pivot = at<T, Offset + (Size / 2)>;
+      using filtered = typename Filter::template apply<pivot>;
+      if (Comparer::template greater<filtered>(needle)) {
+        return f<T, Offset, Size / 2>::template S<Comparer, Filter>(
+          std::forward<Needle>(needle),
+          std::forward<Fallback>(fallback),
+          std::forward<Visitor>(visitor),
+          std::forward<Args>(args)...
+        );
+      } else if (Comparer::template less<filtered>(needle)) {
+        return f<T, (Offset + Size / 2) + 1, Size / 2 - !(Size & 1)>::template S<Comparer, Filter>(
+          std::forward<Needle>(needle),
+          std::forward<Fallback>(fallback),
+          std::forward<Visitor>(visitor),
+          std::forward<Args>(args)...
+        );
+      } else {
+        return visitor(
+          indexed<pivot, Offset + (Size / 2)>(),
+          std::forward<Args>(args)...
+        );
+      }
+    }
   }
 };
 
