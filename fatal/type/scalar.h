@@ -10,6 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_scalar_h
 #define FATAL_INCLUDE_fatal_type_scalar_h
 
+#include <limits>
 #include <ratio>
 #include <type_traits>
 
@@ -41,6 +42,18 @@ using size_constant = std::integral_constant<std::size_t, Value>;
  */
 template <typename T>
 using size_of_constant = std::integral_constant<std::size_t, sizeof(T)>;
+
+/**
+ * Given a type `T`, returns a `std::integral_constant` of type `std::size_t`
+ * whose value is `sizeof(T)`.
+ *
+ * @author: Marcelo Juchem <marcelo@fb.com>
+ */
+template <typename T>
+using ensure_ieee754 = std::enable_if_t<
+  std::numeric_limits<T>::is_iec559,
+  T
+>;
 
 namespace detail {
 namespace scalar_impl {
@@ -75,11 +88,14 @@ static constexpr T to_scalar() noexcept {
   return detail::scalar_impl::to_scalar<From>::template to<T>();
 }
 
-namespace detail {
-namespace scalar_impl {
-template <typename T, bool = std::is_enum<T>::value> struct to_integral_impl;
-} // namespace scalar_impl {
-} // namespace detail {
+namespace i_sc {
+template <typename T, bool = std::is_enum_v<T>>
+struct i_t { using type = std::underlying_type_t<T>; };
+template <typename T> struct i_t<T, false> { using type = T; };
+} // namespace i_sc {
+
+template <typename T>
+using integral_type = typename i_sc::i_t<T>::type;
 
 /**
  * Converts any integral to its appropriate integer value.
@@ -102,10 +118,15 @@ template <typename T, bool = std::is_enum<T>::value> struct to_integral_impl;
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
+template <typename T, T Value>
+using to_integral_t = std::integral_constant<
+  integral_type<T>,
+  static_cast<integral_type<T>>(Value)
+>;
+
 template <typename T>
-static constexpr typename detail::scalar_impl::to_integral_impl<T>::type
-to_integral(T const value) {
-  return detail::scalar_impl::to_integral_impl<T>::convert(value);
+static constexpr auto to_integral(T const value) {
+  return static_cast<integral_type<T>>(value);
 }
 
 /**
@@ -126,16 +147,18 @@ to_integral(T const value) {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-template <typename T>
-static constexpr T bitwise_merge(T const value) { return value; }
-
 // TODO: Implement in logarithmic time
-template <typename T, typename U, typename... Args>
-static constexpr T bitwise_merge(T const lhs, U const rhs, Args... args) {
-  return bitwise_merge(
-    static_cast<T>(to_integral(lhs) | to_integral(rhs)),
-    static_cast<T>(args)...
-  );
+template <typename T, T Value, T... Args>
+using bitwise_merge_t = std::integral_constant<
+  T,
+  static_cast<T>(
+    (to_integral(Value) | ... | to_integral(Args))
+  )
+>;
+
+template <typename T, typename... Args>
+static constexpr T bitwise_merge(T const value, Args const... args) {
+  return static_cast<T>((to_integral(value) | ... | to_integral(args)));
 }
 
 /**
@@ -156,14 +179,18 @@ static constexpr T bitwise_merge(T const lhs, U const rhs, Args... args) {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-template <typename T>
-static constexpr T bitwise_filter(T const value) { return value; }
+template <typename T, T Value, T... Args>
+using bitwise_filter_t = std::integral_constant<
+  T,
+  static_cast<T>(
+    (to_integral(Value) & ... & to_integral(Args))
+  )
+>;
 
-template <typename T, typename U,typename... Args>
-static constexpr T bitwise_filter(T const lhs, U const rhs, Args... args) {
-  return bitwise_filter(
-    static_cast<T>(to_integral(lhs) & to_integral(rhs)),
-    static_cast<T>(args)...
+template <typename T, typename... Args>
+static constexpr T bitwise_filter(T const value, Args const... args) {
+  return static_cast<T>(
+    (to_integral(value) & ... & to_integral(args))
   );
 }
 
@@ -226,19 +253,16 @@ static constexpr T bitwise_disable(
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-namespace scalar_impl {
-template <typename T, typename U>
-static constexpr bool bitwise_has_all_impl(T const value, U const merged) {
-  return bitwise_filter(value, static_cast<T>(merged))
-    == static_cast<T>(merged);
+namespace i_sc {
+template <typename T>
+static constexpr bool bt_ha(T const value, T const merged) {
+  return bitwise_filter(value, static_cast<T>(merged)) == static_cast<T>(merged);
 }
-} // namespace scalar_impl {
+} // namespace i_sc {
+
 template <typename T, typename... Args>
 static constexpr bool bitwise_has_all(T const value, Args... args) {
-  return scalar_impl::bitwise_has_all_impl(
-    value,
-    bitwise_merge(static_cast<T>(args)...)
-  );
+  return i_sc::bt_ha(value, bitwise_merge(static_cast<T>(args)...));
 }
 
 /**
@@ -296,22 +320,6 @@ struct to_scalar<std::ratio<Numerator, Denominator>> {
   static constexpr To to() noexcept {
     return static_cast<To>(Numerator) / static_cast<To>(Denominator);
   }
-};
-
-/////////////////
-// to_integral //
-/////////////////
-
-template <typename T>
-struct to_integral_impl<T, false> {
-  using type = T;
-  static constexpr type convert(T value) { return value; }
-};
-
-template <typename T>
-struct to_integral_impl<T, true> {
-  using type = typename std::underlying_type<T>::type;
-  static constexpr type convert(T value) { return static_cast<type>(value); }
 };
 
 } // namespace scalar_impl {

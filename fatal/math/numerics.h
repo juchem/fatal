@@ -12,6 +12,7 @@
 
 #include <fatal/type/apply.h>
 #include <fatal/type/conditional.h>
+#include <fatal/type/get.h>
 #include <fatal/type/logical.h>
 #include <fatal/type/scalar.h>
 #include <fatal/type/sort.h>
@@ -37,6 +38,15 @@ namespace fatal {
  * Example:
  *
  *  // yields `1`
+ *  data_bits_v<bool>
+ *
+ *  // yields `CHAR_BIT`
+ *  data_bits_v<char>
+ *
+ *  // yields `32`
+ *  data_bits_v<std::int32_t>
+ *
+ *  // yields `1`
  *  data_bits<bool>::value
  *
  *  // yields `CHAR_BIT`
@@ -45,10 +55,22 @@ namespace fatal {
  *  // yields `32`
  *  data_bits<std::int32_t>::value
  *
+ *  // yields `std::integral_constant<std::size_t, 1>`
+ *  get_data_bits::apply<bool>
+ *
+ *  // yields `std::integral_constant<std::size_t, CHAR_BIT>`
+ *  get_data_bits::apply<char>
+ *
+ *  // yields `std::integral_constant<std::size_t, 32>`
+ *  get_data_bits::apply<std::int32_t>
+ *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-using data_bits = i_num::data_bits<T>;
+using data_bits = std::integral_constant<std::size_t, i_nm::data_bits_v<T>>;
+
+template <typename T>
+constexpr auto data_bits_v = i_nm::data_bits_v<T>;
 
 struct get_data_bits {
   template <typename T>
@@ -57,32 +79,68 @@ struct get_data_bits {
 
 struct data_bits_eq {
   template <typename LHS, typename RHS>
-  using apply = bool_constant<(data_bits<LHS>::value == data_bits<RHS>::value)>;
+  using apply = std::bool_constant<(data_bits_v<LHS> == data_bits_v<RHS>)>;
 };
 
 struct data_bits_ne {
   template <typename LHS, typename RHS>
-  using apply = bool_constant<(data_bits<LHS>::value != data_bits<RHS>::value)>;
+  using apply = std::bool_constant<(data_bits_v<LHS> != data_bits_v<RHS>)>;
 };
 
 struct data_bits_lt {
   template <typename LHS, typename RHS>
-  using apply = bool_constant<(data_bits<LHS>::value < data_bits<RHS>::value)>;
+  using apply = std::bool_constant<(data_bits_v<LHS> < data_bits_v<RHS>)>;
 };
 
 struct data_bits_le {
   template <typename LHS, typename RHS>
-  using apply = bool_constant<(data_bits<LHS>::value <= data_bits<RHS>::value)>;
+  using apply = std::bool_constant<(data_bits_v<LHS> <= data_bits_v<RHS>)>;
 };
 
 struct data_bits_gt {
   template <typename LHS, typename RHS>
-  using apply = bool_constant<(data_bits<LHS>::value > data_bits<RHS>::value)>;
+  using apply = std::bool_constant<(data_bits_v<LHS> > data_bits_v<RHS>)>;
 };
 
 struct data_bits_ge {
   template <typename LHS, typename RHS>
-  using apply = bool_constant<(data_bits<LHS>::value >= data_bits<RHS>::value)>;
+  using apply = std::bool_constant<(data_bits_v<LHS> >= data_bits_v<RHS>)>;
+};
+
+template <std::size_t RHS>
+struct data_bits_equal_to {
+  template <typename LHS>
+  using apply = std::bool_constant<(data_bits_v<LHS> == RHS)>;
+};
+
+template <std::size_t RHS>
+struct data_bits_not_equal_to {
+  template <typename LHS>
+  using apply = std::bool_constant<(data_bits_v<LHS> != RHS)>;
+};
+
+template <std::size_t RHS>
+struct data_bits_less_than {
+  template <typename LHS>
+  using apply = std::bool_constant<(data_bits_v<LHS> < RHS)>;
+};
+
+template <std::size_t RHS>
+struct data_bits_less_than_equal {
+  template <typename LHS>
+  using apply = std::bool_constant<(data_bits_v<LHS> <= RHS)>;
+};
+
+template <std::size_t RHS>
+struct data_bits_greater_than {
+  template <typename LHS>
+  using apply = std::bool_constant<(data_bits_v<LHS> > RHS)>;
+};
+
+template <std::size_t RHS>
+struct data_bits_greater_than_equal {
+  template <typename LHS>
+  using apply = std::bool_constant<(data_bits_v<LHS> >= RHS)>;
 };
 
 // TODO: DOCUMENT AND TEST
@@ -113,7 +171,7 @@ typename std::make_unsigned<T>::type unsigned_cast(T value) {
  */
 template <typename T>
 inline constexpr T reverse_integral_bytes(T value) noexcept {
-  return i_num::integral_reverse(value, 4);
+  return i_nm::integral_reverse(value, 4);
 }
 
 /**
@@ -132,7 +190,7 @@ inline constexpr T reverse_integral_bytes(T value) noexcept {
  */
 template <typename T>
 inline constexpr T reverse_integral_bits(T value) noexcept {
-  return i_num::integral_reverse(value, 0);
+  return i_nm::integral_reverse(value, 0);
 }
 
 /**
@@ -166,7 +224,7 @@ inline constexpr T reverse_integral_bits(T value) noexcept {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T, std::size_t Size = 1>
-using shift_left_count_upperbound = size_constant<i_num::slcu<T, Size>()>;
+using shift_left_count_upperbound = size_constant<i_nm::slcu<T, Size>()>;
 
 /**
  * The upper bound on values of type `T` that can be shifted left by `Shift`
@@ -210,7 +268,7 @@ using shift_left_upperbound = std::integral_constant<
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <std::uintmax_t Value>
-using most_significant_bit = i_num::most_significant_bit<Value>;
+using most_significant_bit = i_nm::most_significant_bit<Value>;
 
 ///////////////
 // pop_count //
@@ -220,21 +278,23 @@ using most_significant_bit = i_num::most_significant_bit<Value>;
 template <std::uintmax_t Value>
 using pop_count = std::integral_constant<
   std::size_t,
-  i_num::pop_count_impl(Value)
+  i_nm::pop_count_impl(Value)
 >;
 
 ////////////////////
 // known integers //
 ////////////////////
 
-// TODO: DOCUMENT AND TEST
-
-using known_signed_integers = i_num::uniquify_list_by_bit_size_impl<
-  list<
-    short, int, long, long long,
-    std::int8_t, std::int16_t, std::int32_t, std::int64_t,
-    std::intptr_t, std::intmax_t, std::ptrdiff_t
-  >
+using known_signed_integers = adjacent_unique_by<
+  sort_by<
+    list<
+      short, int, long, long long,
+      std::int8_t, std::int16_t, std::int32_t, std::int64_t,
+      std::intptr_t, std::intmax_t, std::ptrdiff_t
+    >,
+    get_data_bits
+  >,
+  data_bits_eq
 >;
 
 static_assert(
@@ -244,12 +304,16 @@ static_assert(
   "invalid signed integer"
 );
 
-using known_unsigned_integers = i_num::uniquify_list_by_bit_size_impl<
-  list<
-    bool, unsigned short, unsigned int, unsigned long, unsigned long long,
-    std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t, std::size_t,
-    std::uintptr_t, std::uintmax_t
-  >
+using known_unsigned_integers = adjacent_unique_by<
+  sort_by<
+    list<
+      bool, unsigned short, unsigned int, unsigned long, unsigned long long,
+      std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t, std::size_t,
+      std::uintptr_t, std::uintmax_t
+    >,
+    get_data_bits
+  >,
+  data_bits_eq
 >;
 
 static_assert(
@@ -259,10 +323,12 @@ static_assert(
   "invalid unsigned integer"
 );
 
-using known_fast_signed_integers = i_num::uniquify_list_by_bit_size_impl<
-  list<
-    std::int_fast8_t, std::int_fast16_t, std::int_fast32_t, std::int_fast64_t
-  >
+using known_fast_signed_integers = adjacent_unique_by<
+  sort_by<
+    list<std::int_fast8_t, std::int_fast16_t, std::int_fast32_t, std::int_fast64_t>,
+    get_data_bits
+  >,
+  data_bits_eq
 >;
 
 static_assert(
@@ -272,11 +338,12 @@ static_assert(
   "invalid fast signed integer"
 );
 
-using known_fast_unsigned_integers = i_num::uniquify_list_by_bit_size_impl<
-  list<
-    bool, std::uint_fast8_t, std::uint_fast16_t, std::uint_fast32_t,
-    std::uint_fast64_t
-  >
+using known_fast_unsigned_integers = adjacent_unique_by<
+  sort_by<
+    list<bool, std::uint_fast8_t, std::uint_fast16_t, std::uint_fast32_t, std::uint_fast64_t>,
+    get_data_bits
+  >,
+  data_bits_eq
 >;
 
 static_assert(
@@ -286,11 +353,12 @@ static_assert(
   "invalid fast unsigned integer"
 );
 
-using known_least_signed_integers = i_num::uniquify_list_by_bit_size_impl<
-  list<
-    std::int_least8_t, std::int_least16_t, std::int_least32_t,
-    std::int_least64_t
-  >
+using known_least_signed_integers = adjacent_unique_by<
+  sort_by<
+    list<std::int_least8_t, std::int_least16_t, std::int_least32_t, std::int_least64_t>,
+    get_data_bits
+  >,
+  data_bits_eq
 >;
 
 static_assert(
@@ -300,11 +368,12 @@ static_assert(
   "invalid least signed integer"
 );
 
-using known_least_unsigned_integers = i_num::uniquify_list_by_bit_size_impl<
-  list<
-    bool, std::uint_least8_t, std::uint_least16_t, std::uint_least32_t,
-    std::uint_least64_t
-  >
+using known_least_unsigned_integers = adjacent_unique_by<
+  sort_by<
+    list<bool, std::uint_least8_t, std::uint_least16_t, std::uint_least32_t, std::uint_least64_t>,
+    get_data_bits
+  >,
+  data_bits_eq
 >;
 
 static_assert(
@@ -318,10 +387,12 @@ static_assert(
 // known_floating_points //
 ///////////////////////////
 
-// TODO: DOCUMENT AND TEST
-
-using known_floating_points = i_num::uniquify_list_by_bit_size_impl<
-  list<float, double, long double>
+using known_floating_points = adjacent_unique_by<
+  sort_by<
+    list<float, double, long double>,
+    get_data_bits
+  >,
+  data_bits_eq
 >;
 
 static_assert(
@@ -338,30 +409,38 @@ static_assert(
 // TODO: DOCUMENT AND TEST
 
 template <typename List, std::size_t BitCount>
-using smallest_type_for_bit_count = typename i_num::smallest_for_impl<
+using smallest_type_for_bit_count = typename i_nm::smallest_for_impl<
   List, BitCount
 >::type;
 
+template <typename List, std::size_t BitCount>
+using exact_type_for_bit_count = get<
+  List,
+  std::integral_constant<std::size_t, BitCount>,
+  get_data_bits
+>;
+
 /**
  * smallest_signed_integral & friends allow you to get the smallest possible
- * integer type that can accommodate some data with at least the given bits size
+ * arithmetic type that can accommodate some data with at least the given bits size
  *
  * Say, for instance, you need to store 8 bits of data.
  * smallest_signed_integral<8> will provide a member typedef named type,
  * evaluating to int8_t.
  *
- * smallest_signed_integral: chooses among int8_t, int16_t...
- * smallest_fast_signed_integral: chooses among int_fast8_t, int_fast16_t...
- * smallest_least_signed_integral: chooses among int_least8_t, int_least16_t...
- * smallest_unsigned_integral: chooses among bool, uint8_t, uint16_t...
- * smallest_fast_unsigned_integral: chooses among bool, uint_fast8_t,
- *                                  uint_fast16_t...
- * smallest_least_unsigned_integral: chooses among bool, uint_least8_t,
- *                                   uint_least16_t...
+ *  smallest_signed_integral: chooses among int8_t, int16_t...
+ *  smallest_fast_signed_integral: chooses among int_fast8_t, int_fast16_t...
+ *  smallest_least_signed_integral: chooses among int_least8_t, int_least16_t...
+ *  smallest_unsigned_integral: chooses among bool, uint8_t, uint16_t...
+ *  smallest_fast_unsigned_integral: chooses among bool, uint_fast8_t,
+ *                                   uint_fast16_t...
+ *  smallest_least_unsigned_integral: chooses among bool, uint_least8_t,
+ *                                    uint_least16_t...
+ *  smallest_floating_point: chooses among float, double, long double...
  *
  * Example:
  *
- * typename smallest_unsigned_integral<8>::type data = 255;
+ *  typename smallest_unsigned_integral<8>::type data = 255;
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
@@ -393,6 +472,71 @@ using smallest_least_signed_integral = smallest_type_for_bit_count<
 template <std::size_t BitCount>
 using smallest_least_unsigned_integral = smallest_type_for_bit_count<
   known_least_unsigned_integers, BitCount
+>;
+
+template <std::size_t BitCount>
+using smallest_floating_point = smallest_type_for_bit_count<
+  known_floating_points, BitCount
+>;
+
+/**
+ * exact_signed_integral & friends allow you to get the arithmetic type
+ * with exactly the given bits size
+ *
+ * Say, for instance, you need to store 8 bits of data.
+ * exact_signed_integral<8> will provide a member typedef named type,
+ * evaluating to int8_t.
+ *
+ *  exact_signed_integral: chooses among int8_t, int16_t...
+ *  exact_fast_signed_integral: chooses among int_fast8_t, int_fast16_t...
+ *  exact_least_signed_integral: chooses among int_least8_t, int_least16_t...
+ *  exact_unsigned_integral: chooses among bool, uint8_t, uint16_t...
+ *  exact_fast_unsigned_integral: chooses among bool, uint_fast8_t,
+ *                                uint_fast16_t...
+ *  exact_least_unsigned_integral: chooses among bool, uint_least8_t,
+ *                                 uint_least16_t...
+ *  exact_floating_point: chooses among float, double, long double...
+ *
+ * Example:
+ *
+ *  typename exact_unsigned_integral<8>::type data = 255;
+ *
+ * @author: Marcelo Juchem <marcelo@fb.com>
+ */
+
+template <std::size_t BitCount>
+using exact_signed_integral = exact_type_for_bit_count<
+  known_signed_integers, BitCount
+>;
+
+template <std::size_t BitCount>
+using exact_unsigned_integral = exact_type_for_bit_count<
+  known_unsigned_integers, BitCount
+>;
+
+template <std::size_t BitCount>
+using exact_fast_signed_integral = exact_type_for_bit_count<
+  known_fast_signed_integers, BitCount
+>;
+
+template <std::size_t BitCount>
+using exact_fast_unsigned_integral = exact_type_for_bit_count<
+  known_fast_unsigned_integers, BitCount
+>;
+
+template <std::size_t BitCount>
+using exact_least_signed_integral = exact_type_for_bit_count<
+  known_least_signed_integers, BitCount
+>;
+
+template <std::size_t BitCount>
+using exact_least_unsigned_integral = exact_type_for_bit_count<
+  known_least_unsigned_integers, BitCount
+>;
+
+template <std::size_t BitCount>
+using exact_floating_point = exact_type_for_bit_count<
+  known_floating_points, BitCount
 >;
 
 /**
@@ -613,7 +757,7 @@ using nth_mersenne_prime = at<mersenne_primes, Nth>;
  */
 template <std::size_t bits_size>
 using largest_mersenne_prime_under = last<
-  filter<mersenne_primes, i_num::data_bits_filter<bits_size>>
+  filter<mersenne_primes, i_nm::data_bits_filter<bits_size>>
 >;
 
 /**
@@ -629,9 +773,9 @@ using largest_mersenne_prime_under = last<
 template <typename T, std::size_t diff = 0>
 using largest_mersenne_prime_for_type = typename std::enable_if<
   std::is_integral<T>::value
-    && (data_bits<T>::value - std::is_signed<T>::value > diff),
+    && (data_bits_v<T> - std::is_signed_v<T> > diff),
   largest_mersenne_prime_under<
-    data_bits<T>::value - std::is_signed<T>::value - diff
+    data_bits_v<T> - std::is_signed_v<T> - diff
   >
 >::type;
 

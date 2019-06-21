@@ -19,10 +19,10 @@ using debug_mode = std::false_type;
 
 # define FATAL_DEBUG_ONLY(...)
 # define FATAL_DEBUG_STATEMENT(...) ::fatal::fn::no_op()
-# define FATAL_DEBUG_BLOCK while (false)
-# define FATAL_DEBUG_MEMBER_BLOCK while (false)
+# define FATAL_DEBUG_BLOCK for (;false;)
+# define FATAL_DEBUG_MEMBER_BLOCK for (;false;)
 
-# define FATAL_TODO(Message) while (false)
+# define FATAL_TODO(Message) for (;false;)
 
 } // namespace fatal {
 
@@ -45,7 +45,7 @@ using debug_mode = std::true_type;
 
 # define FATAL_TODO(Message) \
   do { \
-    ::std::cerr << "TODO (aborting): " << Message << ::std::endl; \
+    ::std::cerr << "aborting, TODO: " << Message << ::std::endl; \
     ::std::abort(); \
   } while (false)
 

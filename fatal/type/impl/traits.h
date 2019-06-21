@@ -10,7 +10,7 @@
 #define FATAL_INCLUDE_fatal_type_impl_traits_h
 
 namespace fatal {
-namespace impl_trt {
+namespace i_trt {
 
 template <template <typename...> class, typename> struct ist;
 
@@ -18,7 +18,7 @@ template <template <typename...> class T, typename... Args>
 struct ist<T, T<Args...>> {};
 
 
-} // namespace impl_trt {
+} // namespace i_trt {
 } // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_traits_h

@@ -22,7 +22,13 @@ template <typename T>
 using size = typename impl_sz::s<T>::type;
 
 template <typename T>
+constexpr auto size_v = size<T>::value;
+
+template <typename T>
 using empty = std::integral_constant<bool, size<T>::value == 0>;
+
+template <typename T>
+constexpr auto empty_v = empty<T>::value;
 
 } // namespace fatal {
 

@@ -14,7 +14,7 @@
 
 namespace fatal {
 
-template <typename Seed, typename Fn, typename T>
+template <typename T, typename Seed, typename Fn>
 using fold = typename impl_fld::F<Seed, Fn, T>::type;
 
 } // namespace fatal {

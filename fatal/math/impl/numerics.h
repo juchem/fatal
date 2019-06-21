@@ -15,15 +15,12 @@ namespace fatal {
 struct get_data_bits;
 struct data_bits_eq;
 
-namespace i_num {
+namespace i_nm {
 
 template <typename T>
-using data_bits = std::integral_constant<
-  std::size_t,
-  std::is_same<bool, typename std::decay<T>::type>::value
-    ? 1
-    : sizeof(typename std::decay<T>::type) * CHAR_BIT
->;
+constexpr std::size_t data_bits_v = std::is_same_v<bool, std::decay_t<T>>
+  ? 1
+  : sizeof(std::decay_t<T>) * CHAR_BIT;
 
 constexpr std::size_t msb_mp_impl(std::uintmax_t Value) noexcept {
   return Value
@@ -40,20 +37,14 @@ constexpr std::size_t pop_count_impl(std::uintmax_t Value) noexcept {
     : 0;
 }
 
-template <typename List>
-using uniquify_list_by_bit_size_impl = adjacent_unique_by<
-  sort_by<List, get_data_bits>,
-  data_bits_eq
->;
-
 template <typename T, std::size_t Size>
 inline constexpr std::size_t slcu() noexcept {
   static_assert(
-    Size + std::is_signed<T>::value <= data_bits<T>::value,
+    Size + std::is_signed<T>::value <= data_bits_v<T>,
     "value already uses up all the bits available"
   );
 
-  return data_bits<T>::value - Size - std::is_signed<T>::value;
+  return data_bits_v<T> - Size - std::is_signed_v<T>;
 };
 
 template <typename T>
@@ -93,32 +84,36 @@ inline constexpr T integral_reverse(T value, std::size_t end_phase) noexcept {
 template <std::size_t BitSizeUpperBound>
 struct data_bits_filter {
   template <typename T>
-  using apply = bool_constant<
+  using apply = std::bool_constant<
     (most_significant_bit<T::value>::value <= BitSizeUpperBound)
-  >;
-};
-
-template <std::size_t BitCount>
-struct sff {
-  template <typename T>
-  using apply = bool_constant<
-    BitCount <= data_bits<T>::value
   >;
 };
 
 template <typename List, std::size_t BitCount>
 struct smallest_for_impl {
-  using type = first<
-    filter<i_num::uniquify_list_by_bit_size_impl<List>, sff<BitCount>>
+  struct p {
+    template <typename T>
+    using apply = std::bool_constant<
+      BitCount <= data_bits_v<T>
+    >;
+  };
+
+  using filtered = filter<
+    adjacent_unique_by<
+      sort_by<List, get_data_bits>,
+      data_bits_eq
+    >,
+    p
   >;
 
-  static_assert(
-    BitCount <= data_bits<type>::value,
-    "there's no known type to hold that many bits"
-  );
+  static_assert(!empty_v<filtered>, "there's no known type to hold that many bits");
+
+  using type = first<filtered>;
+
+  static_assert(BitCount <= data_bits_v<type>, "there's no known type to hold that many bits");
 };
 
-} // namespace i_num {
+} // namespace i_nm {
 } // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_math_impl_numerics_h

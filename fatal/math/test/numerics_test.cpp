@@ -534,11 +534,11 @@ FATAL_TEST(numerics, most_significant_bit) {
 // smallest integral & friends //
 /////////////////////////////////
 
-#define SEL_TEST(Expected, Selector, N) \
-  FATAL_EXPECT_EQ(data_bits<Expected>::value, data_bits<Selector<N>>::value)
+#define SEL_TEST(Expected, Selector, ...) \
+  FATAL_EXPECT_EQ(data_bits<Expected>::value, data_bits<Selector<__VA_ARGS__>>::value)
 
-#define LEAST_TEST(Expected, Selector, N) \
-  FATAL_EXPECT_LE(sizeof(Expected), sizeof(Selector<N>))
+#define LEAST_TEST(Expected, Selector, __VA_ARGS__) \
+  FATAL_EXPECT_LE(sizeof(Expected), sizeof(Selector<__VA_ARGS__>))
 
 FATAL_TEST(numerics, smallest_signed_integral) {
   SEL_TEST(int8_t, smallest_signed_integral, 0);
@@ -640,6 +640,146 @@ FATAL_TEST(numerics, smallest_least_unsigned_integral) {
   LEAST_TEST(uint_least64_t, smallest_least_unsigned_integral, 33);
   LEAST_TEST(uint_least64_t, smallest_least_unsigned_integral, 63);
   LEAST_TEST(uint_least64_t, smallest_least_unsigned_integral, 64);
+}
+
+FATAL_TEST(numerics, smallest_floating_point float) {
+  SEL_TEST(float, smallest_floating_point, 0);
+  SEL_TEST(float, smallest_floating_point, 1);
+  SEL_TEST(float, smallest_floating_point, 2);
+  SEL_TEST(float, smallest_floating_point, 7);
+  SEL_TEST(float, smallest_floating_point, 8);
+
+  if constexpr (data_bits_v<float> > 16) {
+    SEL_TEST(float, smallest_floating_point, 9);
+    SEL_TEST(float, smallest_floating_point, 15);
+  }
+
+  if constexpr (data_bits_v<float> > 16) {
+    SEL_TEST(float, smallest_floating_point, 16);
+    SEL_TEST(float, smallest_floating_point, 17);
+    SEL_TEST(float, smallest_floating_point, 31);
+    SEL_TEST(float, smallest_floating_point, 32);
+  }
+
+  if constexpr (data_bits_v<float> > 32) {
+    SEL_TEST(float, smallest_floating_point, 33);
+    SEL_TEST(float, smallest_floating_point, 63);
+    SEL_TEST(float, smallest_floating_point, 64);
+  }
+
+  if constexpr (data_bits_v<float> > 64) {
+    SEL_TEST(float, smallest_floating_point, 65);
+    SEL_TEST(float, smallest_floating_point, 70);
+    SEL_TEST(float, smallest_floating_point, 79);
+    SEL_TEST(float, smallest_floating_point, 80);
+  }
+
+  if constexpr (data_bits_v<float> > 80) {
+    SEL_TEST(float, smallest_floating_point, 81);
+    SEL_TEST(float, smallest_floating_point, 100);
+    SEL_TEST(float, smallest_floating_point, 127);
+    SEL_TEST(float, smallest_floating_point, 128);
+  }
+}
+
+FATAL_TEST(numerics, smallest_floating_point double) {
+  if constexpr (data_bits_v<float> <= 8 && data_bits_v<double> > 8) {
+    SEL_TEST(double, smallest_floating_point, 9);
+    SEL_TEST(double, smallest_floating_point, 15);
+  }
+
+  if constexpr (data_bits_v<float> <= 16 && data_bits_v<double> > 16) {
+    SEL_TEST(double, smallest_floating_point, 16);
+    SEL_TEST(double, smallest_floating_point, 17);
+    SEL_TEST(double, smallest_floating_point, 31);
+    SEL_TEST(double, smallest_floating_point, 32);
+  }
+
+  if constexpr (data_bits_v<float> <= 32 && data_bits_v<double> > 32) {
+    SEL_TEST(double, smallest_floating_point, 33);
+    SEL_TEST(double, smallest_floating_point, 63);
+    SEL_TEST(double, smallest_floating_point, 64);
+  }
+
+  if constexpr (data_bits_v<float> <= 64 && data_bits_v<double> > 64) {
+    SEL_TEST(double, smallest_floating_point, 65);
+    SEL_TEST(double, smallest_floating_point, 70);
+    SEL_TEST(double, smallest_floating_point, 79);
+    SEL_TEST(double, smallest_floating_point, 80);
+  }
+
+  if constexpr (data_bits_v<float> <= 80 && data_bits_v<double> > 80) {
+    SEL_TEST(double, smallest_floating_point, 81);
+    SEL_TEST(double, smallest_floating_point, 100);
+    SEL_TEST(double, smallest_floating_point, 127);
+    SEL_TEST(double, smallest_floating_point, 128);
+  }
+}
+
+FATAL_TEST(numerics, smallest_floating_point long double) {
+  if constexpr (data_bits_v<double> <= 8 && data_bits_v<long double> > 8) {
+    SEL_TEST(long double, smallest_floating_point, 9);
+    SEL_TEST(long double, smallest_floating_point, 15);
+  }
+
+  if constexpr (data_bits_v<double> <= 16 && data_bits_v<long double> > 16) {
+    SEL_TEST(long double, smallest_floating_point, 16);
+    SEL_TEST(long double, smallest_floating_point, 17);
+    SEL_TEST(long double, smallest_floating_point, 31);
+    SEL_TEST(long double, smallest_floating_point, 32);
+  }
+
+  if constexpr (data_bits_v<double> <= 32 && data_bits_v<long double> > 32) {
+    SEL_TEST(long double, smallest_floating_point, 33);
+    SEL_TEST(long double, smallest_floating_point, 63);
+    SEL_TEST(long double, smallest_floating_point, 64);
+  }
+
+  if constexpr (data_bits_v<double> <= 64 && data_bits_v<long double> > 64) {
+    SEL_TEST(long double, smallest_floating_point, 65);
+    SEL_TEST(long double, smallest_floating_point, 70);
+    SEL_TEST(long double, smallest_floating_point, 79);
+    SEL_TEST(long double, smallest_floating_point, 80);
+  }
+
+  if constexpr (data_bits_v<double> <= 80 && data_bits_v<long double> > 80) {
+    SEL_TEST(long double, smallest_floating_point, 81);
+    SEL_TEST(long double, smallest_floating_point, 100);
+    SEL_TEST(long double, smallest_floating_point, 127);
+    SEL_TEST(long double, smallest_floating_point, 128);
+  }
+}
+
+#undef SEL_TEST
+
+/////////////////////////////////
+// exact integral & friends //
+/////////////////////////////////
+
+#define SEL_TEST(Expected, Selector, ...) \
+  FATAL_EXPECT_EQ(data_bits<Expected>::value, data_bits<Selector<__VA_ARGS__>>::value)
+
+#define LEAST_TEST(Expected, Selector, __VA_ARGS__) \
+  FATAL_EXPECT_LE(sizeof(Expected), sizeof(Selector<__VA_ARGS__>))
+
+FATAL_TEST(numerics, exact_signed_integral) {
+  SEL_TEST(int8_t, exact_signed_integral, 8);
+  SEL_TEST(int16_t, exact_signed_integral, 16);
+  SEL_TEST(int32_t, exact_signed_integral, 32);
+  SEL_TEST(int64_t, exact_signed_integral, 64);
+}
+
+FATAL_TEST(numerics, exact_unsigned_integral) {
+  SEL_TEST(uint8_t, exact_unsigned_integral, 8);
+  SEL_TEST(uint16_t, exact_unsigned_integral, 16);
+  SEL_TEST(uint32_t, exact_unsigned_integral, 32);
+  SEL_TEST(uint64_t, exact_unsigned_integral, 64);
+}
+
+FATAL_TEST(numerics, exact_floating_point) {
+  SEL_TEST(float, exact_floating_point, data_bits_v<float>);
+  SEL_TEST(double, exact_floating_point, data_bits_v<double>);
+  SEL_TEST(long double, exact_floating_point, data_bits_v<long double>);
 }
 
 #undef SEL_TEST

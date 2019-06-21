@@ -32,6 +32,16 @@
 
 namespace fatal {
 
+//////////////
+// all_same //
+//////////////
+
+template <typename T, typename... Args>
+constexpr bool all_same_v = (std::is_same_v<T, Args> && ... && true);
+
+template <typename T, typename... Args>
+using all_same = std::bool_constant<all_same_v<T, Args...>>;
+
 /////////////////
 // is_template //
 /////////////////
@@ -68,7 +78,7 @@ namespace fatal {
 template <template <typename...> class... Templates>
 class is_template {
   template <template <typename...> class Template, typename T>
-  using impl = is_complete<impl_trt::ist<Template, T>>;
+  using impl = is_complete<i_trt::ist<Template, T>>;
 
 public:
   template <typename T>
