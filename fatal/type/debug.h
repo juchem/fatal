@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_debug_h
 #define FATAL_INCLUDE_fatal_type_debug_h
 
+#include <utility>
+
 namespace fatal {
 
 template <typename...> struct debugged;
@@ -99,6 +101,12 @@ struct debug_type_if<false, T...> { using type = void; };
 
 template <bool Condition, typename... Args>
 using debug_type_if_t = typename debug_type_if<Condition, Args...>::type;
+
+template <typename T>
+constexpr T &&debug_type(T &&value) {
+  return std::forward<FATAL_DEBUG_TYPE(T)>(value);
+}
+
 
 /**
  * Helper to conditionally use `FATAL_DEBUG_TYPE` depending on a boolean
