@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_test_tools_h
 #define FATAL_INCLUDE_fatal_test_tools_h
 
+#include <fatal/portability.h>
+
 #include <sstream>
 #include <string>
 
@@ -17,17 +19,19 @@
 
 namespace fatal {
 
-inline char least_significant_hex_digit(std::uint8_t c) {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+char least_significant_hex_digit(std::uint8_t c) {
   return "0123456789abcdef"[c & 0xf];
 }
 
-enum class literal_style { compact, expanded, readable };
+enum class FATAL_HIDE_SYMBOL literal_style { compact, expanded, readable };
 
 template <
   literal_style Style = literal_style::expanded,
   typename Out,
   typename Buffer
 >
+FATAL_HIDE_SYMBOL
 void data_as_literal(Out &out, Buffer const &v) {
   switch (Style) {
     case literal_style::expanded: {
@@ -107,6 +111,7 @@ void data_as_literal(Out &out, Buffer const &v) {
 }
 
 template <literal_style Style = literal_style::expanded, typename Buffer>
+FATAL_HIDE_SYMBOL
 std::string data_as_literal(Buffer const &v) {
   std::ostringstream ss;
   data_as_literal<Style>(ss, v);
@@ -114,6 +119,7 @@ std::string data_as_literal(Buffer const &v) {
 }
 
 template <literal_style Style = literal_style::expanded>
+FATAL_HIDE_SYMBOL
 std::string string_as_literal(std::string const &s) {
   return data_as_literal<Style>(s);
 }

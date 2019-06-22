@@ -10,8 +10,6 @@
 #ifndef FATAL_INCLUDE_fatal_type_list_h
 #define FATAL_INCLUDE_fatal_type_list_h
 
-#include <fatal/type/debug.h>
-
 #include <fatal/portability.h>
 
 #include <type_traits>

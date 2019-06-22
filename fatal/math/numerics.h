@@ -20,6 +20,8 @@
 #include <fatal/type/transform.h>
 #include <fatal/type/unique.h>
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 #include <limits>
 #include <stdexcept>
@@ -70,87 +72,90 @@ template <typename T>
 using data_bits = std::integral_constant<std::size_t, i_nm::data_bits_v<T>>;
 
 template <typename T>
+FATAL_HIDE_SYMBOL
 constexpr auto data_bits_v = i_nm::data_bits_v<T>;
 
-struct get_data_bits {
+struct FATAL_HIDE_SYMBOL get_data_bits {
   template <typename T>
   using apply = data_bits<T>;
 };
 
-struct data_bits_eq {
+struct FATAL_HIDE_SYMBOL data_bits_eq {
   template <typename LHS, typename RHS>
   using apply = std::bool_constant<(data_bits_v<LHS> == data_bits_v<RHS>)>;
 };
 
-struct data_bits_ne {
+struct FATAL_HIDE_SYMBOL data_bits_ne {
   template <typename LHS, typename RHS>
   using apply = std::bool_constant<(data_bits_v<LHS> != data_bits_v<RHS>)>;
 };
 
-struct data_bits_lt {
+struct FATAL_HIDE_SYMBOL data_bits_lt {
   template <typename LHS, typename RHS>
   using apply = std::bool_constant<(data_bits_v<LHS> < data_bits_v<RHS>)>;
 };
 
-struct data_bits_le {
+struct FATAL_HIDE_SYMBOL data_bits_le {
   template <typename LHS, typename RHS>
   using apply = std::bool_constant<(data_bits_v<LHS> <= data_bits_v<RHS>)>;
 };
 
-struct data_bits_gt {
+struct FATAL_HIDE_SYMBOL data_bits_gt {
   template <typename LHS, typename RHS>
   using apply = std::bool_constant<(data_bits_v<LHS> > data_bits_v<RHS>)>;
 };
 
-struct data_bits_ge {
+struct FATAL_HIDE_SYMBOL data_bits_ge {
   template <typename LHS, typename RHS>
   using apply = std::bool_constant<(data_bits_v<LHS> >= data_bits_v<RHS>)>;
 };
 
 template <std::size_t RHS>
-struct data_bits_equal_to {
+struct FATAL_HIDE_SYMBOL data_bits_equal_to {
   template <typename LHS>
   using apply = std::bool_constant<(data_bits_v<LHS> == RHS)>;
 };
 
 template <std::size_t RHS>
-struct data_bits_not_equal_to {
+struct FATAL_HIDE_SYMBOL data_bits_not_equal_to {
   template <typename LHS>
   using apply = std::bool_constant<(data_bits_v<LHS> != RHS)>;
 };
 
 template <std::size_t RHS>
-struct data_bits_less_than {
+struct FATAL_HIDE_SYMBOL data_bits_less_than {
   template <typename LHS>
   using apply = std::bool_constant<(data_bits_v<LHS> < RHS)>;
 };
 
 template <std::size_t RHS>
-struct data_bits_less_than_equal {
+struct FATAL_HIDE_SYMBOL data_bits_less_than_equal {
   template <typename LHS>
   using apply = std::bool_constant<(data_bits_v<LHS> <= RHS)>;
 };
 
 template <std::size_t RHS>
-struct data_bits_greater_than {
+struct FATAL_HIDE_SYMBOL data_bits_greater_than {
   template <typename LHS>
   using apply = std::bool_constant<(data_bits_v<LHS> > RHS)>;
 };
 
 template <std::size_t RHS>
-struct data_bits_greater_than_equal {
+struct FATAL_HIDE_SYMBOL data_bits_greater_than_equal {
   template <typename LHS>
   using apply = std::bool_constant<(data_bits_v<LHS> >= RHS)>;
 };
 
 // TODO: DOCUMENT AND TEST
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 typename std::make_signed<T>::type signed_cast(T value) {
   return static_cast<typename std::make_signed<T>::type>(value);
 }
 
 // TODO: DOCUMENT AND TEST
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 typename std::make_unsigned<T>::type unsigned_cast(T value) {
   return static_cast<typename std::make_unsigned<T>::type>(value);
 }
@@ -170,7 +175,8 @@ typename std::make_unsigned<T>::type unsigned_cast(T value) {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-inline constexpr T reverse_integral_bytes(T value) noexcept {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr T reverse_integral_bytes(T value) noexcept {
   return i_nm::integral_reverse(value, 4);
 }
 
@@ -189,7 +195,8 @@ inline constexpr T reverse_integral_bytes(T value) noexcept {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-inline constexpr T reverse_integral_bits(T value) noexcept {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr T reverse_integral_bits(T value) noexcept {
   return i_nm::integral_reverse(value, 0);
 }
 
@@ -566,7 +573,7 @@ using smallest_uint_for_value = smallest_unsigned_integral<
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <unsigned long long lhs, unsigned long long rhs>
-struct multiply_mp:
+struct FATAL_HIDE_SYMBOL multiply_mp:
   public std::integral_constant<unsigned long long, lhs * rhs>
 {
   static_assert(
@@ -576,22 +583,22 @@ struct multiply_mp:
 };
 
 template <unsigned long long lhs>
-struct multiply_mp<lhs, 0>:
+struct FATAL_HIDE_SYMBOL multiply_mp<lhs, 0>:
   public std::integral_constant<unsigned long long, 0>
 {};
 
 template <unsigned long long rhs>
-struct multiply_mp<0, rhs>:
+struct FATAL_HIDE_SYMBOL multiply_mp<0, rhs>:
   public std::integral_constant<unsigned long long, 0>
 {};
 
 template <>
-struct multiply_mp<0, 0>:
+struct FATAL_HIDE_SYMBOL multiply_mp<0, 0>:
   public std::integral_constant<unsigned long long, 0>
 {};
 
 template <unsigned long long n>
-struct square_mp:
+struct FATAL_HIDE_SYMBOL square_mp:
   public multiply_mp<n, n>
 {};
 
@@ -603,7 +610,7 @@ struct square_mp:
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <unsigned long long base, unsigned long long exponent>
-struct pow_mp:
+struct FATAL_HIDE_SYMBOL pow_mp:
   public std::integral_constant<
     unsigned long long,
     multiply_mp<
@@ -617,18 +624,18 @@ struct pow_mp:
 {};
 
 template <unsigned long long exponent>
-struct pow_mp<0, exponent>:
+struct FATAL_HIDE_SYMBOL pow_mp<0, exponent>:
   public std::integral_constant<unsigned long long, 0>
 {};
 
 template <unsigned long long base>
-struct pow_mp<base, 0>:
+struct FATAL_HIDE_SYMBOL pow_mp<base, 0>:
   public std::integral_constant<unsigned long long, 1>
 {};
 
 // http://en.wikipedia.org/wiki/Exponentiation#Zero_to_the_power_of_zero
 template <>
-struct pow_mp<0, 0>:
+struct FATAL_HIDE_SYMBOL pow_mp<0, 0>:
   public std::integral_constant<unsigned long long, 1>
 {};
 
@@ -641,7 +648,7 @@ struct pow_mp<0, 0>:
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <unsigned long long base, unsigned long long exponent>
-struct unchecked_pow_mp:
+struct FATAL_HIDE_SYMBOL unchecked_pow_mp:
   public std::integral_constant<
     unsigned long long,
     (exponent & 1 ? base : 1)
@@ -650,17 +657,17 @@ struct unchecked_pow_mp:
 {};
 
 template <unsigned long long exponent>
-struct unchecked_pow_mp<0, exponent>:
+struct FATAL_HIDE_SYMBOL unchecked_pow_mp<0, exponent>:
   public std::integral_constant<unsigned long long, 0>
 {};
 
 template <unsigned long long base>
-struct unchecked_pow_mp<base, 0>:
+struct FATAL_HIDE_SYMBOL unchecked_pow_mp<base, 0>:
   public std::integral_constant<unsigned long long, 1>
 {};
 
 template <>
-struct unchecked_pow_mp<0, 0>:
+struct FATAL_HIDE_SYMBOL unchecked_pow_mp<0, 0>:
   public std::integral_constant<unsigned long long, 1>
 {};
 
@@ -670,7 +677,8 @@ struct unchecked_pow_mp<0, 0>:
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-inline constexpr bool is_power_of_two(T n) noexcept {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr bool is_power_of_two(T n) noexcept {
   return n != 0 && !(n & (n - 1));
 }
 
@@ -683,7 +691,8 @@ inline constexpr bool is_power_of_two(T n) noexcept {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-inline constexpr bool is_mersenne_number(T n) noexcept {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr bool is_mersenne_number(T n) noexcept {
   return n == std::numeric_limits<T>::max()
     ? (n & 1) && (
       n == 1 || is_mersenne_number(n >> 1)
@@ -786,10 +795,11 @@ using largest_mersenne_prime_for_type = typename std::enable_if<
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename TDiscrete, typename TContinuous>
-struct discrete_to_continuous {
-  typedef TDiscrete discrete_type;
-  typedef TContinuous continuous_type;
+struct FATAL_HIDE_SYMBOL discrete_to_continuous {
+  using discrete_type = TDiscrete;
+  using continuous_type = TContinuous;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   discrete_to_continuous(
     discrete_type discreteMin, discrete_type discreteMax,
     continuous_type continuousMin, continuous_type continuousMax
@@ -806,21 +816,32 @@ struct discrete_to_continuous {
     }
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   continuous_type operator ()(fast_pass<discrete_type> discrete) const {
     return (discrete - discreteMin_) / normalizer_
       * adjustment_ + continuousMin_;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   fast_pass<discrete_type> discrete_min() const { return discreteMin_; }
+
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   discrete_type discrete_max() const { return normalizer_ + discreteMin_; }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   fast_pass<continuous_type> min() const { return continuousMin_; }
+
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   continuous_type max() const { return adjustment_ + continuousMin_; }
 
 private:
+  FATAL_HIDE_SYMBOL
   discrete_type const discreteMin_;
+  FATAL_HIDE_SYMBOL
   continuous_type const continuousMin_;
+  FATAL_HIDE_SYMBOL
   continuous_type const normalizer_;
+  FATAL_HIDE_SYMBOL
   continuous_type const adjustment_;
 };
 

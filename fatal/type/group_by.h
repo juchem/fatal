@@ -13,6 +13,8 @@
 #include <fatal/type/list.h>
 #include <fatal/type/pair.h>
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/group_by.h>
 
 namespace fatal {
@@ -22,8 +24,8 @@ namespace fatal {
 template <
   typename T,
   typename Key,
-  template <typename...> class Group = list,
-  template <typename...> class Outer = list
+  template <typename...> typename Group = list,
+  template <typename...> typename Outer = list
 >
 using group_by = typename i_g::G<T, Key, Group, Outer>::type;
 
@@ -34,8 +36,8 @@ template <
   typename T,
   typename Key,
   typename Filter,
-  template <typename...> class Pair = pair,
-  template <typename...> class Group = list
+  template <typename...> typename Pair = pair,
+  template <typename...> typename Group = list
 >
 using filtered_group_by = typename i_g::F<T, Key, Filter, Pair, Group>::type;
 

@@ -10,7 +10,6 @@
 #ifndef FATAL_INCLUDE_fatal_type_enum_h
 #define FATAL_INCLUDE_fatal_type_enum_h
 
-#include <fatal/preprocessor.h>
 #include <fatal/string/string_view.h>
 #include <fatal/type/apply.h>
 #include <fatal/type/array.h>
@@ -27,6 +26,9 @@
 #include <fatal/type/transform.h>
 #include <fatal/type/trie.h>
 
+#include <fatal/portability.h>
+#include <fatal/preprocessor.h>
+
 #include <iterator>
 #include <stdexcept>
 #include <type_traits>
@@ -38,7 +40,7 @@ namespace fatal {
 namespace detail {
 namespace enum_impl {
 
-struct metadata_tag {};
+struct FATAL_HIDE_SYMBOL metadata_tag {};
 
 } // namespace enum_impl {
 } // namespace detail {
@@ -95,7 +97,7 @@ using has_enum_traits = std::integral_constant<
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename Enum>
-class enum_traits {
+class FATAL_HIDE_SYMBOL enum_traits {
   static_assert(std::is_enum<Enum>::value, "enumeration expected");
 
   using impl = registry_lookup<detail::enum_impl::metadata_tag, Enum>;
@@ -259,21 +261,24 @@ public:
   using value_of = typename get<fields, Name, get_type::name>::value;
 
 private:
-  struct parser {
+  struct FATAL_HIDE_SYMBOL parser {
     template <typename Field>
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     void operator ()(tag<Field>, Enum &out) {
       out = Field::value::value;
     }
   };
 
-  struct to_string_visitor {
+  struct FATAL_HIDE_SYMBOL to_string_visitor {
     template <typename Field, std::size_t Index>
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     void operator ()(indexed<Field, Index>, char const *&out) const {
       out = z_data<typename Field::name>();
     }
   };
 
-  struct to_string_fallback {
+  struct FATAL_HIDE_SYMBOL to_string_fallback {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     char const *operator ()(type e, char const *fallback) const {
       scalar_search<fields, get_type::value>(e, to_string_visitor(), fallback);
 
@@ -301,6 +306,7 @@ public:
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool is_valid(type e) {
     return scalar_search<fields, get_type::value>(e);
   }
@@ -323,6 +329,7 @@ public:
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static char const *to_string(type e, char const *fallback = nullptr) {
     using caller = call_traits::to_string::static_member::bind<traits>;
     return call_if_supported<caller, to_string_fallback>(e, fallback);
@@ -351,6 +358,7 @@ public:
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <typename TBegin, typename TEnd>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static type parse(TBegin &&begin, TEnd &&end) {
     type out;
 
@@ -379,6 +387,7 @@ public:
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <typename TString>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static type parse(TString const &s) {
     return parse(std::begin(s), std::end(s));
   }
@@ -407,6 +416,7 @@ public:
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <typename TBegin, typename TEnd>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool try_parse(type &out, TBegin &&begin, TEnd &&end) {
     return trie_find<fields, get_type::name>(
       std::forward<TBegin>(begin), std::forward<TEnd>(end), parser(), out
@@ -431,6 +441,7 @@ public:
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <typename TString>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool try_parse(type &out, TString const &s) {
     return try_parse(out, std::begin(s), std::end(s));
   }
@@ -451,6 +462,7 @@ public:
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename Enum>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr bool is_valid_enum(Enum e) {
   return enum_traits<typename std::decay<Enum>::type>::is_valid(e);
 }
@@ -474,6 +486,7 @@ static constexpr bool is_valid_enum(Enum e) {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename Enum>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr char const *enum_to_string(
   Enum const e,
   char const *fallback = nullptr
@@ -553,7 +566,7 @@ using enum_values_array = as_array<
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 #define FATAL_ENUM(Enum, ...) \
-  enum Enum { \
+  enum FATAL_HIDE_SYMBOL Enum { \
     FATAL_MAP(FATAL_IMPL_ENUM_DECLARE_FIELD_ENTRY_POINT, ~, __VA_ARGS__) \
   }
 
@@ -563,7 +576,7 @@ using enum_values_array = as_array<
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 #define FATAL_ENUM_CLASS(Enum, ...) \
-  enum class Enum { \
+  enum class FATAL_HIDE_SYMBOL Enum { \
     FATAL_MAP(FATAL_IMPL_ENUM_DECLARE_FIELD_ENTRY_POINT, ~, __VA_ARGS__) \
   }
 
@@ -725,7 +738,7 @@ using enum_values_array = as_array<
   FATAL_EXPORT_RICH_ENUM(__VA_ARGS__)
 
 #define FATAL_IMPL_EXPORT_RICH_ENUM_MEMBER(...) \
-  FATAL_CONDITIONAL(IsFirst)()(,) struct __VA_ARGS__ { \
+  FATAL_CONDITIONAL(IsFirst)()(,) struct FATAL_HIDE_SYMBOL __VA_ARGS__ { \
     FATAL_S(name, FATAL_TO_STR(__VA_ARGS__)); \
     using value = std::integral_constant<type, type::__VA_ARGS__>; \
   };
@@ -740,12 +753,12 @@ using enum_values_array = as_array<
 #define FATAL_IMPL_EXPORT_RICH_ENUM( \
   ClassName, TString, TBegin, TEnd, Enum, ... \
 ) \
-  struct ClassName { \
+  struct FATAL_HIDE_SYMBOL ClassName { \
     using type = Enum; \
     \
     FATAL_S(name, FATAL_TO_STR(Enum)); \
     \
-    struct member { \
+    struct FATAL_HIDE_SYMBOL member { \
       FATAL_SIMPLE_MAP(FATAL_IMPL_EXPORT_RICH_ENUM_MEMBER, __VA_ARGS__) \
     }; \
     \
@@ -753,6 +766,7 @@ using enum_values_array = as_array<
       FATAL_MAP(FATAL_IMPL_EXPORT_RICH_ENUM_FIELDS, ~, __VA_ARGS__) \
     >; \
     \
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
     static char const *to_string(type e, char const *fallback) { \
       switch (e) { \
         FATAL_SIMPLE_MAP(FATAL_IMPL_EXPORT_RICH_ENUM_TO_STR, __VA_ARGS__) \

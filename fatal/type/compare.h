@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_compare_h
 #define FATAL_INCLUDE_fatal_type_compare_h
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 
 #include <fatal/type/impl/compare.h>
@@ -37,7 +39,7 @@ namespace fatal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct equal {
+struct FATAL_HIDE_SYMBOL equal {
   template <typename LHS, typename RHS>
   using apply = std::integral_constant<bool, LHS::value == RHS::value>;
 
@@ -66,7 +68,7 @@ struct equal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct not_equal {
+struct FATAL_HIDE_SYMBOL not_equal {
   template <typename LHS, typename RHS>
   using apply = std::integral_constant<bool, LHS::value != RHS::value>;
 
@@ -95,7 +97,7 @@ struct not_equal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct less {
+struct FATAL_HIDE_SYMBOL less {
   template <typename LHS, typename RHS>
   using apply = std::integral_constant<bool, (LHS::value < RHS::value)>;
 
@@ -124,7 +126,7 @@ struct less {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct less_equal {
+struct FATAL_HIDE_SYMBOL less_equal {
   template <typename LHS, typename RHS>
   using apply = std::integral_constant<bool, (LHS::value <= RHS::value)>;
 
@@ -153,7 +155,7 @@ struct less_equal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct greater {
+struct FATAL_HIDE_SYMBOL greater {
   template <typename LHS, typename RHS>
   using apply = std::integral_constant<bool, (LHS::value > RHS::value)>;
 
@@ -182,7 +184,7 @@ struct greater {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct greater_equal {
+struct FATAL_HIDE_SYMBOL greater_equal {
   template <typename LHS, typename RHS>
   using apply = std::integral_constant<bool, (LHS::value >= RHS::value)>;
 
@@ -193,15 +195,16 @@ struct greater_equal {
 // TODO: DOCUMENT REQUIREMENTS OF PREDICATE
 //         http://en.cppreference.com/w/cpp/concept/Compare
 template <typename Less>
-struct sequence_compare {
+struct FATAL_HIDE_SYMBOL sequence_compare {
   template <typename LHS, typename RHS>
-  using apply = i_c::sc<Less, LHS, RHS>;
+  using apply = std::bool_constant<i_c::sc<Less, LHS, RHS>::value>;
 };
 
-struct value_comparer:
+struct FATAL_HIDE_SYMBOL value_comparer:
   public less
 {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool less(RHS &&rhs) {
     return LHS::value < static_cast<
       typename std::decay<decltype(LHS::value)>::type
@@ -209,6 +212,7 @@ struct value_comparer:
   }
 
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool equal(RHS &&rhs) {
     return LHS::value == static_cast<
       typename std::decay<decltype(LHS::value)>::type
@@ -216,6 +220,7 @@ struct value_comparer:
   }
 
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool greater(RHS &&rhs) {
     return LHS::value > static_cast<
       typename std::decay<decltype(LHS::value)>::type
@@ -223,10 +228,11 @@ struct value_comparer:
   }
 };
 
-struct value_reverse_comparer:
+struct FATAL_HIDE_SYMBOL value_reverse_comparer:
   public greater
 {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool less(RHS &&rhs) {
     return LHS::value > static_cast<
       typename std::decay<decltype(LHS::value)>::type
@@ -234,6 +240,7 @@ struct value_reverse_comparer:
   }
 
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool equal(RHS &&rhs) {
     return LHS::value == static_cast<
       typename std::decay<decltype(LHS::value)>::type
@@ -241,6 +248,7 @@ struct value_reverse_comparer:
   }
 
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool greater(RHS &&rhs) {
     return LHS::value < static_cast<
       typename std::decay<decltype(LHS::value)>::type

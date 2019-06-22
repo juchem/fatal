@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_debug_h
 #define FATAL_INCLUDE_fatal_type_debug_h
 
+#include <fatal/portability.h>
+
 #include <utility>
 
 namespace fatal {
@@ -88,7 +90,7 @@ template <typename...> struct debugged;
 #define FATAL_DEBUG_TYPE_OF(...) FATAL_DEBUG_TYPE(decltype(__VA_ARGS__))
 
 template <bool Condition, typename... T>
-struct debug_type_if {
+struct FATAL_HIDE_SYMBOL debug_type_if {
   static_assert(
     Condition, "there's a bug in fatal, no debug should be generated"
   );
@@ -97,17 +99,19 @@ struct debug_type_if {
 };
 
 template <typename... T>
-struct debug_type_if<false, T...> { using type = void; };
+struct FATAL_HIDE_SYMBOL debug_type_if<false, T...> { using type = void; };
 
 template <bool Condition, typename... Args>
 using debug_type_if_t = typename debug_type_if<Condition, Args...>::type;
 
 template <typename T>
+FATAL_HIDE_SYMBOL
 constexpr T const *debug_type() {
   return static_cast<FATAL_DEBUG_TYPE(T)>(nullptr);
 }
 
 template <typename T>
+FATAL_HIDE_SYMBOL
 constexpr T &&debug_type_of(T &&value) {
   return std::forward<FATAL_DEBUG_TYPE(T)>(value);
 }

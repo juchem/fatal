@@ -13,6 +13,8 @@
 #include <fatal/type/apply.h>
 #include <fatal/type/sequence.h>
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/logical.h>
 
 namespace fatal {
@@ -31,7 +33,7 @@ namespace fatal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct tautology {
+struct FATAL_HIDE_SYMBOL tautology {
   template <typename...>
   using apply = std::true_type;
 };
@@ -50,7 +52,7 @@ struct tautology {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct contradiction {
+struct FATAL_HIDE_SYMBOL contradiction {
   template <typename...>
   using apply = std::false_type;
 };
@@ -72,7 +74,7 @@ template <typename T>
 using negate = std::integral_constant<bool, !T::value>;
 
 template <typename Predicate>
-struct negation {
+struct FATAL_HIDE_SYMBOL negation {
   template <typename T>
   using apply = std::integral_constant<
     bool,

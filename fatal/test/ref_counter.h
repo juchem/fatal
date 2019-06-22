@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_test_ref_counter_h
 #define FATAL_INCLUDE_fatal_test_ref_counter_h
 
+#include <fatal/portability.h>
+
 #include <atomic>
 #include <vector>
 
@@ -20,30 +22,38 @@ namespace fatal {
 namespace detail {
 namespace ref_counter_impl {
 
-struct counters;
+struct FATAL_HIDE_SYMBOL counters;
 
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static std::vector<counters *> &all_counters() {
+  FATAL_HIDE_SYMBOL
   static std::vector<counters *> instance;
   return instance;
 }
 
-struct counters {
+struct FATAL_HIDE_SYMBOL counters {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   counters():
     created(0),
     alive(0),
     valid(0)
   {}
 
+  FATAL_HIDE_SYMBOL
   std::atomic<std::intmax_t> created;
+  FATAL_HIDE_SYMBOL
   std::atomic<std::intmax_t> alive;
+  FATAL_HIDE_SYMBOL
   std::atomic<std::intmax_t> valid;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void reset() {
     created = 0;
     alive = 0;
     valid = 0;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void operator -=(counters const &rhs) {
     // TODO: FIX, NOT THREAD SAFE
     created -= rhs.created;
@@ -51,6 +61,7 @@ struct counters {
     valid -= rhs.valid;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void init() {
     if (registered_.test_and_set()) {
       return;
@@ -61,10 +72,13 @@ struct counters {
   }
 
 private:
+  FATAL_HIDE_SYMBOL
   std::atomic_flag registered_ = ATOMIC_FLAG_INIT;
 };
 
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static counters &global() {
+  FATAL_HIDE_SYMBOL
   static counters instance;
   return instance;
 }
@@ -128,7 +142,8 @@ static counters &global() {
  */
 // TODO: ADD UNIT TESTS
 template <typename...>
-struct ref_counter {
+struct FATAL_HIDE_SYMBOL ref_counter {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ref_counter():
     valid_(true)
   {
@@ -137,6 +152,7 @@ struct ref_counter {
     increase_valid();
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ref_counter(ref_counter const &rhs):
     valid_(rhs.valid_)
   {
@@ -148,6 +164,7 @@ struct ref_counter {
     }
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ref_counter(ref_counter &&rhs) noexcept:
     valid_(rhs.valid_)
   {
@@ -163,6 +180,7 @@ struct ref_counter {
       !std::is_same<ref_counter, typename std::decay<T>::type>::value
     >::type
   >
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   explicit ref_counter(T &&, Args &&...):
     valid_(true)
   {
@@ -171,6 +189,7 @@ struct ref_counter {
     increase_valid();
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ref_counter &operator =(ref_counter const &rhs) {
     if (!valid_ && rhs.valid_) {
       increase_valid();
@@ -181,6 +200,7 @@ struct ref_counter {
     return *this;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ref_counter &operator =(ref_counter &&rhs) {
     if (valid_) {
       decrease_valid();
@@ -193,6 +213,7 @@ struct ref_counter {
   }
 
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ref_counter &operator =(T &&) {
     if (!valid_) {
       valid_ = true;
@@ -202,6 +223,7 @@ struct ref_counter {
     return *this;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ~ref_counter() {
     decrease_alive();
 
@@ -219,7 +241,8 @@ struct ref_counter {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  struct guard {
+  struct FATAL_HIDE_SYMBOL guard {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     guard() {
       auto duplicate = singleton().test_and_set();
       assert(!duplicate);
@@ -229,6 +252,7 @@ struct ref_counter {
     guard(guard const &) = delete;
     guard(guard &&) = delete;
 
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     ~guard() {
       assert(counters_().alive == 0);
       assert(counters_().valid == 0);
@@ -236,7 +260,9 @@ struct ref_counter {
     }
 
   private:
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     static std::atomic_flag &singleton() {
+      FATAL_HIDE_SYMBOL
       static std::atomic_flag instance = ATOMIC_FLAG_INIT;
       return instance;
     }
@@ -247,6 +273,7 @@ struct ref_counter {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void reset() {
     detail::ref_counter_impl::global() -= counters_();
     counters_().reset();
@@ -261,6 +288,7 @@ struct ref_counter {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static std::intmax_t created() { return counters_().created; }
 
   /**
@@ -271,6 +299,7 @@ struct ref_counter {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static std::intmax_t alive() { return counters_().alive; }
 
   /**
@@ -288,27 +317,34 @@ struct ref_counter {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static std::intmax_t valid() { return counters_().valid; }
 
 private:
+  FATAL_HIDE_SYMBOL
   bool valid_;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static detail::ref_counter_impl::counters &counters_() {
+    FATAL_HIDE_SYMBOL
     static detail::ref_counter_impl::counters instance;
     instance.init();
     return instance;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void increase_created() {
     ++counters_().created;
     ++detail::ref_counter_impl::global().created;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void increase_alive() {
     ++counters_().alive;
     ++detail::ref_counter_impl::global().alive;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void decrease_alive() {
     --counters_().alive;
     // TODO: FIX, NOT THREAD SAFE
@@ -318,11 +354,13 @@ private:
     assert(detail::ref_counter_impl::global().alive >= 0);
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void increase_valid() {
     ++counters_().valid;
     ++detail::ref_counter_impl::global().valid;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void decrease_valid() {
     --counters_().valid;
     // TODO: FIX, NOT THREAD SAFE
@@ -338,6 +376,7 @@ private:
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void ref_counter_reset() {
   detail::ref_counter_impl::global().reset();
 
@@ -357,6 +396,7 @@ void ref_counter_reset() {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::intmax_t ref_counter_created() {
   return detail::ref_counter_impl::global().created;
 }
@@ -369,6 +409,7 @@ std::intmax_t ref_counter_created() {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::intmax_t ref_counter_alive() {
   return detail::ref_counter_impl::global().alive;
 }
@@ -389,6 +430,7 @@ std::intmax_t ref_counter_alive() {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::intmax_t ref_counter_valid() {
   return detail::ref_counter_impl::global().valid;
 }
@@ -403,7 +445,8 @@ std::intmax_t ref_counter_valid() {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct ref_counter_guard {
+struct FATAL_HIDE_SYMBOL ref_counter_guard {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ref_counter_guard() {
     auto duplicate = singleton().test_and_set();
     assert(!duplicate);
@@ -413,6 +456,7 @@ struct ref_counter_guard {
   ref_counter_guard(ref_counter_guard const &) = delete;
   ref_counter_guard(ref_counter_guard &&) = delete;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ~ref_counter_guard() {
     assert(detail::ref_counter_impl::global().alive == 0);
     assert(detail::ref_counter_impl::global().valid == 0);
@@ -420,7 +464,9 @@ struct ref_counter_guard {
   }
 
 private:
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static std::atomic_flag &singleton() {
+    FATAL_HIDE_SYMBOL
     static std::atomic_flag instance = ATOMIC_FLAG_INIT;
     return instance;
   }

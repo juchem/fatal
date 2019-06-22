@@ -10,15 +10,15 @@
 #ifndef FATAL_INCLUDE_fatal_type_pair_h
 #define FATAL_INCLUDE_fatal_type_pair_h
 
-#include <fatal/type/debug.h>
+#include <fatal/portability.h>
 
 namespace fatal {
 
 template <typename, typename>
-struct pair {};
+struct FATAL_HIDE_SYMBOL pair {};
 
 template <typename First, typename Second>
-struct to_pair {
+struct FATAL_HIDE_SYMBOL FATAL_HIDE_SYMBOL to_pair {
   template <typename T>
   using apply = pair<
     typename First::template apply<T>,

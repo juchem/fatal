@@ -16,9 +16,11 @@ namespace fatal {
 namespace impl_is_complete {
 
 template <typename T, std::size_t = sizeof(T)>
+FATAL_HIDE_SYMBOL
 static std::true_type sfinae(T *);
 
 template <typename = void, std::size_t = 0>
+FATAL_HIDE_SYMBOL
 static std::false_type sfinae(...);
 
 } // namespace impl_is_complete {

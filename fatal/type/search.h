@@ -35,8 +35,8 @@ template <
   typename Visitor,
   typename... Args
 >
-FATAL_HIDE_SYMBOL
-static inline constexpr bool sorted_search(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr bool sorted_search(
   Needle &&needle,
   Visitor &&visitor,
   Args &&...args
@@ -54,8 +54,8 @@ template <
   typename Comparer = value_comparer,
   typename Needle
 >
-FATAL_HIDE_SYMBOL
-static inline constexpr bool sorted_search(Needle &&needle) {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr bool sorted_search(Needle &&needle) {
   return sorted_search<T, Filter, Comparer>(
     std::forward<Needle>(needle),
     fn::no_op()
@@ -71,8 +71,8 @@ template <
   typename Visitor,
   typename... Args
 >
-FATAL_HIDE_SYMBOL
-static inline constexpr decltype(auto) sorted_find(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr decltype(auto) sorted_find(
   Needle &&needle,
   Fallback &&fallback,
   Visitor &&visitor,
@@ -94,8 +94,8 @@ template <
   typename Visitor,
   typename... Args
 >
-FATAL_HIDE_SYMBOL
-static inline constexpr bool scalar_search(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr bool scalar_search(
   Needle &&needle,
   Visitor &&visitor,
   Args &&...args
@@ -113,8 +113,8 @@ template <
   typename Comparer = value_comparer,
   typename Needle
 >
-FATAL_HIDE_SYMBOL
-static inline constexpr bool scalar_search(Needle &&needle) {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr bool scalar_search(Needle &&needle) {
   return scalar_search<T, Filter, Comparer>(
     std::forward<Needle>(needle),
     fn::no_op()
@@ -130,8 +130,8 @@ template <
   typename Visitor,
   typename... Args
 >
-FATAL_HIDE_SYMBOL
-static inline constexpr decltype(auto) scalar_find(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr decltype(auto) scalar_find(
   Needle &&needle,
   Fallback &&fallback,
   Visitor &&visitor,
@@ -146,8 +146,8 @@ static inline constexpr decltype(auto) scalar_find(
 }
 
 template <typename T, typename Visitor, typename... Args>
-FATAL_HIDE_SYMBOL
-static inline constexpr bool index_search(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr bool index_search(
   std::size_t needle,
   Visitor &&visitor,
   Args &&...args
@@ -160,8 +160,8 @@ static inline constexpr bool index_search(
 }
 
 template <typename T, typename Fallback, typename Visitor, typename... Args>
-FATAL_HIDE_SYMBOL
-static inline constexpr decltype(auto) index_find(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr decltype(auto) index_find(
   std::size_t needle,
   Fallback &&fallback,
   Visitor &&visitor,

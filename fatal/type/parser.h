@@ -9,6 +9,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_parser_h
 #define FATAL_INCLUDE_fatal_type_parser_h
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 
 namespace fatal {
@@ -24,11 +26,12 @@ namespace fatal {
  * @author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <typename T>
-struct parser {
+struct FATAL_HIDE_SYMBOL parser {
   using value_type = T;
 
 private:
   template <typename Char, Char Acc, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_octal_digits() {
     static_assert(Head >= '0' && Head <= '7', "invalid octal digit");
 
@@ -43,6 +46,7 @@ private:
   }
 
   template <typename Char, Char Acc, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_decimal_digits() {
     static_assert(Head >= '0' && Head <= '9', "invalid decimal digit");
 
@@ -57,6 +61,7 @@ private:
   }
 
   template <typename Char, Char Acc, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_hexadecimal_digits() {
     static_assert(
       (Head >= '0' && Head <= '9')
@@ -82,6 +87,7 @@ private:
   }
 
   template <typename Char, std::size_t Depth, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_literal_digits() {
     // first character being parsed
     if constexpr (Depth == 0) {
@@ -106,6 +112,7 @@ private:
 
 public:
   template <typename Char, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_octal() {
     if constexpr (Head == '+') {
       return parse_octal_digits<Char, 0, Tail...>();
@@ -125,6 +132,7 @@ public:
   using octal = std::integral_constant<value_type, parse_octal<Char, Digits...>()>;
 
   template <typename Char, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_decimal() {
     if constexpr (Head == '+') {
       return parse_decimal_digits<Char, 0, Tail...>();
@@ -144,6 +152,7 @@ public:
   using decimal = std::integral_constant<value_type, parse_decimal<Char, Digits...>()>;
 
   template <typename Char, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_hexadecimal() {
     if constexpr (Head == '+') {
       return parse_hexadecimal_digits<Char, 0, Tail...>();
@@ -163,6 +172,7 @@ public:
   using hexadecimal = std::integral_constant<value_type, parse_hexadecimal<Char, Digits...>()>;
 
   template <typename Char, Char Head, Char... Tail>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_literal() {
     if constexpr (Head == '+') {
       return parse_literal_digits<Char, 0, Tail...>();

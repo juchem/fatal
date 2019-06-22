@@ -10,9 +10,11 @@
 #ifndef FATAL_INCLUDE_fatal_type_call_traits_h
 #define FATAL_INCLUDE_fatal_type_call_traits_h
 
-#include <fatal/preprocessor.h>
 #include <fatal/type/apply.h>
 #include <fatal/type/sequence.h>
+
+#include <fatal/preprocessor.h>
+#include <fatal/portability.h>
 
 #include <utility>
 
@@ -22,7 +24,7 @@ namespace call_traits_impl {
 
 template <typename T> T arg();
 
-template <bool> struct call_if;
+template <bool> struct FATAL_HIDE_SYMBOL call_if;
 
 } // namespace call_traits_impl {
 } // namespace detail {
@@ -32,54 +34,63 @@ template <bool> struct call_if;
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct ctor_call_traits {
+struct FATAL_HIDE_SYMBOL ctor_call_traits {
   template <typename T>
-  struct automatic {
+  struct FATAL_HIDE_SYMBOL automatic {
     using type = T;
 
-    constexpr inline automatic() {}
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr automatic() {}
 
     template <typename... UArgs>
-    constexpr static inline T construct(UArgs &&...args) {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr static T construct(UArgs &&...args) {
       return T(std::forward<UArgs>(args)...);
     }
 
     template <typename... UArgs>
-    constexpr T inline operator ()(UArgs &&...args) const {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr T operator ()(UArgs &&...args) const {
       return construct(std::forward<UArgs>(args)...);
     }
   };
 
   template <typename T>
-  struct dynamic {
+  struct FATAL_HIDE_SYMBOL dynamic {
     using type = T;
 
-    constexpr inline dynamic() {}
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr dynamic() {}
 
     template <typename... UArgs>
-    constexpr static inline T *construct(UArgs &&...args) {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr static T *construct(UArgs &&...args) {
       return new T(std::forward<UArgs>(args)...);
     }
 
     template <typename... UArgs>
-    constexpr inline T *operator ()(UArgs &&...args) const {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr T *operator ()(UArgs &&...args) const {
       return construct(std::forward<UArgs>(args)...);
     }
   };
 
   template <typename T>
-  struct placement {
+  struct FATAL_HIDE_SYMBOL placement {
     using type = T;
 
-    constexpr inline placement() {}
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr placement() {}
 
     template <typename... UArgs>
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     constexpr static T *construct(T *pointer, UArgs &&...args) {
       return new (pointer) T(std::forward<UArgs>(args)...);
     }
 
     template <typename... UArgs>
-    constexpr inline T *operator ()(T *pointer, UArgs &&...args) const {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    constexpr T *operator ()(T *pointer, UArgs &&...args) const {
       return construct(pointer, std::forward<UArgs>(args)...);
     }
   };
@@ -90,9 +101,9 @@ struct ctor_call_traits {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-class call_operator_traits {
+class FATAL_HIDE_SYMBOL call_operator_traits {
   template <typename... Args>
-  struct is_impl {
+  struct FATAL_HIDE_SYMBOL is_impl {
     template <
       typename T,
       typename = decltype(
@@ -101,23 +112,28 @@ class call_operator_traits {
         )
       )
     >
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     static std::true_type sfinae(T *);
 
     template <typename...>
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     static std::false_type sfinae(...);
   };
 
 public:
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr call_operator_traits() {}
 
   template <typename T, typename... UArgs>
-  static constexpr inline auto call(T &&subject, UArgs &&...args)
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr auto call(T &&subject, UArgs &&...args)
     noexcept(noexcept(subject(std::forward<UArgs>(args)...)))
     -> decltype(subject(std::forward<UArgs>(args)...))
   { return subject(std::forward<UArgs>(args)...); }
 
   template <typename T, typename... UArgs>
-  constexpr inline auto operator ()(T &&subject, UArgs &&...args) const
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  constexpr auto operator ()(T &&subject, UArgs &&...args) const
     noexcept(
       noexcept(call(std::forward<T>(subject), std::forward<UArgs>(args)...))
     )
@@ -179,9 +195,9 @@ public:
     __VA_ARGS__ \
   )
 #define FATAL_IMPL_CALL_TRAITS(Name, Impl, ...) \
-  class Impl { \
+  class FATAL_HIDE_SYMBOL Impl { \
     template <typename... UArgs> \
-    struct member_fn_supports_impl { \
+    struct FATAL_HIDE_SYMBOL member_fn_supports_impl { \
       template < \
         typename U, \
         typename = decltype( \
@@ -190,14 +206,16 @@ public:
           ) \
         ) \
       > \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
       static ::std::true_type sfinae(U *); \
       \
       template <typename...> \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
       static ::std::false_type sfinae(...); \
     }; \
     \
     template <typename... UArgs> \
-    struct static_member_supports_impl { \
+    struct FATAL_HIDE_SYMBOL static_member_supports_impl { \
       template < \
         typename U, \
         typename = decltype( \
@@ -206,9 +224,11 @@ public:
           ) \
         ) \
       > \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
       static ::std::true_type sfinae(U *); \
       \
       template <typename...> \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
       static ::std::false_type sfinae(...); \
     }; \
     \
@@ -217,13 +237,14 @@ public:
   public: \
     using name = name_str; \
     \
-    struct member_function { \
+    struct FATAL_HIDE_SYMBOL member_function { \
       using name = name_str; \
       \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
       constexpr member_function() {} \
       \
       template <typename U> \
-      struct bind { \
+      struct FATAL_HIDE_SYMBOL bind { \
         template <typename... UArgs> \
         using supports = decltype( \
           member_fn_supports_impl<UArgs...>::template sfinae( \
@@ -241,7 +262,8 @@ public:
       ); \
       \
       template <typename U, typename... UArgs> \
-      static constexpr inline auto call(U &&subject, UArgs &&...args) \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+      static constexpr auto call(U &&subject, UArgs &&...args) \
         -> decltype( \
           ::std::forward<U>(subject).__VA_ARGS__( \
             ::std::forward<UArgs>(args)... \
@@ -254,7 +276,8 @@ public:
       } \
       \
       template <typename U, typename... UArgs> \
-      constexpr inline auto operator ()(U &&subject, UArgs &&...args) const \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+      constexpr auto operator ()(U &&subject, UArgs &&...args) const \
         -> decltype( \
           call(::std::forward<U>(subject), ::std::forward<UArgs>(args)...) \
         ) \
@@ -266,18 +289,20 @@ public:
       } \
     }; \
     \
-    struct static_member { \
+    struct FATAL_HIDE_SYMBOL static_member { \
       using name = name_str; \
       \
       template <typename U> \
-      class bind { \
+      class FATAL_HIDE_SYMBOL bind { \
         template <typename V, typename... UArgs> \
-        static constexpr inline auto call_impl(UArgs &&...args) \
+        FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+        static constexpr auto call_impl(UArgs &&...args) \
           -> decltype(V::__VA_ARGS__(::std::forward<UArgs>(args)...)) \
         { return V::__VA_ARGS__(::std::forward<UArgs>(args)...); } \
         \
       public: \
-        constexpr inline bind() {} \
+        FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+        constexpr bind() {} \
         \
         using type = U; \
         \
@@ -292,18 +317,21 @@ public:
         using result = decltype(call_impl<type>(::std::declval<UArgs>()...)); \
         \
         template <typename... UArgs> \
-        static constexpr inline auto call(UArgs &&...args) \
+        FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+        static constexpr auto call(UArgs &&...args) \
           -> decltype(call_impl<type>(::std::forward<UArgs>(args)...)) \
         { return call_impl<type>(::std::forward<UArgs>(args)...); } \
         \
         template <typename... UArgs> \
-        constexpr inline auto operator ()(UArgs &&...args) const \
+        FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+        constexpr auto operator ()(UArgs &&...args) const \
           -> decltype(call_impl<type>(::std::forward<UArgs>(args)...)) \
         { return call_impl<type>(::std::forward<UArgs>(args)...); } \
       }; \
       \
       template <typename U, typename... UArgs> \
-      static constexpr inline auto call(UArgs &&...args) \
+      FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+      static constexpr auto call(UArgs &&...args) \
         -> decltype(bind<U>::call(::std::forward<UArgs>(args)...)) \
       { return bind<U>::call(::std::forward<UArgs>(args)...); } \
       \
@@ -322,7 +350,7 @@ public:
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct call_traits {
+namespace call_traits {
 # define FATAL_CALL_TRAITS_IMPL(Name) FATAL_CALL_TRAITS(Name, Name)
 
   FATAL_CALL_TRAITS_IMPL(abort);
@@ -574,7 +602,7 @@ struct call_traits {
   FATAL_CALL_TRAITS_IMPL(write);
 
 # undef FATAL_CALL_TRAITS_IMPL
-};
+}
 
 /**
  * TODO: DOCUMENT
@@ -589,18 +617,21 @@ struct call_traits {
   )
 
 #define FATAL_IMPL_FREE_FUNCTION_CALL_TRAITS(Name, Impl, ...) \
-  struct Impl { \
+  struct FATAL_HIDE_SYMBOL Impl { \
     FATAL_S(name, FATAL_TO_STR(__VA_ARGS__)); \
     \
-    constexpr inline Impl() {} \
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+    constexpr Impl() {} \
     \
     template <typename... UArgs> \
-    static constexpr inline auto call(UArgs &&...args) \
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+    static constexpr auto call(UArgs &&...args) \
       -> decltype(__VA_ARGS__(::std::forward<UArgs>(args)...)) \
     { return __VA_ARGS__(::std::forward<UArgs>(args)...); } \
     \
     template <typename... UArgs> \
-    constexpr inline auto operator ()(UArgs &&...args) const \
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
+    constexpr auto operator ()(UArgs &&...args) const \
       -> decltype(call(::std::forward<UArgs>(args)...)) \
     { return call(::std::forward<UArgs>(args)...); } \
   }; \
@@ -702,11 +733,12 @@ struct call_traits {
 template <
   typename CallTraits,
   typename Fallback,
-  template <typename...> class Predicate,
+  template <typename...> typename Predicate,
   typename... Args,
   typename... UArgs
 >
-constexpr inline auto call_if(UArgs &&...args)
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr auto call_if(UArgs &&...args)
   -> decltype(
     detail::call_traits_impl::call_if<
       apply_args<Predicate, Args..., UArgs...>::value
@@ -798,7 +830,8 @@ constexpr inline auto call_if(UArgs &&...args)
 template <
   typename CallTraits, typename Fallback, typename... Args, typename... UArgs
 >
-constexpr inline auto call_if_supported(UArgs &&...args)
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr auto call_if_supported(UArgs &&...args)
   -> decltype(
     call_if<CallTraits, Fallback, CallTraits::template supports, Args...>(
       std::forward<UArgs>(args)...
@@ -818,9 +851,10 @@ namespace detail {
 namespace call_traits_impl {
 
 template <bool>
-struct call_if {
+struct FATAL_HIDE_SYMBOL call_if {
   template <typename Traits, typename, typename... Args, typename... UArgs>
-  static constexpr inline auto call(UArgs &&...args)
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr auto call(UArgs &&...args)
     -> decltype(Traits::template call<Args...>(std::forward<UArgs>(args)...))
   {
     return Traits::template call<Args...>(std::forward<UArgs>(args)...);
@@ -828,9 +862,10 @@ struct call_if {
 };
 
 template <>
-struct call_if<false> {
+struct FATAL_HIDE_SYMBOL call_if<false> {
   template <typename, typename Fn, typename... Args, typename... UArgs>
-  static constexpr inline auto call(UArgs &&...args)
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr auto call(UArgs &&...args)
     -> decltype(Fn()(std::forward<UArgs>(args)...))
   {
     return Fn()(std::forward<UArgs>(args)...);

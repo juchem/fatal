@@ -32,7 +32,8 @@ template <
   typename Visitor,
   typename... VArgs
 >
-static inline bool trie_find(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static bool trie_find(
   Begin &&begin,
   End &&end,
   Visitor &&visitor,
@@ -54,7 +55,8 @@ template <
   typename Begin,
   typename End
 >
-static inline bool trie_find(Begin &&begin, End &&end) {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static bool trie_find(Begin &&begin, End &&end) {
   return trie_find<T, Filter, Comparer>(
     std::forward<Begin>(begin),
     std::forward<End>(end),

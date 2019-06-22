@@ -36,27 +36,27 @@ template <
   std::size_t Begin, std::size_t End,
   typename... Children
 >
-struct n {
+struct FATAL_HIDE_SYMBOL n {
   using haystack = Haystack;
 };
 
 // bound node - to expose it as a transform //
 template <typename T, bool IsTerminal, std::size_t Begin, std::size_t End>
-struct N {
+struct FATAL_HIDE_SYMBOL N {
   template <typename... Args>
   using apply = n<T, IsTerminal, Begin, End, Args...>;
 };
 
 // filtered at
 template <std::size_t Index, typename Filter>
-struct a {
+struct FATAL_HIDE_SYMBOL a {
   template <typename T>
   using apply = at<typename Filter::template apply<T>, Index>;
 };
 
 // node filter for sorted search (lookup) //
 template <std::size_t Index, typename Filter>
-struct F {
+struct FATAL_HIDE_SYMBOL F {
   template <typename T>
   using apply = at<
     typename Filter::template apply<typename T::haystack>,
@@ -65,13 +65,14 @@ struct F {
 };
 
 // trie lookup implementation //
-template <std::size_t, typename...> struct l;
+template <std::size_t, typename...> struct FATAL_HIDE_SYMBOL l;
 
 // empty subtrie //
 template <typename Filter>
-struct l<0, Filter> {
+struct FATAL_HIDE_SYMBOL l<0, Filter> {
   template <typename... Args>
-  static constexpr inline bool f(Args &&...) { return false; }
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr bool f(Args &&...) { return false; }
 };
 
 // subtrie with single node //
@@ -84,54 +85,39 @@ template <
   std::size_t End,
   typename... Children
 >
-struct l<Offset, Filter, n<Haystack, IsTerminal, Begin, End, Children...>> {
+struct FATAL_HIDE_SYMBOL l<Offset, Filter, n<Haystack, IsTerminal, Begin, End, Children...>> {
   static_assert(Offset + Begin <= End, "internal error");
 
-  template <
-    typename NeedleBegin,
-    typename Visitor,
-    typename... VArgs
-  >
-  static inline bool f(
+  template <typename NeedleBegin, typename Visitor, typename... VArgs>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr bool f(
     std::size_t const size,
     NeedleBegin &&begin,
     Visitor &&visitor,
     VArgs &&...args
   ) {
     using haystack_data = typename Filter::template apply<Haystack>;
+    using value_type = typename std::iterator_traits<std::decay_t<NeedleBegin>>::value_type;
 
-    if (size < End - Begin - Offset) {
-      return false;
-    }
-
-    if (!IsTerminal && size == End - Begin - Offset) {
-      return false;
-    };
-
-    using value_type = typename std::iterator_traits<
-      typename std::decay<NeedleBegin>::type
-    >::value_type;
-
-    auto i = std::next(begin, End - Begin - Offset);
-    if (!std::equal(
-      begin,
-      i,
-      std::next(z_data<haystack_data, value_type>(), Offset + Begin)
-    )) {
-      return false;
-    }
-
-    if (IsTerminal && size == End - Begin - Offset) {
-      visitor(tag<Haystack>(), std::forward<VArgs>(args)...);
-      return true;
-    }
-
-    return l<0, Filter, Children...>::f(
-      size - (End - Begin - Offset),
-      std::move(i),
-      std::forward<Visitor>(visitor),
-      std::forward<VArgs>(args)...
-    );
+    return (size >= End - Begin - Offset)
+      && !(!IsTerminal && size == End - Begin - Offset)
+      && std::equal(
+        begin,
+        std::next(begin, End - Begin - Offset),
+        std::next(z_data<haystack_data, value_type>(), Offset + Begin)
+      )
+      && (
+        (
+          IsTerminal && size == End - Begin - Offset
+            && (visitor(tag<Haystack>(), std::forward<VArgs>(args)...), true)
+        )
+        || l<0, Filter, Children...>::f(
+          size - (End - Begin - Offset),
+          std::next(begin, End - Begin - Offset),
+          std::forward<Visitor>(visitor),
+          std::forward<VArgs>(args)...
+        )
+      );
   }
 };
 
@@ -146,7 +132,7 @@ template <
   typename Node,
   typename... Siblings
 >
-struct l<
+struct FATAL_HIDE_SYMBOL l<
   0,
   Filter,
   n<Haystack, IsTerminal, Begin, End, Children...>,
@@ -154,31 +140,25 @@ struct l<
   Siblings...
 > {
   template <typename NeedleBegin, typename Visitor, typename... VArgs>
-  static inline bool f(
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr bool f(
     std::size_t const size,
     NeedleBegin &&begin,
     Visitor &&visitor,
     VArgs &&...args
   ) {
-    if (!size) {
-      return false;
-    }
-
-    bool found = false;
-    sorted_search<
+    return size && sorted_find<
       list<n<Haystack, IsTerminal, Begin, End, Children...>, Node, Siblings...>,
       F<Begin, Filter>
     >(
       *begin,
+      false,
       l(),
-      found,
       size,
       std::forward<NeedleBegin>(begin),
       std::forward<Visitor>(visitor),
       std::forward<VArgs>(args)...
     );
-
-    return found;
   }
 
   template <
@@ -188,15 +168,15 @@ struct l<
     typename Visitor,
     typename... VArgs
   >
-  void operator ()(
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  constexpr bool operator ()(
     indexed<Match, Index>,
-    bool &found,
     std::size_t const size,
     NeedleBegin &&begin,
     Visitor &&visitor,
     VArgs &&...args
   ) const {
-    found = l<1, Filter, Match>::f(
+    return l<1, Filter, Match>::f(
       size - 1,
       std::next(begin),
       std::forward<Visitor>(visitor),
@@ -207,24 +187,24 @@ struct l<
 
 // helper to expose the trie lookup implementation as a transform //
 template <typename Filter>
-struct L {
+struct FATAL_HIDE_SYMBOL L {
   template <typename... T>
   using apply = l<0, Filter, T...>;
 };
 
 // trie build recursion //
-template <std::size_t, typename...> struct r;
+template <std::size_t, typename...> struct FATAL_HIDE_SYMBOL r;
 
 // helper to expose the trie build recursion as a transform //
 template <std::size_t Depth, typename Filter>
-struct R {
+struct FATAL_HIDE_SYMBOL R {
   template <typename... Args>
   using apply = typename r<Depth, Filter, Args...>::type;
 };
 
 // leaf //
 template <std::size_t Depth, typename Filter, typename T>
-struct r<Depth, Filter, T> {
+struct FATAL_HIDE_SYMBOL r<Depth, Filter, T> {
   using type = n<
     T, true, Depth, size<typename Filter::template apply<T>>::value
   >;
@@ -232,7 +212,7 @@ struct r<Depth, Filter, T> {
 
 // internal node //
 template <std::size_t Depth, typename Filter, typename T, typename... Args>
-struct r<Depth, Filter, T, Args...> {
+struct FATAL_HIDE_SYMBOL r<Depth, Filter, T, Args...> {
   using common = longest_common_prefix<
     at,
     Depth,
@@ -262,11 +242,11 @@ struct r<Depth, Filter, T, Args...> {
 };
 
 // trie build entry point helper //
-template <bool, std::size_t, typename...> struct h;
+template <bool, std::size_t, typename...> struct FATAL_HIDE_SYMBOL h;
 
 // no common prefix and no empty string //
 template <std::size_t Common, typename Filter, typename T, typename... Args>
-struct h<true, Common, Filter, T, Args...> {
+struct FATAL_HIDE_SYMBOL h<true, Common, Filter, T, Args...> {
   using type = group_by<
     list<T, Args...>,
     a<0, Filter>,
@@ -277,7 +257,7 @@ struct h<true, Common, Filter, T, Args...> {
 
 // common prefix or empty string //
 template <std::size_t Common, typename Filter, typename T, typename... Args>
-struct h<false, Common, Filter, T, Args...> {
+struct FATAL_HIDE_SYMBOL h<false, Common, Filter, T, Args...> {
   using type = l<
     0,
     Filter,
@@ -297,15 +277,15 @@ struct h<false, Common, Filter, T, Args...> {
 };
 
 // trie build entry point //
-template <typename...> struct e;
+template <typename...> struct FATAL_HIDE_SYMBOL e;
 
 // non-empty input - find longest common prefix //
 template <
   typename Filter,
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename T, typename... Args
 >
-struct e<Filter, Variadic<T, Args...>>:
+struct FATAL_HIDE_SYMBOL e<Filter, Variadic<T, Args...>>:
   h<
     (size<typename Filter::template apply<T>>::value > 1)
       && !longest_common_prefix<
@@ -331,8 +311,8 @@ struct e<Filter, Variadic<T, Args...>>:
 {};
 
 // unitary input //
-template <typename Filter, template <typename...> class Variadic, typename T>
-struct e<Filter, Variadic<T>> {
+template <typename Filter, template <typename...> typename Variadic, typename T>
+struct FATAL_HIDE_SYMBOL e<Filter, Variadic<T>> {
   using type = l<
     0,
     Filter,
@@ -341,8 +321,8 @@ struct e<Filter, Variadic<T>> {
 };
 
 // empty input //
-template <typename Filter, template <typename...> class Variadic>
-struct e<Filter, Variadic<>> {
+template <typename Filter, template <typename...> typename Variadic>
+struct FATAL_HIDE_SYMBOL e<Filter, Variadic<>> {
   using type = l<0, Filter>;
 };
 

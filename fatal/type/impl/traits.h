@@ -12,10 +12,10 @@
 namespace fatal {
 namespace i_trt {
 
-template <template <typename...> class, typename> struct ist;
+template <template <typename...> typename, typename> struct FATAL_HIDE_SYMBOL ist;
 
-template <template <typename...> class T, typename... Args>
-struct ist<T, T<Args...>> {};
+template <template <typename...> typename T, typename... Args>
+struct FATAL_HIDE_SYMBOL ist<T, T<Args...>> {};
 
 
 } // namespace i_trt {

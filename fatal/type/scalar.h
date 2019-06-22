@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_scalar_h
 #define FATAL_INCLUDE_fatal_type_scalar_h
 
+#include <fatal/portability.h>
+
 #include <limits>
 #include <ratio>
 #include <type_traits>
@@ -57,7 +59,7 @@ using ensure_ieee754 = std::enable_if_t<
 
 namespace detail {
 namespace scalar_impl {
-template <typename> struct to_scalar;
+template <typename> struct FATAL_HIDE_SYMBOL to_scalar;
 } // namespace scalar_impl {
 } // namespace detail {
 
@@ -84,14 +86,15 @@ template <
   typename From,
   typename T = typename detail::scalar_impl::to_scalar<From>::default_type
 >
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr T to_scalar() noexcept {
   return detail::scalar_impl::to_scalar<From>::template to<T>();
 }
 
 namespace i_sc {
 template <typename T, bool = std::is_enum_v<T>>
-struct i_t { using type = std::underlying_type_t<T>; };
-template <typename T> struct i_t<T, false> { using type = T; };
+struct FATAL_HIDE_SYMBOL i_t { using type = std::underlying_type_t<T>; };
+template <typename T> struct FATAL_HIDE_SYMBOL i_t<T, false> { using type = T; };
 } // namespace i_sc {
 
 template <typename T>
@@ -125,6 +128,7 @@ using to_integral_t = std::integral_constant<
 >;
 
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr auto to_integral(T const value) {
   return static_cast<integral_type<T>>(value);
 }
@@ -157,6 +161,7 @@ using bitwise_merge_t = std::integral_constant<
 >;
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr T bitwise_merge(T const value, Args const... args) {
   return static_cast<T>((to_integral(value) | ... | to_integral(args)));
 }
@@ -188,6 +193,7 @@ using bitwise_filter_t = std::integral_constant<
 >;
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr T bitwise_filter(T const value, Args const... args) {
   return static_cast<T>(
     (to_integral(value) & ... & to_integral(args))
@@ -217,9 +223,11 @@ static constexpr T bitwise_filter(T const value, Args const... args) {
  * @author: Marcelo Juchem <juchem@gmail.com>
  */
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr T bitwise_disable(T const value) { return value; }
 
 template <typename T, typename U, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr T bitwise_disable(
   T const lhs,
   U const rhs,
@@ -255,12 +263,14 @@ static constexpr T bitwise_disable(
  */
 namespace i_sc {
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr bool bt_ha(T const value, T const merged) {
   return bitwise_filter(value, static_cast<T>(merged)) == static_cast<T>(merged);
 }
 } // namespace i_sc {
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr bool bitwise_has_all(T const value, Args... args) {
   return i_sc::bt_ha(value, bitwise_merge(static_cast<T>(args)...));
 }
@@ -285,6 +295,7 @@ static constexpr bool bitwise_has_all(T const value, Args... args) {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr bool bitwise_has_any(T const value, Args... args) {
   return to_integral(
     bitwise_filter(value, bitwise_merge(static_cast<T>(args)...))
@@ -305,18 +316,20 @@ namespace scalar_impl {
 ///////////////
 
 template <typename T, T Value>
-struct to_scalar<std::integral_constant<T, Value>> {
+struct FATAL_HIDE_SYMBOL to_scalar<std::integral_constant<T, Value>> {
   using default_type = T;
 
   template <typename To>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr To to() noexcept { return static_cast<To>(Value); }
 };
 
 template <std::intmax_t Numerator, std::intmax_t Denominator>
-struct to_scalar<std::ratio<Numerator, Denominator>> {
+struct FATAL_HIDE_SYMBOL to_scalar<std::ratio<Numerator, Denominator>> {
   using default_type = double;
 
   template <typename To>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr To to() noexcept {
     return static_cast<To>(Numerator) / static_cast<To>(Denominator);
   }

@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_functional_no_op_h
 #define FATAL_INCLUDE_fatal_functional_no_op_h
 
+#include <fatal/portability.h>
+
 namespace fatal {
 namespace fn {
 
@@ -18,8 +20,9 @@ namespace fn {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct no_op {
+struct FATAL_HIDE_SYMBOL no_op {
   template <typename... UArgs>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void operator ()(UArgs &&...) const noexcept {}
 };
 

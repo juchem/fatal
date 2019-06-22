@@ -13,13 +13,13 @@
 #include <fatal/type/list.h>
 
 namespace fatal {
-namespace impl_fld {
+namespace i_fl {
 
 // TODO: Implement a version for  sequences
-template <typename...> struct fold;
+template <typename...> struct FATAL_HIDE_SYMBOL fold;
 
 template <typename Fn, typename Seed, typename... R>
-struct fold<Fn, Seed, list<R...>> {
+struct FATAL_HIDE_SYMBOL fold<Fn, Seed, list<R...>> {
   template <template <typename...> class V>
   using apply = V<R...>;
 };
@@ -31,7 +31,7 @@ template <
   typename T,
   typename... Args
 >
-struct fold<Fn, Seed, list<R...>, T, Args...>:
+struct FATAL_HIDE_SYMBOL fold<Fn, Seed, list<R...>, T, Args...>:
   fold<
     Fn,
     typename Fn::template apply<Seed, T>,
@@ -40,7 +40,7 @@ struct fold<Fn, Seed, list<R...>, T, Args...>:
   >
 {};
 
-template <typename...> struct F;
+template <typename...> struct FATAL_HIDE_SYMBOL F;
 
 template <
   typename Seed,
@@ -48,11 +48,11 @@ template <
   template <typename...> class V,
   typename... Args
 >
-struct F<Seed, Fn, V<Args...>> {
+struct FATAL_HIDE_SYMBOL F<Seed, Fn, V<Args...>> {
   using type = typename fold<Fn, Seed, list<>, Args...>::template apply<V>;
 };
 
-} // namespace impl_fld {
+} // namespace i_fl {
 } // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_fold_h

@@ -1306,16 +1306,16 @@ FATAL_TEST(search, search) {
   check_search<tl, same_as_t2::template apply, void, T2>();
   check_search<tp, same_as_t2::template apply, void, void>();
 
-  typedef is_template<std::basic_string> is_std_string;
-  typedef is_template<std::tuple> is_std_tuple;
+  using is_std_string = is_template<std::basic_string>;
+  using is_std_tuple = is_template<std::tuple>;
 
   typedef type_list<int, std::string, double, long> types1;
-  check_search<types1, is_std_string::type, void, std::string>();
-  check_search<types1, is_std_tuple::type, void, void>();
+  check_search<types1, is_std_string::apply, void, std::string>();
+  check_search<types1, is_std_tuple::apply, void, void>();
 
   typedef type_list<int, float, double, std::tuple<long, bool>> types2;
-  check_search<types2, is_std_string::type, void, void>();
-  check_search<types2, is_std_tuple::type, void, std::tuple<long, bool>>();
+  check_search<types2, is_std_string::apply, void, void>();
+  check_search<types2, is_std_tuple::apply, void, std::tuple<long, bool>>();
 }
 
 ////////////////////////

@@ -12,6 +12,8 @@
 
 #include <fatal/type/identity.h>
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/transform.h>
 
 namespace fatal {

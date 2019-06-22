@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_benchmark_prevent_optimization_h
 #define FATAL_INCLUDE_fatal_benchmark_prevent_optimization_h
 
+#include <fatal/portability.h>
+
 #include <memory>
 
 #include <cstdint>
@@ -17,12 +19,14 @@
 namespace fatal {
 namespace detail {
 
-std::uintptr_t prevent_optimization = 0;
+FATAL_HIDE_SYMBOL
+static std::uintptr_t prevent_optimization = 0;
 
 } // namespace detail {
 
 template <typename T>
-inline void prevent_optimization(T const &what) {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+void prevent_optimization(T const &what) {
   detail::prevent_optimization |= reinterpret_cast<
     decltype(detail::prevent_optimization)
   >(std::addressof(what));

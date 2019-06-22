@@ -10,12 +10,15 @@
 #ifndef FATAL_INCLUDE_fatal_test_args_h
 #define FATAL_INCLUDE_fatal_test_args_h
 
+#include <fatal/portability.h>
+
 namespace fatal {
 namespace test_impl {
 namespace args {
 
 // Not a real argument parser. Just enough to get started with.
 template <typename Map>
+FATAL_HIDE_SYMBOL
 void parse_args(int argc, char const *const *argv, Map &map) {
   using Key = typename Map::key_type;
   using Val = typename Map::mapped_type;
@@ -35,14 +38,15 @@ void parse_args(int argc, char const *const *argv, Map &map) {
 
 // Not a real argument parser. Just enough to get started with.
 template <typename Map>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 Map parse_args(int const argc, char const *const *const argv) {
   Map result;
   parse_args(argc, argv, result);
   return result;
 }
 
-}
-}
-}
+} // namespace args {
+} // namespace test_impl {
+} // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_test_args_h

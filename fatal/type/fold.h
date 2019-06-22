@@ -10,12 +10,14 @@
 #ifndef FATAL_INCLUDE_fatal_type_fold_h
 #define FATAL_INCLUDE_fatal_type_fold_h
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/fold.h>
 
 namespace fatal {
 
 template <typename T, typename Seed, typename Fn>
-using fold = typename impl_fld::F<Seed, Fn, T>::type;
+using fold = typename i_fl::F<Seed, Fn, T>::type;
 
 } // namespace fatal {
 

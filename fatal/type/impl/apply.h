@@ -13,51 +13,51 @@
 namespace fatal {
 namespace i_ap {
 
-template <template <typename...> class T, typename... Args>
-struct a { using type = T<Args...>; };
+template <template <typename...> typename T, typename... Args>
+struct FATAL_HIDE_SYMBOL a { using type = T<Args...>; };
 
-template <template <typename> class T, typename U>
-struct a<T, U> { using type = T<U>; };
+template <template <typename> typename T, typename U>
+struct FATAL_HIDE_SYMBOL a<T, U> { using type = T<U>; };
 
-template <template <typename, typename> class T, typename U0, typename U1>
-struct a<T, U0, U1> { using type = T<U0, U1>; };
+template <template <typename, typename> typename T, typename U0, typename U1>
+struct FATAL_HIDE_SYMBOL a<T, U0, U1> { using type = T<U0, U1>; };
 
 template <
-  template <typename, typename, typename> class T,
+  template <typename, typename, typename> typename T,
   typename U0, typename U1, typename U2
 >
-struct a<T, U0, U1, U2> { using type = T<U0, U1, U2>; };
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2> { using type = T<U0, U1, U2>; };
 
 template <
-  template <typename, typename, typename, typename> class T,
+  template <typename, typename, typename, typename> typename T,
   typename U0, typename U1, typename U2, typename U3
 >
-struct a<T, U0, U1, U2, U3> { using type = T<U0, U1, U2, U3>; };
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3> { using type = T<U0, U1, U2, U3>; };
 
 template <
-  template <typename, typename, typename, typename, typename> class T,
+  template <typename, typename, typename, typename, typename> typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4
 >
-struct a<T, U0, U1, U2, U3, U4> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4> {
   using type = T<U0, U1, U2, U3, U4>;
 };
 
 template <
-  template <typename, typename, typename, typename, typename, typename> class T,
+  template <typename, typename, typename, typename, typename, typename> typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5
 >
-struct a<T, U0, U1, U2, U3, U4, U5> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4, U5> {
   using type = T<U0, U1, U2, U3, U4, U5>;
 };
 
 template <
   template <
     typename, typename, typename, typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0
 >
-struct a<T, U0, U1, U2, U3, U4, U5, V0> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4, U5, V0> {
   using type = T<U0, U1, U2, U3, U4, U5, V0>;
 };
 
@@ -65,11 +65,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1
 >
-struct a<T, U0, U1, U2, U3, U4, U5, V0, V1> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4, U5, V0, V1> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1>;
 };
 
@@ -77,11 +77,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2
 >
-struct a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2>;
 };
 
@@ -89,11 +89,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2, typename V3
 >
-struct a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2, V3>;
 };
 
@@ -101,11 +101,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2, typename V3, typename V4
 >
-struct a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4>;
 };
 
@@ -113,107 +113,107 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2, typename V3, typename V4, typename V5
 >
-struct a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4, V5> {
+struct FATAL_HIDE_SYMBOL a<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4, V5> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4, V5>;
 };
 
-template <template <typename...> class, typename...> struct LS;
+template <template <typename...> typename, typename...> struct FATAL_HIDE_SYMBOL LS;
 template <
-  template <typename...> class To,
-  template <typename...> class List,
+  template <typename...> typename To,
+  template <typename...> typename List,
   typename... Args,
   typename... Suffix
 >
-struct LS<To, List<Args...>, Suffix...> {
+struct FATAL_HIDE_SYMBOL LS<To, List<Args...>, Suffix...> {
   using type = typename a<To, Args..., Suffix...>::type;
 };
 
-template <template <typename...> class, typename...> struct lsf;
+template <template <typename...> typename, typename...> struct FATAL_HIDE_SYMBOL lsf;
 
 template <
-  template <typename...> class To,
-  template <typename...> class List,
+  template <typename...> typename To,
+  template <typename...> typename List,
   typename... Args,
   typename... Prefix
 >
-struct lsf<To, List<Args...>, Prefix...> {
+struct FATAL_HIDE_SYMBOL lsf<To, List<Args...>, Prefix...> {
   using type = typename a<To, Prefix..., Args...>::type;
 };
 
-template <typename> struct sq;
+template <typename> struct FATAL_HIDE_SYMBOL sq;
 
 template <
-  template <typename V, V...> class Sequence,
+  template <typename V, V...> typename Sequence,
   typename T,
   T... Values
 >
-struct sq<Sequence<T, Values...>> {
-  template<template <typename V, V...> class To, T... Suffix>
+struct FATAL_HIDE_SYMBOL sq<Sequence<T, Values...>> {
+  template<template <typename V, V...> typename To, T... Suffix>
   using apply = To<T, Values..., Suffix...>;
 
-  template<template <typename V, V...> class To, T... Prefix>
+  template<template <typename V, V...> typename To, T... Prefix>
   using front = To<T, Prefix..., Values...>;
 };
 
-template <template <typename...> class T, typename... Args>
-struct app {
+template <template <typename...> typename T, typename... Args>
+struct FATAL_HIDE_SYMBOL app {
   using type = T<Args...>;
 };
 
-template <template <typename> class T, typename U>
-struct app<T, U> {
+template <template <typename> typename T, typename U>
+struct FATAL_HIDE_SYMBOL app<T, U> {
   using type = T<U>;
 };
 
-template <template <typename, typename> class T, typename U0, typename U1>
-struct app<T, U0, U1> {
+template <template <typename, typename> typename T, typename U0, typename U1>
+struct FATAL_HIDE_SYMBOL app<T, U0, U1> {
   using type = T<U0, U1>;
 };
 
 template <
-  template <typename, typename, typename> class T,
+  template <typename, typename, typename> typename T,
   typename U0, typename U1, typename U2
 >
-struct app<T, U0, U1, U2> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2> {
   using type = T<U0, U1, U2>;
 };
 
 template <
-  template <typename, typename, typename, typename> class T,
+  template <typename, typename, typename, typename> typename T,
   typename U0, typename U1, typename U2, typename U3
 >
-struct app<T, U0, U1, U2, U3> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3> {
   using type = T<U0, U1, U2, U3>;
 };
 
 template <
-  template <typename, typename, typename, typename, typename> class T,
+  template <typename, typename, typename, typename, typename> typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4
 >
-struct app<T, U0, U1, U2, U3, U4> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4> {
   using type = T<U0, U1, U2, U3, U4>;
 };
 
 template <
-  template <typename, typename, typename, typename, typename, typename> class T,
+  template <typename, typename, typename, typename, typename, typename> typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5
 >
-struct app<T, U0, U1, U2, U3, U4, U5> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5> {
   using type = T<U0, U1, U2, U3, U4, U5>;
 };
 
 template <
   template <
     typename, typename, typename, typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0
 >
-struct app<T, U0, U1, U2, U3, U4, U5, V0> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5, V0> {
   using type = T<U0, U1, U2, U3, U4, U5, V0>;
 };
 
@@ -221,11 +221,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1
 >
-struct app<T, U0, U1, U2, U3, U4, U5, V0, V1> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5, V0, V1> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1>;
 };
 
@@ -233,11 +233,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2
 >
-struct app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2>;
 };
 
@@ -245,11 +245,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2, typename V3
 >
-struct app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2, V3>;
 };
 
@@ -257,11 +257,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2, typename V3, typename V4
 >
-struct app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4>;
 };
 
@@ -269,11 +269,11 @@ template <
   template <
     typename, typename, typename, typename, typename, typename,
     typename, typename, typename, typename, typename, typename
-  > class T,
+  > typename T,
   typename U0, typename U1, typename U2, typename U3, typename U4, typename U5,
   typename V0, typename V1, typename V2, typename V3, typename V4, typename V5
 >
-struct app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4, V5> {
+struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4, V5> {
   using type = T<U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4, V5>;
 };
 

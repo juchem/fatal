@@ -12,9 +12,10 @@
 
 #include <fatal/benchmark/prevent_optimization.h>
 #include <fatal/container/optional.h>
+#include <fatal/time/units.h>
+
 #include <fatal/portability.h>
 #include <fatal/preprocessor.h>
-#include <fatal/time/time.h>
 
 #include <algorithm>
 #include <chrono>
@@ -48,7 +49,7 @@ namespace benchmark {
   )
 
 #define FATAL_IMPL_BENCHMARK(Class, Group, Name, UserLoop, Iterations) \
-  class Class { \
+  class FATAL_HIDE_SYMBOL Class { \
     using timer = ::fatal::benchmark::detail::registry::timer; \
     \
     ::fatal::benchmark::controller<timer> benchmark; \
@@ -101,7 +102,7 @@ using clock = std::chrono::high_resolution_clock;
 using duration = clock::duration;
 using iterations = std::uint_fast32_t;
 
-struct result_entry {
+struct FATAL_HIDE_SYMBOL result_entry {
 
 FATAL_DIAGNOSTIC_PUSH
 FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
@@ -156,13 +157,13 @@ using results = std::unordered_map<
 
 namespace detail {
 
-struct group_tag {};
-struct name_tag {};
+struct FATAL_HIDE_SYMBOL group_tag {};
+struct FATAL_HIDE_SYMBOL name_tag {};
 
-struct registry {
+struct FATAL_HIDE_SYMBOL registry {
   using time_point = clock::time_point;
 
-  struct timer {
+  struct FATAL_HIDE_SYMBOL timer {
     timer():
       elapsed_(0),
       running_(false)
@@ -191,7 +192,7 @@ struct registry {
   };
 
 private:
-  struct entry {
+  struct FATAL_HIDE_SYMBOL entry {
     virtual ~entry() {}
 
     virtual duration run(iterations) = 0;
@@ -200,7 +201,7 @@ private:
   };
 
   template <typename T>
-  struct entry_impl:
+  struct FATAL_HIDE_SYMBOL entry_impl:
     public entry
   {
     using type = T;
@@ -296,12 +297,12 @@ private:
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-struct controller {
+struct FATAL_HIDE_SYMBOL controller {
   using type = T;
 
   explicit controller(type &run): run_(run) {}
 
-  struct scoped_suspend {
+  struct FATAL_HIDE_SYMBOL scoped_suspend {
     explicit scoped_suspend(type *run): run_(run) {}
 
     scoped_suspend(scoped_suspend const &) = delete;
@@ -340,7 +341,7 @@ private:
   type &run_;
 };
 
-struct default_printer {
+struct FATAL_HIDE_SYMBOL default_printer {
   template <typename TOut>
   void operator ()(
     TOut &out,
@@ -361,7 +362,7 @@ struct default_printer {
           : decltype(period)(std::chrono::seconds(1)).count() / period.count();
 
         out << i.name() << ": period = " << period.count()
-          << ' ' << time::suffix(period) << ", frequency = ";
+          << ' ' << time::suffix_of(period) << ", frequency = ";
 
         if (inf) {
           out << "inf";
@@ -397,7 +398,7 @@ struct default_printer {
     }
 
     out << "total running time: " << running_time.count()
-      << ' ' << time::suffix(running_time) << '\n';
+      << ' ' << time::suffix_of(running_time) << '\n';
   }
 };
 

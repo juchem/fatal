@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_conditional_h
 #define FATAL_INCLUDE_fatal_type_conditional_h
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/conditional.h>
 
 namespace fatal {
@@ -21,7 +23,7 @@ namespace fatal {
  * build times compared to using `std::conditional` or `std::conditional_t`.
  */
 template <bool C, typename T, typename F>
-using conditional = typename impl_cnd::cond<C>::template apply<T, F>;
+using conditional = typename i_cnd::c<C>::template apply<T, F>;
 
 } // namespace fatal {
 

@@ -15,6 +15,8 @@
 #include <fatal/type/list.h>
 #include <fatal/type/slice.h>
 
+#include <fatal/portability.h>
+
 #include <chrono>
 #include <ratio>
 #include <string_view>
@@ -59,13 +61,15 @@ template <typename Period>
 using suffix_t = second<get<suffixes, Period>>;
 
 template <typename T>
-inline std::string_view suffix_of() {
-  using suffix = suffix_t<suffix_t<typename T::period>>;
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+std::string_view suffix_of() {
+  using suffix = suffix_t<typename T::period>;
   return {z_data<suffix>(), size<suffix>::value};
 }
 
 template <typename T>
-inline std::string_view suffix_of(T const &) {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+std::string_view suffix_of(T const &) {
   return suffix_of<T>();
 }
 

@@ -20,11 +20,12 @@
 namespace fatal {
 namespace impl_tm {
 
-template <typename...> struct pretty;
+template <typename...> struct FATAL_HIDE_SYMBOL pretty;
 
 template <typename T, typename... Args>
-struct pretty<T, Args...> {
+struct FATAL_HIDE_SYMBOL pretty<T, Args...> {
   template <typename Out, typename P, typename R>
+  FATAL_HIDE_SYMBOL
   static void print(Out &out, std::chrono::duration<R, P> time) {
     auto const local = std::chrono::duration_cast<std::chrono::duration<R, T>>(time);
 
@@ -43,8 +44,9 @@ struct pretty<T, Args...> {
 };
 
 template <>
-struct pretty<> {
+struct FATAL_HIDE_SYMBOL pretty<> {
   template <typename Out, typename D>
+  FATAL_HIDE_SYMBOL
   static void print(Out &, D) {}
 };
 

@@ -14,6 +14,8 @@
 #include <fatal/type/sort.h>
 #include <fatal/type/size.h>
 
+#include <fatal/portability.h>
+
 #include <chrono>
 #include <ratio>
 #include <utility>
@@ -23,6 +25,7 @@
 namespace fatal::time {
 
 template <typename Out, typename R, typename P>
+FATAL_HIDE_SYMBOL
 Out &&pretty_print(Out &&out, std::chrono::duration<R, P> time) {
   using ratios = reject<
     typename impl_tm::pretty_print_ratios, curry<applier<std::ratio_greater>, P>

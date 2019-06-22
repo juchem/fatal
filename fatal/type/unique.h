@@ -10,15 +10,17 @@
 #ifndef FATAL_INCLUDE_fatal_type_unique_h
 #define FATAL_INCLUDE_fatal_type_unique_h
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/unique.h>
 
 namespace fatal {
 
 template <typename T>
-using adjacent_unique = typename impl_uq::au<T>::type;
+using adjacent_unique = typename i_uq::au<T>::type;
 
 template <typename T, typename Comparer>
-using adjacent_unique_by = typename impl_uq::au<T, Comparer>::type;
+using adjacent_unique_by = typename i_uq::au<T, Comparer>::type;
 
 } // namespace fatal {
 

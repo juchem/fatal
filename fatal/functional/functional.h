@@ -14,6 +14,8 @@
 #include <fatal/functional/no_op.h>
 #include <fatal/type/scalar.h>
 
+#include <fatal/portability.h>
+
 #include <limits>
 #include <memory>
 #include <tuple>
@@ -47,8 +49,9 @@ namespace fn {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-struct default_constructed {
+struct FATAL_HIDE_SYMBOL default_constructed {
   template <typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T operator ()(Args &&...) const noexcept(noexcept(T())) {
     return T();
   }
@@ -74,10 +77,11 @@ struct default_constructed {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-struct constant {
+struct FATAL_HIDE_SYMBOL constant {
   using value_type = typename T::value_type;
 
   template <typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr value_type operator ()(Args &&...) const noexcept {
     return T::value;
   }
@@ -103,8 +107,9 @@ struct constant {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <std::size_t Index>
-struct std_get {
+struct FATAL_HIDE_SYMBOL std_get {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(T &&value) const
     noexcept(noexcept(std::get<Index>(std::forward<T>(value))))
     -> decltype(std::get<Index>(std::forward<T>(value)))
@@ -120,8 +125,9 @@ struct std_get {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-struct static_caster {
+struct FATAL_HIDE_SYMBOL static_caster {
   template <typename U>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T operator ()(U &&value) const
     noexcept(noexcept(static_cast<T>(std::forward<U>(value))))
   {
@@ -136,8 +142,9 @@ struct static_caster {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-struct reinterpret_caster {
+struct FATAL_HIDE_SYMBOL reinterpret_caster {
   template <typename U>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T operator ()(U &&value) const
     noexcept(noexcept(reinterpret_cast<T>(std::forward<U>(value))))
   {
@@ -152,8 +159,9 @@ struct reinterpret_caster {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-struct dynamic_caster {
+struct FATAL_HIDE_SYMBOL dynamic_caster {
   template <typename U>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T operator ()(U &&value) const
     noexcept(noexcept(dynamic_cast<T>(std::forward<U>(value))))
   {
@@ -167,8 +175,9 @@ struct dynamic_caster {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct dereferencer {
+struct FATAL_HIDE_SYMBOL dereferencer {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(T &&value) const
     noexcept(noexcept(*std::forward<T>(value)))
     -> decltype(*std::forward<T>(value))
@@ -183,8 +192,9 @@ struct dereferencer {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct address_of {
+struct FATAL_HIDE_SYMBOL address_of {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T *operator ()(T &value) const noexcept {
     return std::addressof(value);
   }
@@ -196,8 +206,9 @@ struct address_of {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct is_positive {
+struct FATAL_HIDE_SYMBOL is_positive {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()(T &&value) const
     noexcept(noexcept(value > static_cast<T>(0)))
   {
@@ -211,8 +222,9 @@ struct is_positive {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct not_positive {
+struct FATAL_HIDE_SYMBOL not_positive {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()(T &&value) const
     noexcept(noexcept(value <= static_cast<T>(0)))
   {
@@ -224,7 +236,8 @@ namespace detail {
 namespace functional_impl {
 
 template <typename T, bool = std::is_unsigned<T>::value>
-struct is_negative {
+struct FATAL_HIDE_SYMBOL is_negative {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool impl(T const &value)
     noexcept(noexcept(value >= static_cast<T>(0)))
   {
@@ -233,14 +246,16 @@ struct is_negative {
 };
 
 template <typename T>
-struct is_negative<T, true> {
+struct FATAL_HIDE_SYMBOL is_negative<T, true> {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool impl(T const &) noexcept {
     return false;
   }
 };
 
 template <typename T, bool = std::is_unsigned<T>::value>
-struct not_negative {
+struct FATAL_HIDE_SYMBOL not_negative {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool impl(T const &value)
     noexcept(noexcept(value >= static_cast<T>(0)))
   {
@@ -249,7 +264,8 @@ struct not_negative {
 };
 
 template <typename T>
-struct not_negative<T, true> {
+struct FATAL_HIDE_SYMBOL not_negative<T, true> {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool impl(T const &) noexcept {
     return true;
   }
@@ -267,8 +283,9 @@ struct not_negative<T, true> {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct is_negative {
+struct FATAL_HIDE_SYMBOL is_negative {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()(T &&value) const
     noexcept(noexcept(
       detail::functional_impl::is_negative<
@@ -290,8 +307,9 @@ struct is_negative {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct not_negative {
+struct FATAL_HIDE_SYMBOL not_negative {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()(T &&value) const
     noexcept(noexcept(
       detail::functional_impl::not_negative<
@@ -311,8 +329,9 @@ struct not_negative {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct equal {
+struct FATAL_HIDE_SYMBOL equal {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, RHS &&rhs) const
     noexcept(noexcept(std::forward<LHS>(lhs) == std::forward<RHS>(rhs)))
     -> decltype(std::forward<LHS>(lhs) == std::forward<RHS>(rhs))
@@ -327,8 +346,9 @@ struct equal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct not_equal {
+struct FATAL_HIDE_SYMBOL not_equal {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, RHS &&rhs) const
     noexcept(noexcept(std::forward<LHS>(lhs) != std::forward<RHS>(rhs)))
     -> decltype(std::forward<LHS>(lhs) != std::forward<RHS>(rhs))
@@ -343,8 +363,9 @@ struct not_equal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct less {
+struct FATAL_HIDE_SYMBOL less {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, RHS &&rhs) const
     noexcept(noexcept(std::forward<LHS>(lhs) < std::forward<RHS>(rhs)))
     -> decltype(std::forward<LHS>(lhs) < std::forward<RHS>(rhs))
@@ -359,8 +380,9 @@ struct less {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct less_equal {
+struct FATAL_HIDE_SYMBOL less_equal {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, RHS &&rhs) const
     noexcept(noexcept(std::forward<LHS>(lhs) <= std::forward<RHS>(rhs)))
     -> decltype(std::forward<LHS>(lhs) <= std::forward<RHS>(rhs))
@@ -375,8 +397,9 @@ struct less_equal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct greater {
+struct FATAL_HIDE_SYMBOL greater {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, RHS &&rhs) const
     noexcept(noexcept(std::forward<LHS>(lhs) > std::forward<RHS>(rhs)))
     -> decltype(std::forward<LHS>(lhs) > std::forward<RHS>(rhs))
@@ -391,8 +414,9 @@ struct greater {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct greater_equal {
+struct FATAL_HIDE_SYMBOL greater_equal {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, RHS &&rhs) const
     noexcept(noexcept(std::forward<LHS>(lhs) >= std::forward<RHS>(rhs)))
     -> decltype(std::forward<LHS>(lhs) >= std::forward<RHS>(rhs))
@@ -407,8 +431,9 @@ struct greater_equal {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct negate {
+struct FATAL_HIDE_SYMBOL negate {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(T &&value) const
     noexcept(noexcept(!std::forward<T>(value)))
     -> decltype(!std::forward<T>(value))
@@ -425,17 +450,20 @@ struct negate {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct logical_and {
+struct FATAL_HIDE_SYMBOL logical_and {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()() const noexcept {
     return true;
   }
 
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T &&operator ()(T &&value) const noexcept {
     return std::forward<T>(value);
   }
 
   template <typename LHS, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, Args &&...args) const
     noexcept(
       noexcept(
@@ -460,17 +488,20 @@ struct logical_and {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct logical_or {
+struct FATAL_HIDE_SYMBOL logical_or {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()() const noexcept {
     return false;
   }
 
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T &&operator ()(T &&value) const noexcept {
     return std::forward<T>(value);
   }
 
   template <typename LHS, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, Args &&...args) const
     noexcept(
       noexcept(
@@ -493,8 +524,9 @@ struct logical_or {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct ternary {
+struct FATAL_HIDE_SYMBOL ternary {
   template <typename C, typename T, typename F>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(C &&c, T &&t, F &&f) const
     noexcept(
       noexcept(std::forward<C>(c) ? std::forward<T>(t) : std::forward<F>(f))
@@ -511,8 +543,9 @@ struct ternary {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct complement {
+struct FATAL_HIDE_SYMBOL complement {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(T &&value) const
     noexcept(noexcept(~std::forward<T>(value)))
     -> decltype(~std::forward<T>(value))
@@ -530,13 +563,15 @@ struct complement {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct bitwise_and {
+struct FATAL_HIDE_SYMBOL bitwise_and {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T &&operator ()(T &&value) const noexcept {
     return std::forward<T>(value);
   }
 
   template <typename LHS, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, Args &&...args) const
     noexcept(
       noexcept(
@@ -562,13 +597,15 @@ struct bitwise_and {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct bitwise_or {
+struct FATAL_HIDE_SYMBOL bitwise_or {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T &&operator ()(T &&value) const noexcept {
     return std::forward<T>(value);
   }
 
   template <typename LHS, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, Args &&...args) const
     noexcept(
       noexcept(
@@ -594,13 +631,15 @@ struct bitwise_or {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct bitwise_xor {
+struct FATAL_HIDE_SYMBOL bitwise_xor {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T &&operator ()(T &&value) const noexcept {
     return std::forward<T>(value);
   }
 
   template <typename LHS, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr auto operator ()(LHS &&lhs, Args &&...args) const
     noexcept(
       noexcept(
@@ -650,8 +689,9 @@ struct bitwise_xor {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct placement_forward {
+struct FATAL_HIDE_SYMBOL placement_forward {
   template <typename T, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T *operator ()(T *to, Args &&...args) const
     noexcept(noexcept(new (to) T(std::forward<Args>(args)...)))
   {
@@ -688,8 +728,9 @@ struct placement_forward {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct placement_copy {
+struct FATAL_HIDE_SYMBOL placement_copy {
   template <typename T, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T *operator ()(T *to, Args const &...args) const
     noexcept(noexcept(new (to) T(args...)))
   {
@@ -727,8 +768,9 @@ struct placement_copy {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct placement_move {
+struct FATAL_HIDE_SYMBOL placement_move {
   template <typename T, typename... Args>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T *operator ()(T *to, Args &&...args) const
     noexcept(noexcept(new (to) T(std::move(args)...)))
   {
@@ -755,8 +797,9 @@ struct placement_move {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct forward_assigner {
+struct FATAL_HIDE_SYMBOL forward_assigner {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr LHS &operator ()(LHS &lhs, RHS &&rhs) const
     noexcept(noexcept(lhs = std::forward<RHS>(rhs)))
   {
@@ -779,8 +822,9 @@ struct forward_assigner {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct copy_assigner {
+struct FATAL_HIDE_SYMBOL copy_assigner {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr LHS &operator ()(LHS &lhs, RHS const &rhs) const
     noexcept(noexcept(lhs = rhs))
   {
@@ -804,8 +848,9 @@ struct copy_assigner {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct move_assigner {
+struct FATAL_HIDE_SYMBOL move_assigner {
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr LHS &operator ()(LHS &lhs, RHS &&rhs) const
     noexcept(noexcept(lhs = std::move(rhs)))
   {
@@ -817,7 +862,7 @@ namespace detail {
 namespace tuple_comparer_impl {
 
 template <int Index>
-struct index_traits {
+struct FATAL_HIDE_SYMBOL index_traits {
   using reversed = bool_constant<(Index < 0)>;
 
   static_assert(Index >= 0 || -(Index + 1) >= 0, "internal error");
@@ -895,13 +940,14 @@ struct index_traits {
 template <int...> class tuple_comparer;
 
 template <int HeadIndex, int... TailIndexes>
-class tuple_comparer<HeadIndex, TailIndexes...> {
+class FATAL_HIDE_SYMBOL tuple_comparer<HeadIndex, TailIndexes...> {
   using traits = detail::tuple_comparer_impl::index_traits<HeadIndex>;
   using head = tuple_comparer<HeadIndex>;
   using tail = tuple_comparer<TailIndexes...>;
 
 public:
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()(LHS const &lhs, RHS const &rhs) const
     noexcept(
       noexcept(
@@ -920,11 +966,12 @@ public:
 };
 
 template <int Index>
-class tuple_comparer<Index> {
+class FATAL_HIDE_SYMBOL tuple_comparer<Index> {
   using traits = detail::tuple_comparer_impl::index_traits<Index>;
 
 public:
   template <typename LHS, typename RHS>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr bool operator ()(LHS const &lhs, RHS const &rhs) const
     noexcept(
       noexcept(

@@ -10,7 +10,6 @@
 #ifndef FATAL_INCLUDE_fatal_type_traits_h
 #define FATAL_INCLUDE_fatal_type_traits_h
 
-#include <fatal/preprocessor.h>
 #include <fatal/type/constify.h>
 #include <fatal/type/constify_from.h>
 #include <fatal/type/compilability.h>
@@ -25,6 +24,9 @@
 #include <fatal/type/scalar.h>
 #include <fatal/type/sequence.h>
 
+#include <fatal/portability.h>
+#include <fatal/preprocessor.h>
+
 #include <type_traits>
 #include <utility>
 
@@ -37,6 +39,7 @@ namespace fatal {
 //////////////
 
 template <typename T, typename... Args>
+FATAL_HIDE_SYMBOL
 constexpr bool all_same_v = (std::is_same_v<T, Args> && ... && true);
 
 template <typename T, typename... Args>
@@ -75,9 +78,9 @@ using all_same = std::bool_constant<all_same_v<T, Args...>>;
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-template <template <typename...> class... Templates>
-class is_template {
-  template <template <typename...> class Template, typename T>
+template <template <typename...> typename... Templates>
+class FATAL_HIDE_SYMBOL is_template {
+  template <template <typename...> typename Template, typename T>
   using impl = is_complete<i_trt::ist<Template, T>>;
 
 public:
@@ -94,13 +97,16 @@ public:
   using all = std::bool_constant<(sizeof...(T) && ... && apply_v<T>)>;
 };
 
-template <template <typename...> class Template, typename T>
+template <template <typename...> typename Template, typename T>
+FATAL_HIDE_SYMBOL
 constexpr bool is_template_v = is_template<Template>::template apply<T>::value;
 
-template <template <typename...> class Template, typename... T>
+template <template <typename...> typename Template, typename... T>
+FATAL_HIDE_SYMBOL
 constexpr bool is_template_any_v = is_template<Template>::template any<T...>::value;
 
-template <template <typename...> class Template, typename... T>
+template <template <typename...> typename Template, typename... T>
+FATAL_HIDE_SYMBOL
 constexpr bool is_template_all_v = is_template<Template>::template all<T...>::value;
 
 /////////////////
@@ -109,7 +115,7 @@ constexpr bool is_template_all_v = is_template<Template>::template all<T...>::va
 
 namespace detail {
 namespace traits_impl {
-template <typename T, bool = std::is_enum<T>::value> struct integral_of;
+template <typename T, bool = std::is_enum<T>::value> struct FATAL_HIDE_SYMBOL integral_of;
 } // namespace traits_impl {
 } // namespace detail {
 
@@ -161,7 +167,8 @@ using integral_of = typename detail::traits_impl::integral_of<T>::type;
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 template <typename T>
-integral_of<typename std::decay<T>::type> as_integral(T value) noexcept {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr integral_of<typename std::decay<T>::type> as_integral(T value) noexcept {
   return detail::traits_impl::integral_of<
     typename std::decay<T>::type
   >::convert(value);
@@ -173,7 +180,8 @@ integral_of<typename std::decay<T>::type> as_integral(T value) noexcept {
 
 namespace detail {
 namespace traits_impl {
-template <typename...> class is_callable;
+template <typename...>
+class FATAL_HIDE_SYMBOL is_callable;
 } // namespace traits_impl {
 } // namespace detail {
 
@@ -245,7 +253,7 @@ using is_callable = typename detail::traits_impl::is_callable<Args...>
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct enable_when {
+struct FATAL_HIDE_SYMBOL enable_when {
   /**
    * Helps conditionally enable methods when the given `Predicate` provides a
    * `value` member that evaluates to `true`.
@@ -634,23 +642,25 @@ namespace traits_impl {
 /////////////////
 
 template <typename T, bool IsEnum>
-struct integral_of {
+struct FATAL_HIDE_SYMBOL integral_of {
   static_assert(IsEnum, "wrong specialization");
 
   using type = typename std::underlying_type<T>::type;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static type convert(T value) { return static_cast<type>(value); }
 };
 
 template <typename T, T Value>
-struct integral_of<std::integral_constant<T, Value>, false> {
+struct FATAL_HIDE_SYMBOL integral_of<std::integral_constant<T, Value>, false> {
   using type = T;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static type convert(T) { return Value; }
 };
 
 template <typename T>
-struct integral_of<T, false> {
+struct FATAL_HIDE_SYMBOL integral_of<T, false> {
   static_assert(
     std::is_integral<T>::value,
     "type does not represent an integral"
@@ -658,6 +668,7 @@ struct integral_of<T, false> {
 
   using type = T;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static type convert(T value) { return value; }
 };
 
@@ -666,8 +677,8 @@ struct integral_of<T, false> {
 /////////////////
 
 template <typename... Args>
-class is_callable {
-  struct impl {
+class FATAL_HIDE_SYMBOL is_callable {
+  struct FATAL_HIDE_SYMBOL impl {
     template <
       typename T,
       typename = decltype(
@@ -676,9 +687,11 @@ class is_callable {
         )
       )
     >
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     static std::true_type sfinae(T *);
 
     template <typename = void>
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     static std::false_type sfinae(...);
   };
 

@@ -10,11 +10,13 @@
 #ifndef FATAL_INCLUDE_fatal_type_array_h
 #define FATAL_INCLUDE_fatal_type_array_h
 
-#include <fatal/type/impl/array.h>
-
 #include <fatal/type/identity.h>
 #include <fatal/type/sequence.h>
 #include <fatal/type/size.h>
+
+#include <fatal/portability.h>
+
+#include <fatal/type/impl/array.h>
 
 namespace fatal {
 
@@ -33,6 +35,7 @@ template <typename Array, typename... T>
 using as_array = i_a::C<Array, T...>;
 
 template <typename Array, typename... T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr typename std::decay<
   decltype(i_a::z<Array, T...>::data)
 >::type z_data() {

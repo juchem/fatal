@@ -13,8 +13,8 @@
 namespace fatal {
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_10_words = List<
   Sequence<char, 'c', 'a', 'l', 'e', 'n', 'd', 'a', 'r'>,
@@ -30,8 +30,8 @@ using random_10_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_25_words = List<
   Sequence<char, 'e', 'x', 't', 'r', 'a', 't', 'e', 'r', 'r', 'e', 's', 't', 'r', 'i', 'a', 'l'>,
@@ -62,8 +62,8 @@ using random_25_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_50_words = List<
   Sequence<char, 'c', 'u', 'r', 'r', 'e', 'n', 't'>,
@@ -119,8 +119,8 @@ using random_50_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_75_words = List<
   Sequence<char, 'l', 'o', 'o', 'k'>,
@@ -201,8 +201,8 @@ using random_75_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_100_words = List<
   Sequence<char, 'o', 'b', 's', 'e', 'r', 'v', 'e', 'r'>,
@@ -308,8 +308,8 @@ using random_100_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_250_words = List<
   Sequence<char, 'f', 'l', 'a', 'v', 'o', 'r'>,
@@ -565,8 +565,8 @@ using random_250_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_500_words = List<
   Sequence<char, 'c', 'e', 'n', 's', 'u', 's'>,
@@ -1072,8 +1072,8 @@ using random_500_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_750_words = List<
   Sequence<char, 'p', 'e', 'r', 'c', 'e', 'i', 'v', 'e'>,
@@ -1829,8 +1829,8 @@ using random_750_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_900_words = List<
 	Sequence<char, 'r', 'a', 't', 'i', 'o'>,
@@ -2736,8 +2736,8 @@ using random_900_words = List<
 >;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Sequence
+  template <typename...> typename List,
+  template <typename V, V...> typename Sequence
 >
 using random_1000_words = List<
 	Sequence<char, 'm', 'e', 'r', 'c', 'h', 'a', 'n', 't'>,

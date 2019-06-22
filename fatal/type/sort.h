@@ -16,12 +16,14 @@
 #include <fatal/type/pair.h>
 #include <fatal/type/slice.h>
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/sort.h>
 
 namespace fatal {
 
 // `Pair` is guaranteed to be instantiated at most once
-template <typename T, typename Filter, template <typename...> class Pair = pair>
+template <typename T, typename Filter, template <typename...> typename Pair = pair>
 using partition = typename i_s::P<Pair, T, Filter>::type;
 
 template <typename T, typename Predicate>

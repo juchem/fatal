@@ -14,10 +14,10 @@ namespace fatal {
 namespace i_A {
 
 // TODO: Implement a version for  sequences
-template <typename...> struct a;
+template <typename...> struct FATAL_HIDE_SYMBOL a;
 
 template <typename Fn, typename Seed>
-struct a<Fn, Seed> {
+struct FATAL_HIDE_SYMBOL a<Fn, Seed> {
   using type = Seed;
 };
 
@@ -27,25 +27,25 @@ template <
   typename T,
   typename... Args
 >
-struct a<Fn, Seed, T, Args...>:
+struct FATAL_HIDE_SYMBOL a<Fn, Seed, T, Args...>:
   a<Fn, typename Fn::template apply<Seed, T>, Args...>
 {};
 
-template <typename...> struct F;
+template <typename...> struct FATAL_HIDE_SYMBOL F;
 
 template <
   typename Seed,
   typename Fn,
-  template <typename...> class V,
+  template <typename...> typename V,
   typename... Args
 >
-struct F<Seed, Fn, V<Args...>>:
+struct FATAL_HIDE_SYMBOL F<Seed, Fn, V<Args...>>:
   a<Fn, Seed, Args...>
 {};
 
 // default metafunction //
 // TODO: TEST DEFAULT METAFUNCTION
-struct f {
+struct FATAL_HIDE_SYMBOL f {
   template <typename Seed, typename T>
   using apply = typename Seed::template apply<T>;
 };

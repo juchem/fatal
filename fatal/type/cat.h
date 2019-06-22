@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_cat_h
 #define FATAL_INCLUDE_fatal_type_cat_h
 
-#include <fatal/type/debug.h>
+#include <fatal/portability.h>
 
 #include <fatal/type/impl/cat.h>
 

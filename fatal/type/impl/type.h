@@ -12,42 +12,49 @@
 
 #include <fatal/type/tag.h>
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 
 namespace fatal {
 namespace impl_t {
 
 template <typename T, typename = typename T::type>
+FATAL_HIDE_SYMBOL
 std::true_type s(T *);
+
+FATAL_HIDE_SYMBOL
 std::false_type s(...);
 
 template <typename T, bool = decltype(s(static_cast<T *>(nullptr)))::value>
-struct to;
+struct FATAL_HIDE_SYMBOL to;
 
 template <typename T>
-struct to<T, true> {
+struct FATAL_HIDE_SYMBOL to<T, true> {
   using type = typename T::type;
 };
 
-template <template <typename V, V...> class Variadics, typename T, T... Values>
-struct to<Variadics<T, Values...>, false> {
+template <template <typename V, V...> typename Variadics, typename T, T... Values>
+struct FATAL_HIDE_SYMBOL to<Variadics<T, Values...>, false> {
   using type = T;
 };
 
 template <typename T, typename = typename T::value_type>
+FATAL_HIDE_SYMBOL
 std::true_type S(T *);
+FATAL_HIDE_SYMBOL
 std::false_type S(...);
 
 template <typename T, bool = decltype(S(static_cast<T *>(nullptr)))::value>
-struct vto;
+struct FATAL_HIDE_SYMBOL vto;
 
 template <typename T>
-struct vto<T, true> {
+struct FATAL_HIDE_SYMBOL vto<T, true> {
   using type = typename T::value_type;
 };
 
-template <template <typename V, V...> class Variadics, typename T, T... Values>
-struct vto<Variadics<T, Values...>, false> {
+template <template <typename V, V...> typename Variadics, typename T, T... Values>
+struct FATAL_HIDE_SYMBOL vto<Variadics<T, Values...>, false> {
   using type = T;
 };
 

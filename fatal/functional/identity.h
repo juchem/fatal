@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_functional_identity_h
 #define FATAL_INCLUDE_fatal_functional_identity_h
 
+#include <fatal/portability.h>
+
 #include <utility>
 
 namespace fatal {
@@ -37,8 +39,9 @@ namespace fn {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-struct identity {
+struct FATAL_HIDE_SYMBOL identity {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   constexpr T &&operator ()(T &&value) const noexcept {
     return std::forward<T>(value);
   }

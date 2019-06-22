@@ -15,6 +15,8 @@
 #include <fatal/type/transform.h>
 #include <fatal/type/trie.h>
 
+#include <fatal/portability.h>
+
 #include <fatal/test/driver.h>
 
 #include <type_traits>
@@ -39,11 +41,11 @@ FATAL_S(field2, "field2");
 using fld_tree = list<field, field10, field2>;
 
 template <typename T>
-struct wrapper {
+struct FATAL_HIDE_SYMBOL wrapper {
   using value = T;
 };
 
-struct seq {
+struct FATAL_HIDE_SYMBOL seq {
   using gooey = sequence<char, 'g', 'o', 'o', 'e', 'y'>;
   using fast = sequence<char, 'f', 'a', 's', 't'>;
   using granite = sequence<char, 'g', 'r', 'a', 'n', 'i', 't', 'e'>;
@@ -71,7 +73,7 @@ struct seq {
   >;
 };
 
-struct lst {
+struct FATAL_HIDE_SYMBOL lst {
   using gooey = as_list<seq::gooey>;
   using fast = as_list<seq::fast>;
   using granite = as_list<seq::granite>;
@@ -103,11 +105,12 @@ struct lst {
 // match_* helpers //
 /////////////////////
 
-template <typename...> struct check_trie_find_visitor;
+template <typename...> struct FATAL_HIDE_SYMBOL check_trie_find_visitor;
 
 template <typename Expected, typename Filter>
-struct check_trie_find_visitor<Expected, Filter> {
+struct FATAL_HIDE_SYMBOL check_trie_find_visitor<Expected, Filter> {
   template <typename Match, typename NeedleChar>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void operator ()(
     tag<Match>,
     std::basic_string<NeedleChar> const &needle,
@@ -121,13 +124,14 @@ struct check_trie_find_visitor<Expected, Filter> {
 };
 
 template <typename Expected>
-struct check_trie_find_visitor<Expected>:
+struct FATAL_HIDE_SYMBOL check_trie_find_visitor<Expected>:
   check_trie_find_visitor<Expected, get_identity>
 {};
 
 template <>
-struct check_trie_find_visitor<void> {
+struct FATAL_HIDE_SYMBOL check_trie_find_visitor<void> {
   template <typename String, typename... VArgs>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void operator ()(tag<String>, VArgs &&...) {
     FATAL_EXPECT_EQ(
       "no match expected",
@@ -137,6 +141,7 @@ struct check_trie_find_visitor<void> {
 };
 
 template <typename Expected, typename Tree, typename... Filter>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void check_trie_find_impl(std::string const &needle) {
   check_trie_find_visitor<Expected, Filter...> visitor;
 
@@ -150,6 +155,7 @@ void check_trie_find_impl(std::string const &needle) {
   FATAL_EXPECT_EQ(expected, matches);
 }
 template <typename Tree, typename Expected = void>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void check_trie_find(std::string const &needle) {
   check_trie_find_impl<Expected, Tree>(needle);
   check_trie_find_impl<
@@ -208,8 +214,9 @@ FATAL_TEST(trie, find variations) {
   } while (false)
 
 template <typename Expected>
-struct test_trie_find_visitor {
+struct FATAL_HIDE_SYMBOL test_trie_find_visitor {
   template <typename Needle>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void operator ()(tag<Needle>) const {
     FATAL_EXPECT_SAME<Expected, Needle>();
   }

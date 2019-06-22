@@ -12,7 +12,6 @@
 
 #include <fatal/portability.h>
 #include <fatal/preprocessor.h>
-#include <fatal/type/debug.h>
 
 #include <utility>
 

@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_test_random_data_h
 #define FATAL_INCLUDE_fatal_test_random_data_h
 
+#include <fatal/portability.h>
+
 #include <array>
 #include <iterator>
 #include <random>
@@ -30,20 +32,26 @@ static std::size_t random_seed() {
 
 } // namespace impl_rng {
 
-struct random_data {
+struct FATAL_HIDE_SYMBOL random_data {
   using rng_type = std::mt19937;
   using result_type = typename rng_type::result_type;
 
+  FATAL_HIDE_SYMBOL
   random_data(): rng_(impl_rng::random_seed()) {}
 
+  FATAL_HIDE_SYMBOL
   result_type next() { return rng_(); }
+
+  FATAL_HIDE_SYMBOL
   result_type operator ()() { return rng_(); }
 
+  FATAL_HIDE_SYMBOL
   bool coin_flip() {
     return rng_() & (result_type(1) << (sizeof(result_type) * CHAR_BIT / 2));
   }
 
   template <typename Iterator>
+  FATAL_HIDE_SYMBOL
   void string(
     Iterator begin,
     Iterator end,
@@ -60,6 +68,7 @@ struct random_data {
     }
   }
 
+  FATAL_HIDE_SYMBOL
   std::string string(
     std::size_t size,
     char const *alphabet,
@@ -72,6 +81,7 @@ struct random_data {
     return result;
   }
 
+  FATAL_HIDE_SYMBOL
   std::string string(std::size_t size) {
     auto const alphabet = "0123456789"
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -81,6 +91,7 @@ struct random_data {
   }
 
   template <typename T>
+  FATAL_HIDE_SYMBOL
   std::size_t chop(std::size_t size, T &&fn) {
     std::size_t chunks = 0;
 
@@ -96,6 +107,7 @@ struct random_data {
   }
 
   template <typename T, typename Iterator>
+  FATAL_HIDE_SYMBOL
   std::size_t chop(Iterator begin, Iterator const end, T &&fn) {
     assert(begin <= end);
 
@@ -112,6 +124,7 @@ struct random_data {
     );
   }
   
+  FATAL_HIDE_SYMBOL
   std::vector<std::string> chop(std::string const &s) {
     std::vector<std::string> result;
 
@@ -127,7 +140,10 @@ struct random_data {
     return result;
   }
 
+  FATAL_HIDE_SYMBOL
   static constexpr result_type min() { return rng_type::min(); }
+
+  FATAL_HIDE_SYMBOL
   static constexpr result_type max() { return rng_type::max(); }
 
 private:

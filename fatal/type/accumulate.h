@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_accumulate_h
 #define FATAL_INCLUDE_fatal_type_accumulate_h
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/accumulate.h>
 
 namespace fatal {

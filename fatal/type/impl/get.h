@@ -17,12 +17,13 @@ namespace fatal {
 namespace impl_gt {
 
 template <typename Key, typename Value>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static Value f(pair<Key, Value>);
 
-template <typename> struct g;
+template <typename> struct FATAL_HIDE_SYMBOL g;
 
-template <template <typename...> class List, typename... Args>
-struct g<List<Args...>> {
+template <template <typename...> typename List, typename... Args>
+struct FATAL_HIDE_SYMBOL g<List<Args...>> {
   template <typename Key, typename KeyFilter, typename PostFilter>
   using apply = typename PostFilter::template apply<decltype(f<Key>(
     inherit<pair<typename KeyFilter::template apply<Args>, Args>...>())

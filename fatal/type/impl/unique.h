@@ -12,8 +12,10 @@
 
 #include <fatal/type/list.h>
 
+#include <fatal/portability.h>
+
 namespace fatal {
-namespace impl_uq {
+namespace i_uq {
 
 /////////////////////
 // adjacent_unique //
@@ -21,38 +23,38 @@ namespace impl_uq {
 
 // TODO: OPTIMIZE
 // unique recursion //
-template <template <typename...> class, typename...> struct a;
+template <template <typename...> typename, typename...> struct FATAL_HIDE_SYMBOL a;
 
 // unique //
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... Result,
   typename T,
   typename U,
   typename... Args
 >
-struct a<Variadic, list<Result...>, T, U, Args...>:
+struct FATAL_HIDE_SYMBOL a<Variadic, list<Result...>, T, U, Args...>:
   a<Variadic, list<Result..., T>, U, Args...>
 {};
 
 // duplicate //
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... Result,
   typename T,
   typename... Args
 >
-struct a<Variadic, list<Result...>, T, T, Args...>:
+struct FATAL_HIDE_SYMBOL a<Variadic, list<Result...>, T, T, Args...>:
   a<Variadic, list<Result...>, T, Args...>
 {};
 
 // base case //
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... Result,
   typename T
 >
-struct a<Variadic, list<Result...>, T> {
+struct FATAL_HIDE_SYMBOL a<Variadic, list<Result...>, T> {
   using type = Variadic<Result..., T>;
 };
 
@@ -61,18 +63,18 @@ struct a<Variadic, list<Result...>, T> {
 ////////////////////////
 
 // unique recursion //
-template <bool, template <typename...> class, typename...> struct A;
+template <bool, template <typename...> typename, typename...> struct FATAL_HIDE_SYMBOL A;
 
 // unique //
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename Comparer,
   typename... Result,
   typename LHS,
   typename RHS,
   typename... Args
 >
-struct A<
+struct FATAL_HIDE_SYMBOL A<
   false,
   Variadic,
   Comparer,
@@ -87,14 +89,14 @@ struct A<
 
 // duplicate //
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename Comparer,
   typename... Result,
   typename LHS,
   typename RHS,
   typename... Args
 >
-struct A<true, Variadic, Comparer, list<Result...>, LHS, RHS, Args...>:
+struct FATAL_HIDE_SYMBOL A<true, Variadic, Comparer, list<Result...>, LHS, RHS, Args...>:
   A<
     Comparer::template apply<LHS, RHS>::value,
     Variadic, Comparer, list<Result...>, RHS, Args...
@@ -103,23 +105,23 @@ struct A<true, Variadic, Comparer, list<Result...>, LHS, RHS, Args...>:
 
 // base case //
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename Comparer,
   typename... Result,
   typename T
 >
-struct A<false, Variadic, Comparer, list<Result...>, T> {
+struct FATAL_HIDE_SYMBOL A<false, Variadic, Comparer, list<Result...>, T> {
   using type = Variadic<Result..., T>;
 };
 
 // base case //
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename Comparer,
   typename... Result,
   typename T
 >
-struct A<true, Variadic, Comparer, list<Result...>, T> {
+struct FATAL_HIDE_SYMBOL A<true, Variadic, Comparer, list<Result...>, T> {
   using type = Variadic<Result...>;
 };
 
@@ -128,31 +130,31 @@ struct A<true, Variadic, Comparer, list<Result...>, T> {
 /////////////////
 
 // unique entry point //
-template <typename...> struct au;
+template <typename...> struct FATAL_HIDE_SYMBOL au;
 
-template <template <typename...> class Variadic, typename... Args>
-struct au<Variadic<Args...>>: a<Variadic, list<>, Args...> {};
+template <template <typename...> typename Variadic, typename... Args>
+struct FATAL_HIDE_SYMBOL au<Variadic<Args...>>: a<Variadic, list<>, Args...> {};
 
-template <template <typename...> class Variadic>
-struct au<Variadic<>> {
+template <template <typename...> typename Variadic>
+struct FATAL_HIDE_SYMBOL au<Variadic<>> {
   using type = Variadic<>;
 };
 
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... Args,
   typename Comparer
 >
-struct au<Variadic<Args...>, Comparer>:
+struct FATAL_HIDE_SYMBOL au<Variadic<Args...>, Comparer>:
   A<false, Variadic, Comparer, list<>, Args...>
 {};
 
-template <template <typename...> class Variadic, typename Comparer>
-struct au<Variadic<>, Comparer> {
+template <template <typename...> typename Variadic, typename Comparer>
+struct FATAL_HIDE_SYMBOL au<Variadic<>, Comparer> {
   using type = Variadic<>;
 };
 
-} // namespace impl_uq {
+} // namespace i_uq {
 } // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_unique_h

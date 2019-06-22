@@ -46,8 +46,8 @@ namespace rope_impl {
 
 // optimized for rope
 template <typename TData>
-class variant {
-  enum class id_type: unsigned char { string, reference, character };
+class FATAL_HIDE_SYMBOL variant {
+  enum class FATAL_HIDE_SYMBOL id_type: unsigned char { string, reference, character };
 
 public:
   using size_type = std::size_t;
@@ -239,7 +239,7 @@ private:
 
 // optimized for rope
 template <typename T, std::size_t SmallBufferSize = 8>
-struct vector {
+struct FATAL_HIDE_SYMBOL vector {
   using value_type = T;
   using const_reference = value_type const &;
   using rvalue_reference = value_type &&;
@@ -646,7 +646,7 @@ public:
    *
    * @author: Marcelo Juchem
    */
-  struct const_iterator:
+  struct FATAL_HIDE_SYMBOL const_iterator:
     public std::iterator<
       std::bidirectional_iterator_tag,
       value_type,
@@ -1639,7 +1639,7 @@ public:
     return compare(std::forward<T>(rhs)) > 0;
   }
 
-  struct hasher {
+  struct FATAL_HIDE_SYMBOL hasher {
     using argument = rope;
     using result_type = std::size_t;
 

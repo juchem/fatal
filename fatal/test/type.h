@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_test_type_h
 #define FATAL_INCLUDE_fatal_test_type_h
 
+#include <fatal/portability.h>
+
 #include <string>
 #include <type_traits>
 #include <typeinfo>
@@ -20,6 +22,7 @@
 
 namespace fatal {
 
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string type_str(std::string &out, std::type_info const &type) {
 # ifdef __GLIBCXX__
   int status;
@@ -37,6 +40,7 @@ std::string type_str(std::string &out, std::type_info const &type) {
 }
 
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string &type_str(std::string &out) {
   type_str(out, typeid(T));
 
@@ -60,12 +64,14 @@ std::string &type_str(std::string &out) {
 }
 
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string type_str() {
   std::string result;
   type_str<T>(result);
   return result;
 }
 
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string type_str(std::type_info const &type) {
   std::string result;
   type_str(result, type);

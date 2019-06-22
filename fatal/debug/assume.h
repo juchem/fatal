@@ -10,6 +10,8 @@
 #include <fatal/debug/debug.h>
 #include <fatal/log/log.h>
 
+#include <fatal/portability.h>
+
 #ifndef FATAL_INCLUDE_fatal_debug_assume_h
 #define FATAL_INCLUDE_fatal_debug_assume_h
 
@@ -214,12 +216,14 @@ namespace assume_impl {
 ////////////////////////
 
 template <typename Assumption>
-struct nullary_assumption {
+struct FATAL_HIDE_SYMBOL nullary_assumption {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   nullary_assumption(char const *file, long long line, char const *assumption):
     file_(file), line_(line), assumption_(assumption)
   {}
 
   template <typename TOut>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   TOut &&print(TOut &&out) const {
     out << "\nassumption " << (eval() ? "succeeded" : "failed") << " at "
       << file_ << ':' << line_ << ":\n\t" << assumption_;
@@ -227,19 +231,27 @@ struct nullary_assumption {
     return std::forward<TOut>(out);
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   bool eval() const {
     return Assumption()();
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   explicit operator bool() const { return eval(); }
 
 private:
+  FATAL_HIDE_SYMBOL
   char const *file_;
+
+  FATAL_HIDE_SYMBOL
   long long line_;
+
+  FATAL_HIDE_SYMBOL
   char const *assumption_;
 };
 
 template <typename Assumption, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 nullary_assumption<Assumption> create_nullary_assumption(Args &&...args) {
   return nullary_assumption<Assumption>(std::forward<Args>(args)...);
 }
@@ -249,7 +261,8 @@ nullary_assumption<Assumption> create_nullary_assumption(Args &&...args) {
 //////////////////////
 
 template <typename Assumption, typename TValue>
-struct unary_assumption {
+struct FATAL_HIDE_SYMBOL unary_assumption {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   unary_assumption(
     TValue const &value, char const *value_str,
     char const *file, long long line, char const *assumption
@@ -259,6 +272,7 @@ struct unary_assumption {
   {}
 
   template <typename TOut>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   TOut &&print(TOut &&out) const {
     out << "\nassumption " << (eval() ? "succeeded" : "failed") << " at "
       << file_ << ':' << line_ << ':'
@@ -268,22 +282,33 @@ struct unary_assumption {
     return std::forward<TOut>(out);
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   bool eval() const {
     return Assumption()(value_);
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   explicit operator bool() const { return eval(); }
 
 private:
+  FATAL_HIDE_SYMBOL
   TValue const &value_;
+
+  FATAL_HIDE_SYMBOL
   char const *value_str_;
 
+  FATAL_HIDE_SYMBOL
   char const *file_;
+
+  FATAL_HIDE_SYMBOL
   long long line_;
+
+  FATAL_HIDE_SYMBOL
   char const *assumption_;
 };
 
 template <typename Assumption, typename TValue, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 unary_assumption<Assumption, TValue> create_unary_assumption(
   TValue const &value, Args &&...args
 ) {
@@ -297,7 +322,8 @@ unary_assumption<Assumption, TValue> create_unary_assumption(
 ///////////////////////
 
 template <typename Assumption, typename TLHS, typename TRHS>
-struct binary_assumption {
+struct FATAL_HIDE_SYMBOL binary_assumption {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   binary_assumption(
     TLHS const &lhs, TRHS const &rhs,
     char const *lhs_str, char const *rhs_str,
@@ -309,6 +335,7 @@ struct binary_assumption {
   {}
 
   template <typename TOut>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   TOut &&print(TOut &&out) const {
     out << "\nassumption " << (eval() ? "succeeded" : "failed") << " at "
       << file_ << ':' << line_ << ':'
@@ -319,23 +346,39 @@ struct binary_assumption {
     return std::forward<TOut>(out);
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   bool eval() const {
     return Assumption()(lhs_, rhs_);
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   explicit operator bool() const { return eval(); }
 
 private:
+  FATAL_HIDE_SYMBOL
   TLHS const &lhs_;
+
+  FATAL_HIDE_SYMBOL
   TRHS const &rhs_;
+
+  FATAL_HIDE_SYMBOL
   char const *lhs_str_;
+
+  FATAL_HIDE_SYMBOL
   char const *rhs_str_;
+
+  FATAL_HIDE_SYMBOL
   char const *file_;
+
+  FATAL_HIDE_SYMBOL
   long long line_;
+
+  FATAL_HIDE_SYMBOL
   char const *assumption_;
 };
 
 template <typename Assumption, typename TLHS, typename TRHS, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 binary_assumption<Assumption, TLHS, TRHS> create_binary_assumption(
   TLHS const &lhs, TRHS const &rhs, Args &&...args
 ) {
@@ -349,9 +392,11 @@ binary_assumption<Assumption, TLHS, TRHS> create_binary_assumption(
 ///////////////////////
 
 template <typename TOut>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void print_assumptions(TOut &&) {}
 
 template <typename TOut, typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void print_assumptions(TOut &&out, T &&assumption, Args &&...args) {
   assumption.print(out);
   print_assumptions(std::forward<TOut>(out), std::forward<Args>(args)...);
@@ -362,9 +407,11 @@ void print_assumptions(TOut &&out, T &&assumption, Args &&...args) {
 //////////////////////////
 
 template <typename TOut>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void print_assumptions_if(TOut &&, bool) {}
 
 template <typename TOut, typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void print_assumptions_if(
   TOut &&out, bool condition, T &&assumption, Args &&...args
 ) {
@@ -382,9 +429,11 @@ void print_assumptions_if(
 ///////////////////////
 
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::size_t count_assumptions(T &&assumption) { return assumption.eval(); }
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::size_t count_assumptions(T &&assumption, Args &&...args) {
   return assumption.eval() + count_assumptions(std::forward<Args>(args)...);
 }
@@ -394,6 +443,7 @@ std::size_t count_assumptions(T &&assumption, Args &&...args) {
 ///////////////////
 
 template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_single(T &&assumption) {
   if (!assumption.eval()) {
     assumption.print(FATAL_LOG(FATAL));
@@ -406,6 +456,7 @@ void assume_single(T &&assumption) {
 ////////////////
 
 template <typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_one(Args &&...args) {
   auto const n = count_assumptions(args...);
 
@@ -423,10 +474,11 @@ void assume_one(Args &&...args) {
 // assume_any //
 ////////////////
 
-
-inline bool assume_any_impl() { return false; }
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+bool assume_any_impl() { return false; }
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 bool assume_any_impl(T &&assumption, Args &&...args) {
   if (assumption.eval()) {
     return true;
@@ -436,6 +488,7 @@ bool assume_any_impl(T &&assumption, Args &&...args) {
 }
 
 template <typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_any(Args &&...args) {
   if (!assume_any_impl(std::forward<Args>(args)...)) {
     print_assumptions(
@@ -450,9 +503,11 @@ void assume_any(Args &&...args) {
 // assume_all //
 ////////////////
 
-inline void assume_all_impl() {}
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+void assume_all_impl() {}
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_all_impl(T &&assumption, Args &&...args) {
   if (!assumption.eval()) {
     print_assumptions_if(
@@ -468,6 +523,7 @@ void assume_all_impl(T &&assumption, Args &&...args) {
 }
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_all(T &&assumption, Args &&...args) {
   assume_all_impl(std::forward<T>(assumption), std::forward<Args>(args)...);
 }
@@ -476,9 +532,11 @@ void assume_all(T &&assumption, Args &&...args) {
 // assume_none //
 /////////////////
 
-inline void assume_none_impl() {}
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+void assume_none_impl() {}
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_none_impl(T &&assumption, Args &&...args) {
   if (assumption.eval()) {
     print_assumptions_if(
@@ -494,6 +552,7 @@ void assume_none_impl(T &&assumption, Args &&...args) {
 }
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_none(T &&assumption, Args &&...args) {
   assume_none_impl(std::forward<T>(assumption), std::forward<Args>(args)...);
 }
@@ -502,15 +561,18 @@ void assume_none(T &&assumption, Args &&...args) {
 // assume_all_or_none //
 ////////////////////////
 
-inline bool assume_all_or_none_impl(bool) { return true; }
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+bool assume_all_or_none_impl(bool) { return true; }
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 bool assume_all_or_none_impl(bool expected, T &&assumption, Args &&...args) {
   return (assumption.eval() == expected)
     && assume_all_or_none_impl(expected, std::forward<Args>(args)...);
 }
 
 template <typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_all_or_none(T &&assumption, Args &&...args) {
   auto const result = assume_all_or_none_impl(
     assumption.eval(),
@@ -533,6 +595,7 @@ void assume_all_or_none(T &&assumption, Args &&...args) {
 ///////////////
 
 template <typename TCondition, typename TWhenTrue>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_if(TCondition &&condition, TWhenTrue &&when_true) {
   if (condition.eval() && !when_true.eval()) {
     print_assumptions(
@@ -550,6 +613,7 @@ void assume_if(TCondition &&condition, TWhenTrue &&when_true) {
 ////////////////////
 
 template <typename TCondition, typename TWhenTrue, typename TWhenFalse>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void assume_if_else(
   TCondition &&condition,
   TWhenTrue &&when_true,

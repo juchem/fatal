@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_identity_h
 #define FATAL_INCLUDE_fatal_type_identity_h
 
+#include <fatal/portability.h>
+
 namespace fatal {
 
 /**
@@ -32,7 +34,7 @@ namespace fatal {
 template <typename T>
 using identity = T;
 
-struct get_identity {
+struct FATAL_HIDE_SYMBOL get_identity {
   template <typename T>
   using apply = T;
 };

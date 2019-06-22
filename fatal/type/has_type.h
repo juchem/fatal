@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_has_type_h
 #define FATAL_INCLUDE_fatal_type_has_type_h
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 
 namespace fatal {
@@ -49,11 +51,13 @@ namespace fatal {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 #define FATAL_HAS_TYPE(Class, ...) \
-  struct Class { \
+  struct FATAL_HIDE_SYMBOL Class { \
     template <typename T> \
+    FATAL_HIDE_SYMBOL \
     static std::true_type sfinae(typename T::__VA_ARGS__ *); \
     \
     template <typename> \
+    FATAL_HIDE_SYMBOL \
     static std::false_type sfinae(...); \
     \
     template <typename T> \

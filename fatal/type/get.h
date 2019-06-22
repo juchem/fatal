@@ -13,6 +13,8 @@
 #include <fatal/type/identity.h>
 #include <fatal/type/slice.h>
 
+#include <fatal/portability.h>
+
 #include <fatal/type/impl/get.h>
 
 namespace fatal {

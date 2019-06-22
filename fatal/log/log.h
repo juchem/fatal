@@ -10,8 +10,10 @@
 #ifndef FATAL_INCLUDE_fatal_log_log_h
 #define FATAL_INCLUDE_fatal_log_log_h
 
-#include <fatal/preprocessor.h>
 #include <fatal/time/print.h>
+
+#include <fatal/portability.h>
+#include <fatal/preprocessor.h>
 
 #include <atomic>
 #include <chrono>
@@ -31,16 +33,20 @@ namespace detail {
 namespace log_impl {
 
 template <typename TOut, typename TInfo>
-struct logger {
+struct FATAL_HIDE_SYMBOL logger {
   using info = TInfo;
 
-  struct writer {
+  struct FATAL_HIDE_SYMBOL writer {
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     explicit writer(TOut *out) noexcept: out_(out) {}
 
     writer(writer const &) = delete;
+
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     writer(writer &&rhs) noexcept: out_(rhs.out_) { rhs.out_ = nullptr; }
 
     template <typename T>
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     writer &operator <<(T &&value) & {
       if (out_) {
         *out_ << std::forward<T>(value);
@@ -50,6 +56,7 @@ struct logger {
     }
 
     template <typename T>
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     writer &&operator <<(T &&value) && {
       if (out_) {
         *out_ << std::forward<T>(value);
@@ -58,6 +65,7 @@ struct logger {
       return std::move(*this);
     }
 
+    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     ~writer() {
       if (out_) {
         *out_ << '\n';
@@ -65,9 +73,11 @@ struct logger {
     }
 
   private:
+    FATAL_HIDE_SYMBOL
     TOut *out_;
   };
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   logger(TOut *out, source_info source) noexcept:
     writer_(out),
     source_(source)
@@ -76,6 +86,7 @@ struct logger {
   logger(logger const &) = delete;
   logger(logger &&rhs) = default;
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   ~logger() {
     if (info::abort::value) {
       std::abort();
@@ -83,6 +94,7 @@ struct logger {
   }
 
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   writer operator <<(T &&value) {
     writer_ << info::signature::value;
 
@@ -104,24 +116,31 @@ struct logger {
   }
 
 private:
+  FATAL_HIDE_SYMBOL
   writer writer_;
+
+  FATAL_HIDE_SYMBOL
   source_info source_;
 };
 
 using level_t = unsigned;
 
 template <typename TCategory, level_t Level>
-struct log_level {
+struct FATAL_HIDE_SYMBOL log_level {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void set(level_t level) {
     value() = level;
   }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static level_t get() {
     return value();
   }
 
 private:
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static std::atomic<level_t> &value() {
+    FATAL_HIDE_SYMBOL
     static std::atomic<level_t> instance(Level);
     return instance;
   }
@@ -134,7 +153,7 @@ template <
   bool ShowLevel,
   bool Abort = false
 >
-struct level_info:
+struct FATAL_HIDE_SYMBOL level_info:
   std::integral_constant<level_t, Level>
 {
   using category = TCategory;
@@ -143,8 +162,8 @@ struct level_info:
   using abort = std::integral_constant<bool, Abort>;
 };
 
-struct log_tag {};
-struct verbose_tag {};
+struct FATAL_HIDE_SYMBOL log_tag {};
+struct FATAL_HIDE_SYMBOL verbose_tag {};
 
 using level_FATAL = level_info<log_tag, 0, 'F', false, true>;
 using level_CRITICAL = level_info<log_tag, 1, 'C', false>;
@@ -155,10 +174,10 @@ using level_INFO = level_info<log_tag, 4, 'I', false>;
 template <level_t Level>
 using level_verbose = level_info<verbose_tag, Level, 'V', true>;
 
-template <typename> struct by_category;
+template <typename> struct FATAL_HIDE_SYMBOL by_category;
 
 template <>
-struct by_category<log_tag> {
+struct FATAL_HIDE_SYMBOL by_category<log_tag> {
   using level = detail::log_impl::log_level<
     detail::log_impl::log_tag,
     detail::log_impl::level_INFO::value
@@ -166,7 +185,7 @@ struct by_category<log_tag> {
 };
 
 template <>
-struct by_category<verbose_tag> {
+struct FATAL_HIDE_SYMBOL by_category<verbose_tag> {
   using level = detail::log_impl::log_level<
     detail::log_impl::verbose_tag, 0
   >;
@@ -175,8 +194,9 @@ struct by_category<verbose_tag> {
 } // namespace log_impl {
 } // namespace detail {
 
-struct null_logger {
+struct FATAL_HIDE_SYMBOL null_logger {
   template <typename T>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   null_logger const &operator <<(T &&) const { return *this; }
 };
 
@@ -190,6 +210,7 @@ using v_level = detail::log_impl::by_category<
 
 // TODO: ADD THE ABILITY TO TURN VERBOSE LOGGING ON AND OFF
 template <typename TInfo>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 log::detail::log_impl::logger<std::ostream, TInfo> log(source_info source) {
   return log::detail::log_impl::logger<std::ostream, TInfo>(
     TInfo::value <= detail::log_impl::by_category<

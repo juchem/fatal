@@ -14,20 +14,22 @@
 #include <fatal/string/string_view.h>
 #include <fatal/type/traits.h>
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 #include <utility>
 
 namespace fatal {
 
 template <typename Token, char Delimiter>
-struct tokenizer {
+struct FATAL_HIDE_SYMBOL tokenizer {
   using token = Token;
   using delimiter = std::integral_constant<char, Delimiter>;
 
   template <typename... Args, typename = safe_overload<tokenizer, Args...>>
   explicit tokenizer(Args &&...args): data_(std::forward<Args>(args)...) {}
 
-  struct const_iterator {
+  struct FATAL_HIDE_SYMBOL const_iterator {
     const_iterator(const_iterator const &rhs):
       data_(rhs.data_)
     {

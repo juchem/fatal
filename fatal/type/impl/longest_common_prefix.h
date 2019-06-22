@@ -15,55 +15,55 @@
 #include <type_traits>
 
 namespace fatal {
-namespace impl_lcp {
+namespace i_lcp {
 
 // longest common prefix size //
 
 template <
   bool,
-  template <typename, std::size_t> class,
+  template <typename, std::size_t> typename,
   std::size_t Offset,
   std::size_t,
   typename...
 >
-struct s {
+struct FATAL_HIDE_SYMBOL s {
   using type = std::integral_constant<std::size_t, Offset>;
 };
 
 template <
-  template <typename, std::size_t> class Key,
+  template <typename, std::size_t> typename Key,
   std::size_t Offset,
   std::size_t End
 >
-struct s<true, Key, Offset, End> {
+struct FATAL_HIDE_SYMBOL s<true, Key, Offset, End> {
   using type = std::integral_constant<std::size_t, Offset>;
 };
 
 template <
-  template <typename, std::size_t> class Key,
+  template <typename, std::size_t> typename Key,
   std::size_t End,
   typename... Args
 >
-struct s<false, Key, End, End, Args...> {
+struct FATAL_HIDE_SYMBOL s<false, Key, End, End, Args...> {
   using type = std::integral_constant<std::size_t, End>;
 };
 
 template <
-  template <typename, std::size_t> class Key,
+  template <typename, std::size_t> typename Key,
   std::size_t End,
   typename T, typename... Args
 >
-struct s<true, Key, End, End, T, Args...> {
+struct FATAL_HIDE_SYMBOL s<true, Key, End, End, T, Args...> {
   using type = std::integral_constant<std::size_t, End>;
 };
 
 template <
-  template <typename, std::size_t> class Key,
+  template <typename, std::size_t> typename Key,
   std::size_t Offset,
   std::size_t End,
   typename T, typename... Args
 >
-struct s<true, Key, Offset, End, T, Args...>:
+struct FATAL_HIDE_SYMBOL s<true, Key, Offset, End, T, Args...>:
   s<
     std::is_same<
       list<Key<T, Offset>, Key<T, Offset>, Key<Args, Offset>...>,
@@ -79,7 +79,7 @@ struct s<true, Key, Offset, End, T, Args...>:
   >
 {};
 
-} // namespace impl_lcp {
+} // namespace i_lcp {
 } // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_longest_common_prefix_h

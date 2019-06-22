@@ -12,6 +12,8 @@
 
 #include <fatal/type/compare.h>
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 
 #include <fatal/type/impl/select.h>

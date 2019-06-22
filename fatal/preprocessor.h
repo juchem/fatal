@@ -21,11 +21,12 @@ namespace fatal {
 #define FATAL_SOURCE_INFO() \
   ::fatal::source_info(__FILE__, __LINE__)
 
-struct source_info {
+struct FATAL_HIDE_SYMBOL source_info {
 
 FATAL_DIAGNOSTIC_PUSH
 FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   source_info(char const *file, unsigned long line):
     file_(basename(file)),
     line_(line)
@@ -33,9 +34,13 @@ FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
 
 FATAL_DIAGNOSTIC_POP
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   char const *file() const { return file_; }
+
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   unsigned long line() const { return line_; }
 
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static char const *basename(char const *path) {
     for (auto i = path; *i; ++i) {
       if (*i == '/') {
@@ -46,17 +51,22 @@ FATAL_DIAGNOSTIC_POP
   }
 
   template <typename Out>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   Out &print(Out &out) const {
     out << file_ << ':' << line_;
     return out;
   }
 
 private:
+  FATAL_HIDE_SYMBOL
   char const *const file_;
+
+  FATAL_HIDE_SYMBOL
   unsigned long const line_;
 };
 
 template <typename Out>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 Out &operator <<(Out &out, source_info source) {
   return source.print(out);
 }

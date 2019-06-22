@@ -10,10 +10,12 @@
 #ifndef FATAL_INCLUDE_fatal_type_inherit_h
 #define FATAL_INCLUDE_fatal_type_inherit_h
 
+#include <fatal/portability.h>
+
 namespace fatal {
 
 template <typename... Args>
-struct inherit:
+struct FATAL_HIDE_SYMBOL inherit:
   public Args...
 {};
 

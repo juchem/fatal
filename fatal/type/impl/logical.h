@@ -17,10 +17,10 @@
 namespace fatal {
 namespace impl_logical {
 
-template <typename...> struct l_xor;
+template <typename...> struct FATAL_HIDE_SYMBOL l_xor;
 
 template <typename V0, typename V1, typename... Args>
-struct l_xor<V0, V1, Args...> {
+struct FATAL_HIDE_SYMBOL l_xor<V0, V1, Args...> {
   using type = typename l_xor<
     std::integral_constant<
       bool,
@@ -31,7 +31,7 @@ struct l_xor<V0, V1, Args...> {
 };
 
 template <typename V0, typename V1, typename V2, typename... Args>
-struct l_xor<V0, V1, V2, Args...> {
+struct FATAL_HIDE_SYMBOL l_xor<V0, V1, V2, Args...> {
   using type = typename l_xor<
     std::integral_constant<
       bool,
@@ -42,7 +42,7 @@ struct l_xor<V0, V1, V2, Args...> {
 };
 
 template <typename V0, typename V1, typename V2, typename V3, typename... Args>
-struct l_xor<V0, V1, V2, V3, Args...> {
+struct FATAL_HIDE_SYMBOL l_xor<V0, V1, V2, V3, Args...> {
   using type = typename l_xor<
     std::integral_constant<
       bool,
@@ -53,7 +53,7 @@ struct l_xor<V0, V1, V2, V3, Args...> {
 };
 
 template <typename T>
-struct l_xor<T> {
+struct FATAL_HIDE_SYMBOL l_xor<T> {
   using type = T;
 };
 

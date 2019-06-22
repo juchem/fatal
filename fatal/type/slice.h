@@ -13,6 +13,8 @@
 #include <fatal/type/size.h>
 #include <fatal/type/tag.h>
 
+#include <fatal/portability.h>
+
 #include <cstdlib>
 
 #include <fatal/type/impl/slice.h>
@@ -31,7 +33,7 @@ using try_at = typename i_at::A<
 template <typename T>
 using first = at<T, 0>;
 
-struct get_first {
+struct FATAL_HIDE_SYMBOL get_first {
   template <typename T>
   using apply = first<T>;
 };
@@ -39,7 +41,7 @@ struct get_first {
 template <typename T>
 using second = at<T, 1>;
 
-struct get_second {
+struct FATAL_HIDE_SYMBOL get_second {
   template <typename T>
   using apply = second<T>;
 };
@@ -47,7 +49,7 @@ struct get_second {
 template <typename T>
 using third = at<T, 2>;
 
-struct get_third {
+struct FATAL_HIDE_SYMBOL get_third {
   template <typename T>
   using apply = third<T>;
 };
@@ -55,7 +57,7 @@ struct get_third {
 template <typename T>
 using last = at<T, size<T>::value - 1>;
 
-struct get_last {
+struct FATAL_HIDE_SYMBOL get_last {
   template <typename T>
   using apply = last<T>;
 };
@@ -87,7 +89,7 @@ using try_index = i_at::ti<
 template <typename T0, typename...>
 using first_argument = T0;
 
-struct get_first_argument {
+struct FATAL_HIDE_SYMBOL get_first_argument {
   template <typename T0, typename...>
   using apply = T0;
 };
@@ -95,7 +97,7 @@ struct get_first_argument {
 template <typename T0, typename T1, typename...>
 using second_argument = T1;
 
-struct get_second_argument {
+struct FATAL_HIDE_SYMBOL get_second_argument {
   template <typename T0, typename T1, typename...>
   using apply = T1;
 };
@@ -103,7 +105,7 @@ struct get_second_argument {
 template <typename T0, typename T1, typename T2, typename...>
 using third_argument = T2;
 
-struct get_third_argument {
+struct FATAL_HIDE_SYMBOL get_third_argument {
   template <typename T0, typename T1, typename T2, typename...>
   using apply = T2;
 };
@@ -118,13 +120,13 @@ using try_index_of = typename try_index<T>::template apply<Of>;
 namespace bound {
 
 template <std::size_t Index>
-struct at {
+struct FATAL_HIDE_SYMBOL at {
   template <typename T>
   using apply = typename i_at::a<Index, T>::type;
 };
 
 template <std::size_t Index, typename Default = not_found>
-struct try_at {
+struct FATAL_HIDE_SYMBOL try_at {
   template <typename T>
   using apply = typename i_at::A<
     (Index < size<T>::value),
@@ -133,25 +135,25 @@ struct try_at {
 };
 
 template <std::size_t... Indexes>
-struct pick {
+struct FATAL_HIDE_SYMBOL pick {
   template <typename T>
   using apply = typename i_at::p<T, Indexes...>::type;
 };
 
 template <std::size_t Offset>
-struct tail {
+struct FATAL_HIDE_SYMBOL tail {
   template <typename T>
   using apply = typename i_at::t<T, make_index_sequence<Offset>>::type;
 };
 
 template <std::size_t Offset>
-struct head {
+struct FATAL_HIDE_SYMBOL head {
   template <typename T>
   using apply = typename i_at::h<Offset, T>::type;
 };
 
 template <std::size_t Begin, std::size_t End>
-struct slice {
+struct FATAL_HIDE_SYMBOL slice {
   template <typename T>
   using apply = fatal::slice<T, Begin, End>;
 };

@@ -14,25 +14,25 @@ namespace fatal {
 namespace impl_cv {
 
 // as_sequence //
-template <typename...> struct s;
+template <typename...> struct FATAL_HIDE_SYMBOL s;
 
 template <
-  template <typename V, V...> class Sequence,
-  template <typename...> class Variadics,
+  template <typename V, V...> typename Sequence,
+  template <typename...> typename Variadics,
   typename... Args,
   typename T
 >
-struct s<Sequence<int>, Variadics<Args...>, T> {
+struct FATAL_HIDE_SYMBOL s<Sequence<int>, Variadics<Args...>, T> {
   using type = Sequence<T, Args::value...>;
 };
 
 template <
-  template <typename V, V...> class Sequence,
-  template <typename...> class Variadics,
+  template <typename V, V...> typename Sequence,
+  template <typename...> typename Variadics,
   typename Head,
   typename... Tail
 >
-struct s<Sequence<int>, Variadics<Head, Tail...>> {
+struct FATAL_HIDE_SYMBOL s<Sequence<int>, Variadics<Head, Tail...>> {
   using type = Sequence<
     typename std::decay<decltype(Head::value)>::type,
     Head::value, Tail::value...
@@ -40,53 +40,53 @@ struct s<Sequence<int>, Variadics<Head, Tail...>> {
 };
 
 template <
-  template <typename V, V...> class Sequence,
-  template <typename V, V...> class Variadics,
+  template <typename V, V...> typename Sequence,
+  template <typename V, V...> typename Variadics,
   typename V,
   V... Args,
   typename T
 >
-struct s<Sequence<int>, Variadics<V, Args...>, T> {
+struct FATAL_HIDE_SYMBOL s<Sequence<int>, Variadics<V, Args...>, T> {
   using type = Sequence<T, static_cast<T>(Args)...>;
 };
 
 template <
-  template <typename V, V...> class Sequence,
-  template <typename V, V...> class Variadics,
+  template <typename V, V...> typename Sequence,
+  template <typename V, V...> typename Variadics,
   typename T,
   T... Args
 >
-struct s<Sequence<int>, Variadics<T, Args...>> {
+struct FATAL_HIDE_SYMBOL s<Sequence<int>, Variadics<T, Args...>> {
   using type = Sequence<T, Args...>;
 };
 
 // as_list //
-template <template <typename...> class, typename> struct l;
+template <template <typename...> typename, typename> struct FATAL_HIDE_SYMBOL l;
 
 template <
-  template <typename...> class List,
-  template <typename V, V...> class Variadics,
+  template <typename...> typename List,
+  template <typename V, V...> typename Variadics,
   typename T,
   T... Args
 >
-struct l<List, Variadics<T, Args...>> {
+struct FATAL_HIDE_SYMBOL l<List, Variadics<T, Args...>> {
   using type = List<std::integral_constant<T, Args>...>;
 };
 
 template <
-  template <typename...> class List,
-  template <typename...> class Variadics,
+  template <typename...> typename List,
+  template <typename...> typename Variadics,
   typename... Args
 >
-struct l<List, Variadics<Args...>> {
+struct FATAL_HIDE_SYMBOL l<List, Variadics<Args...>> {
   using type = List<Args...>;
 };
 
 // to_instance //
-template <typename...> struct t;
+template <typename...> struct FATAL_HIDE_SYMBOL t;
 
-template <typename To, template <typename...> class Variadics, typename... T>
-struct t<To, Variadics<T...>> {
+template <typename To, template <typename...> typename Variadics, typename... T>
+struct FATAL_HIDE_SYMBOL t<To, Variadics<T...>> {
   template <typename... Args>
   static constexpr To to(Args &&...args) {
     return To{T::value..., std::forward<Args>(args)...};
@@ -95,11 +95,11 @@ struct t<To, Variadics<T...>> {
 
 template <
   typename To,
-  template <typename V, V...> class Variadics,
+  template <typename V, V...> typename Variadics,
   typename T,
   T... Values
 >
-struct t<To, Variadics<T, Values...>> {
+struct FATAL_HIDE_SYMBOL t<To, Variadics<T, Values...>> {
   template <typename... Args>
   static constexpr To to(Args &&...args) {
     return To{Values..., std::forward<Args>(args)...};

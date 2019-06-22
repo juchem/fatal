@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_get_type_h
 #define FATAL_INCLUDE_fatal_type_get_type_h
 
+#include <fatal/portability.h>
+
 namespace fatal {
 
 /**
@@ -29,7 +31,7 @@ namespace fatal {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 # define FATAL_GET_TYPE(Name, ...) \
-  struct Name { \
+  struct FATAL_HIDE_SYMBOL Name { \
     template <typename Name##T> \
     using apply = typename Name##T::__VA_ARGS__; \
   }

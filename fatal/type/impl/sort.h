@@ -24,34 +24,34 @@ namespace fatal {
 namespace i_s {
 
 // partition recursion
-template <template <typename...> class, typename...> struct p;
+template <template <typename...> typename, typename...> struct FATAL_HIDE_SYMBOL p;
 
-template <template <typename...> class Pair, typename L, typename R>
-struct p<Pair, L, R> {
+template <template <typename...> typename Pair, typename L, typename R>
+struct FATAL_HIDE_SYMBOL p<Pair, L, R> {
   using type = Pair<L, R>;
 };
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R, typename T0
 >
-struct p<Pair, Variadic<L...>, Variadic<R...>, indexed<T0, true>> {
+struct FATAL_HIDE_SYMBOL p<Pair, Variadic<L...>, Variadic<R...>, indexed<T0, true>> {
   using type = Pair<Variadic<L..., T0>, Variadic<R...>>;
 };
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R, typename T0
 >
-struct p<Pair, Variadic<L...>, Variadic<R...>, indexed<T0, false>> {
+struct FATAL_HIDE_SYMBOL p<Pair, Variadic<L...>, Variadic<R...>, indexed<T0, false>> {
   using type = Pair<Variadic<L...>, Variadic<R..., T0>>;
 };
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R, typename T0, typename T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, false>, indexed<T1, false>
 > {
@@ -59,10 +59,10 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R, typename T0, typename T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, false>, indexed<T1, true>
 > {
@@ -70,10 +70,10 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R, typename T0, typename T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, true>, indexed<T1, false>
 > {
@@ -81,10 +81,10 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R, typename T0, typename T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, true>, indexed<T1, true>
 > {
@@ -92,11 +92,11 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, false>, indexed<T1, false>, indexed<T2, false>,
   Args...
@@ -105,11 +105,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, false>, indexed<T1, false>, indexed<T2, true>,
   Args...
@@ -118,11 +118,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, false>, indexed<T1, true>, indexed<T2, false>,
   Args...
@@ -131,11 +131,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, false>, indexed<T1, true>, indexed<T2, true>,
   Args...
@@ -144,11 +144,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, true>, indexed<T1, false>, indexed<T2, false>,
   Args...
@@ -157,11 +157,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, true>, indexed<T1, false>, indexed<T2, true>,
   Args...
@@ -170,11 +170,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, true>, indexed<T1, true>, indexed<T2, false>,
   Args...
@@ -183,11 +183,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair, template <typename...> class Variadic,
+  template <typename...> typename Pair, template <typename...> typename Variadic,
   typename... L, typename... R,
   typename T0, typename T1, typename T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<L...>, Variadic<R...>,
   indexed<T0, true>, indexed<T1, true>, indexed<T2, true>,
   Args...
@@ -196,34 +196,34 @@ struct p<
 {};
 
 // placeholder for partition's filtered sequence elements
-template <typename T, T, bool> struct h;
+template <typename T, T, bool> struct FATAL_HIDE_SYMBOL h;
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic, typename T,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic, typename T,
   T... L, T... R, T T0
 >
-struct p<Pair, Variadic<T, L...>, Variadic<T, R...>, h<T, T0, true>> {
+struct FATAL_HIDE_SYMBOL p<Pair, Variadic<T, L...>, Variadic<T, R...>, h<T, T0, true>> {
   using type = Pair<Variadic<T, L..., T0>, Variadic<T, R...>>;
 };
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>, h<T, T0, false>
 > {
   using type = Pair<Variadic<T, L...>, Variadic<T, R..., T0>>;
 };
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, false>, h<T, T1, false>
 > {
@@ -231,11 +231,11 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, false>, h<T, T1, true>
 > {
@@ -243,11 +243,11 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, true>, h<T, T1, false>
 > {
@@ -255,11 +255,11 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, true>, h<T, T1, true>
 > {
@@ -267,11 +267,11 @@ struct p<
 };
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, false>, h<T, T1, false>, h<T, T2, false>,
   Args...
@@ -280,11 +280,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, false>, h<T, T1, false>, h<T, T2, true>,
   Args...
@@ -293,11 +293,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, false>, h<T, T1, true>, h<T, T2, false>,
   Args...
@@ -306,11 +306,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, false>, h<T, T1, true>, h<T, T2, true>,
   Args...
@@ -319,11 +319,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, true>, h<T, T1, false>, h<T, T2, false>,
   Args...
@@ -332,11 +332,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, true>, h<T, T1, false>, h<T, T2, true>,
   Args...
@@ -345,11 +345,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, true>, h<T, T1, true>, h<T, T2, false>,
   Args...
@@ -358,11 +358,11 @@ struct p<
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... L, T... R, T T0, T T1, T T2, typename... Args
 >
-struct p<
+struct FATAL_HIDE_SYMBOL p<
   Pair, Variadic<T, L...>, Variadic<T, R...>,
   h<T, T0, true>, h<T, T1, true>, h<T, T2, true>,
   Args...
@@ -371,15 +371,15 @@ struct p<
 {};
 
 // partition entry point
-template <template <typename...> class, typename...> struct P;
+template <template <typename...> typename, typename...> struct FATAL_HIDE_SYMBOL P;
 
 template <
-  template <typename...> class Pair,
-  template <typename...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename...> typename Variadic,
   typename... Args,
   typename Filter
 >
-struct P<Pair, Variadic<Args...>, Filter>:
+struct FATAL_HIDE_SYMBOL P<Pair, Variadic<Args...>, Filter>:
   p<
     Pair, Variadic<>, Variadic<>,
     indexed<Args, Filter::template apply<Args>::value>...
@@ -387,37 +387,37 @@ struct P<Pair, Variadic<Args...>, Filter>:
 {};
 
 template <
-  template <typename...> class Pair,
-  template <typename V, V...> class Variadic,
+  template <typename...> typename Pair,
+  template <typename V, V...> typename Variadic,
   typename T, T... Args,
   typename Filter
 >
-struct P<Pair, Variadic<T, Args...>, Filter>:
+struct FATAL_HIDE_SYMBOL P<Pair, Variadic<T, Args...>, Filter>:
   p<
     Pair, Variadic<T>, Variadic<T>,
     h<T, Args, Filter::template apply<T, Args>::value>...
   >
 {};
 
-template <typename...> struct f;
+template <typename...> struct FATAL_HIDE_SYMBOL f;
 
 template <
   typename Predicate,
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... Result
 >
-struct f<Predicate, Variadic<Result...>> {
+struct FATAL_HIDE_SYMBOL f<Predicate, Variadic<Result...>> {
   using type = Variadic<Result...>;
 };
 
 template <
   typename Predicate,
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... Result,
   typename T,
   typename... Args
 >
-struct f<Predicate, Variadic<Result...>, T, Args...>:
+struct FATAL_HIDE_SYMBOL f<Predicate, Variadic<Result...>, T, Args...>:
   f<
     Predicate,
     conditional<
@@ -429,28 +429,28 @@ struct f<Predicate, Variadic<Result...>, T, Args...>:
   >
 {};
 
-template <typename...> struct F;
+template <typename...> struct FATAL_HIDE_SYMBOL F;
 
 // TODO: OPTIMIZE
 template <
   typename Predicate,
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... Args
 >
-struct F<Predicate, Variadic<Args...>>:
+struct FATAL_HIDE_SYMBOL F<Predicate, Variadic<Args...>>:
   f<Predicate, Variadic<>, Args...>
 {};
 
 // merge implementation
-template <typename...> struct m;
+template <typename...> struct FATAL_HIDE_SYMBOL m;
 
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename L, typename... LHS,
   typename R, typename... RHS,
   typename... Args
 >
-struct m<Variadic<L, LHS...>, Variadic<R, RHS...>, Variadic<Args...>> {
+struct FATAL_HIDE_SYMBOL m<Variadic<L, LHS...>, Variadic<R, RHS...>, Variadic<Args...>> {
   using type = conditional<
     (R::value < L::value),
     typename m<
@@ -463,34 +463,34 @@ struct m<Variadic<L, LHS...>, Variadic<R, RHS...>, Variadic<Args...>> {
 };
 
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... LHS, typename... Args
 >
-struct m<Variadic<LHS...>, Variadic<>, Variadic<Args...>> {
+struct FATAL_HIDE_SYMBOL m<Variadic<LHS...>, Variadic<>, Variadic<Args...>> {
   using type = Variadic<Args..., LHS...>;
 };
 
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... RHS, typename... Args
 >
-struct m<Variadic<>, Variadic<RHS...>, Variadic<Args...>> {
+struct FATAL_HIDE_SYMBOL m<Variadic<>, Variadic<RHS...>, Variadic<Args...>> {
   using type = Variadic<Args..., RHS...>;
 };
 
-template <template <typename...> class Variadic, typename... Args>
-struct m<Variadic<>, Variadic<>, Variadic<Args...>> {
+template <template <typename...> typename Variadic, typename... Args>
+struct FATAL_HIDE_SYMBOL m<Variadic<>, Variadic<>, Variadic<Args...>> {
   using type = Variadic<Args...>;
 };
 
 template <
-  template <typename V, V...> class Variadic,
+  template <typename V, V...> typename Variadic,
   typename T,
   T L, T... LHS,
   T R, T... RHS,
   T... Values
 >
-struct m<
+struct FATAL_HIDE_SYMBOL m<
   Variadic<T, L, LHS...>,
   Variadic<T, R, RHS...>,
   Variadic<T, Values...>
@@ -511,48 +511,48 @@ struct m<
 };
 
 template <
-  template <typename V, V...> class Variadic,
+  template <typename V, V...> typename Variadic,
   typename T,
   T... LHS,
   T... Values
 >
-struct m<Variadic<T, LHS...>, Variadic<T>, Variadic<T, Values...>> {
+struct FATAL_HIDE_SYMBOL m<Variadic<T, LHS...>, Variadic<T>, Variadic<T, Values...>> {
   using type = Variadic<T, Values..., LHS...>;
 };
 
 template <
-  template <typename V, V...> class Variadic,
+  template <typename V, V...> typename Variadic,
   typename T,
   T... RHS,
   T... Values
 >
-struct m<Variadic<T>, Variadic<T, RHS...>, Variadic<T, Values...>> {
+struct FATAL_HIDE_SYMBOL m<Variadic<T>, Variadic<T, RHS...>, Variadic<T, Values...>> {
   using type = Variadic<T, Values..., RHS...>;
 };
 
-template <template <typename V, V...> class Variadic, typename T, T... Values>
-struct m<Variadic<T>, Variadic<T>, Variadic<T, Values...>> {
+template <template <typename V, V...> typename Variadic, typename T, T... Values>
+struct FATAL_HIDE_SYMBOL m<Variadic<T>, Variadic<T>, Variadic<T, Values...>> {
   using type = Variadic<T, Values...>;
 };
 
 // merge entry point
-template <typename...> struct M;
+template <typename...> struct FATAL_HIDE_SYMBOL M;
 
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename... LHS, typename... RHS
 >
-struct M<Variadic<LHS...>, Variadic<RHS...>> {
+struct FATAL_HIDE_SYMBOL M<Variadic<LHS...>, Variadic<RHS...>> {
   using type = typename m<Variadic<LHS...>, Variadic<RHS...>, Variadic<>>::type;
 };
 
 template <
-  template <typename V, V...> class Variadic,
+  template <typename V, V...> typename Variadic,
   typename T,
   T... LHS,
   T... RHS
 >
-struct M<Variadic<T, LHS...>, Variadic<T, RHS...>> {
+struct FATAL_HIDE_SYMBOL M<Variadic<T, LHS...>, Variadic<T, RHS...>> {
   using type = typename m<
     Variadic<T, LHS...>,
     Variadic<T, RHS...>,
@@ -561,20 +561,20 @@ struct M<Variadic<T, LHS...>, Variadic<T, RHS...>> {
 };
 
 // merge sort
-template <typename...> struct s;
+template <typename...> struct FATAL_HIDE_SYMBOL s;
 
-template <template <typename...> class Variadic>
-struct s<Variadic<>> {
+template <template <typename...> typename Variadic>
+struct FATAL_HIDE_SYMBOL s<Variadic<>> {
   using type = Variadic<>;
 };
 
-template <template <typename...> class Variadic, typename T>
-struct s<Variadic<T>> {
+template <template <typename...> typename Variadic, typename T>
+struct FATAL_HIDE_SYMBOL s<Variadic<T>> {
   using type = Variadic<T>;
 };
 
-template <template <typename...> class Variadic, typename... Args>
-struct s<Variadic<Args...>> {
+template <template <typename...> typename Variadic, typename... Args>
+struct FATAL_HIDE_SYMBOL s<Variadic<Args...>> {
   using type = typename m<
     typename s<head<Variadic<Args...>, sizeof...(Args) / 2>>::type,
     typename s<tail<Variadic<Args...>, sizeof...(Args) / 2>>::type,
@@ -582,18 +582,18 @@ struct s<Variadic<Args...>> {
   >::type;
 };
 
-template <template <typename V, V...> class Variadic, typename T>
-struct s<Variadic<T>> {
+template <template <typename V, V...> typename Variadic, typename T>
+struct FATAL_HIDE_SYMBOL s<Variadic<T>> {
   using type = Variadic<T>;
 };
 
-template <template <typename V, V...> class Variadic, typename T, T Value>
-struct s<Variadic<T, Value>> {
+template <template <typename V, V...> typename Variadic, typename T, T Value>
+struct FATAL_HIDE_SYMBOL s<Variadic<T, Value>> {
   using type = Variadic<T, Value>;
 };
 
-template <template <typename V, V...> class Variadic, typename T, T... Values>
-struct s<Variadic<T, Values...>> {
+template <template <typename V, V...> typename Variadic, typename T, T... Values>
+struct FATAL_HIDE_SYMBOL s<Variadic<T, Values...>> {
   using type = typename m<
     typename s<head<Variadic<T, Values...>, sizeof...(Values) / 2>>::type,
     typename s<tail<Variadic<T, Values...>, sizeof...(Values) / 2>>::type,
@@ -602,25 +602,25 @@ struct s<Variadic<T, Values...>> {
 };
 
 // quicksort
-template <typename...> struct q;
+template <typename...> struct FATAL_HIDE_SYMBOL q;
 
-template <template <typename...> class Variadic, typename Less>
-struct q<Variadic<>, Less> {
+template <template <typename...> typename Variadic, typename Less>
+struct FATAL_HIDE_SYMBOL q<Variadic<>, Less> {
   using type = Variadic<>;
 };
 
-template <template <typename...> class Variadic, typename T, typename Less>
-struct q<Variadic<T>, Less> {
+template <template <typename...> typename Variadic, typename T, typename Less>
+struct FATAL_HIDE_SYMBOL q<Variadic<T>, Less> {
   using type = Variadic<T>;
 };
 
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename LHS,
   typename RHS,
   typename Less
 >
-struct q<Variadic<LHS, RHS>, Less> {
+struct FATAL_HIDE_SYMBOL q<Variadic<LHS, RHS>, Less> {
   using type = conditional<
     Less::template apply<RHS, LHS>::value,
     Variadic<RHS, LHS>,
@@ -630,11 +630,11 @@ struct q<Variadic<LHS, RHS>, Less> {
 
 // TODO: MAKE IT FOUR WAY QUICK SORT??
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename Pivot, typename... Args, typename Less
 >
 // TODO: USE A BETTER PIVOT
-struct q<Variadic<Pivot, Args...>, Less> {
+struct FATAL_HIDE_SYMBOL q<Variadic<Pivot, Args...>, Less> {
   using type = lcat<
     typename q<
       second<typename P<pair, Variadic<Args...>, curry<Less, Pivot>>::type>,
@@ -648,26 +648,26 @@ struct q<Variadic<Pivot, Args...>, Less> {
   >;
 };
 
-template <template <typename V, V...> class Variadic, typename T, typename Less>
-struct q<Variadic<T>, Less> {
+template <template <typename V, V...> typename Variadic, typename T, typename Less>
+struct FATAL_HIDE_SYMBOL q<Variadic<T>, Less> {
   using type = Variadic<T>;
 };
 
 template <
-  template <typename V, V...> class Variadic,
+  template <typename V, V...> typename Variadic,
   typename T, T Value,
   typename Less
 >
-struct q<Variadic<T, Value>, Less> {
+struct FATAL_HIDE_SYMBOL q<Variadic<T, Value>, Less> {
   using type = Variadic<T, Value>;
 };
 
 template <
-  template <typename V, V...> class Variadic,
+  template <typename V, V...> typename Variadic,
   typename T, T LHS, T RHS,
   typename Less
 >
-struct q<Variadic<T, LHS, RHS>, Less> {
+struct FATAL_HIDE_SYMBOL q<Variadic<T, LHS, RHS>, Less> {
   using type = conditional<
     Less::template vapply<T, RHS, LHS>::value,
     Variadic<T, RHS, LHS>,
@@ -677,18 +677,18 @@ struct q<Variadic<T, LHS, RHS>, Less> {
 
 // curried comparer for sequences
 template <typename Less, typename T, T LHS>
-struct c {
+struct FATAL_HIDE_SYMBOL c {
   template <typename U, U RHS>
   using apply = typename Less::template vapply<T, LHS, RHS>;
 };
 
 template <
-  template <typename V, V...> class Variadic,
+  template <typename V, V...> typename Variadic,
   typename T, T Pivot, T Arg0, T Arg1, T... Args,
   typename Less
 >
 // TODO: USE A BETTER PIVOT
-struct q<Variadic<T, Pivot, Arg0, Arg1, Args...>, Less> {
+struct FATAL_HIDE_SYMBOL q<Variadic<T, Pivot, Arg0, Arg1, Args...>, Less> {
   using type = typename vcat<
     typename q<
       second<
@@ -716,7 +716,7 @@ struct q<Variadic<T, Pivot, Arg0, Arg1, Args...>, Less> {
 // TODO: OPTIMIZE BY EXPANDING THE q LIST INTO A PAIR(FILTERED, T)??
 // filtered comparer for quicksort
 template <typename Less, typename Filter>
-struct C {
+struct FATAL_HIDE_SYMBOL C {
   template <typename LHS, typename RHS>
   using apply = typename Less::template apply<
     typename Filter::template apply<LHS>,
@@ -725,28 +725,28 @@ struct C {
 };
 
 // quicksort entry-point
-template <typename...> struct Q;
+template <typename...> struct FATAL_HIDE_SYMBOL Q;
 
 template <typename T, typename Less>
-struct Q<T, Less>: q<T, Less> {};
+struct FATAL_HIDE_SYMBOL Q<T, Less>: q<T, Less> {};
 
 template <typename T, typename Less, typename By>
-struct Q<T, Less, By>: q<T, C<Less, By>> {};
+struct FATAL_HIDE_SYMBOL Q<T, Less, By>: q<T, C<Less, By>> {};
 
-template <typename> struct i;
+template <typename> struct FATAL_HIDE_SYMBOL i;
 
-template <template <typename, typename> class Pair, typename LHS, typename RHS>
-struct i<Pair<LHS, RHS>> {
+template <template <typename, typename> typename Pair, typename LHS, typename RHS>
+struct FATAL_HIDE_SYMBOL i<Pair<LHS, RHS>> {
   using type = Pair<RHS, LHS>;
 };
 
 template <
-  template <typename...> class Variadic,
+  template <typename...> typename Variadic,
   typename LHS,
   typename RHS,
   typename... Args
 >
-struct i<Variadic<LHS, RHS, Args...>> {
+struct FATAL_HIDE_SYMBOL i<Variadic<LHS, RHS, Args...>> {
   using type = Variadic<RHS, LHS, Args...>;
 };
 

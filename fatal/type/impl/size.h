@@ -11,22 +11,22 @@
 #define FATAL_INCLUDE_fatal_type_impl_size_h
 
 namespace fatal {
-namespace impl_sz {
+namespace i_sz {
 
 // size //
-template <typename> struct s;
+template <typename> struct FATAL_HIDE_SYMBOL s;
 
-template <template <typename...> class T, typename... Args>
-struct s<T<Args...>> {
+template <template <typename...> typename T, typename... Args>
+struct FATAL_HIDE_SYMBOL s<T<Args...>> {
   using type = std::integral_constant<std::size_t, sizeof...(Args)>;
 };
 
-template <typename T, template <typename V, V...> class Sequence, T... Values>
-struct s<Sequence<T, Values...>> {
+template <typename T, template <typename V, V...> typename Sequence, T... Values>
+struct FATAL_HIDE_SYMBOL s<Sequence<T, Values...>> {
   using type = std::integral_constant<std::size_t, sizeof...(Values)>;
 };
 
-} // namespace impl_sz {
+} // namespace i_sz {
 } // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_size_h

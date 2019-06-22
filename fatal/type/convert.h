@@ -15,6 +15,8 @@
 #include <fatal/type/pair.h>
 #include <fatal/type/sequence.h>
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 #include <utility>
 
@@ -24,29 +26,30 @@ namespace fatal {
 
 template <
   typename From,
-  template <typename V, V...> class Sequence = sequence,
+  template <typename V, V...> typename Sequence = sequence,
   typename... T
 >
 using as_sequence = typename impl_cv::s<Sequence<int>, From, T...>::type;
 
-template <typename T, template <typename...> class List = list>
+template <typename T, template <typename...> typename List = list>
 using as_list = typename impl_cv::l<List, T>::type;
 
 template <typename To, typename T, typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr To to_instance(Args &&...args) {
   return impl_cv::t<To, T>::to(std::forward<Args>(args)...);
 }
 
 namespace bound {
 
-template <template <typename V, V...> class Sequence, typename... T>
-struct as_sequence {
+template <template <typename V, V...> typename Sequence, typename... T>
+struct FATAL_HIDE_SYMBOL as_sequence {
   template <typename From>
   using apply = typename impl_cv::s<Sequence<int>, From, T...>::type;
 };
 
-template <template <typename...> class List>
-struct as_list {
+template <template <typename...> typename List>
+struct FATAL_HIDE_SYMBOL as_list {
   template <typename T>
   using apply = fatal::as_list<T, List>;
 };

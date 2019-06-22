@@ -12,16 +12,18 @@
 
 namespace fatal {
 
-struct get_data_bits;
-struct data_bits_eq;
+struct FATAL_HIDE_SYMBOL get_data_bits;
+struct FATAL_HIDE_SYMBOL data_bits_eq;
 
 namespace i_nm {
 
 template <typename T>
+FATAL_HIDE_SYMBOL
 constexpr std::size_t data_bits_v = std::is_same_v<bool, std::decay_t<T>>
   ? 1
   : sizeof(std::decay_t<T>) * CHAR_BIT;
 
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 constexpr std::size_t msb_mp_impl(std::uintmax_t Value) noexcept {
   return Value
     ? 1 + msb_mp_impl(Value >> 1)
@@ -31,6 +33,7 @@ constexpr std::size_t msb_mp_impl(std::uintmax_t Value) noexcept {
 template <std::uintmax_t Value>
 using most_significant_bit = size_constant<msb_mp_impl(Value)>;
 
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 constexpr std::size_t pop_count_impl(std::uintmax_t Value) noexcept {
   return Value
     ? pop_count_impl(Value & (Value - 1)) + 1
@@ -38,7 +41,8 @@ constexpr std::size_t pop_count_impl(std::uintmax_t Value) noexcept {
 }
 
 template <typename T, std::size_t Size>
-inline constexpr std::size_t slcu() noexcept {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr std::size_t slcu() noexcept {
   static_assert(
     Size + std::is_signed<T>::value <= data_bits_v<T>,
     "value already uses up all the bits available"
@@ -48,7 +52,8 @@ inline constexpr std::size_t slcu() noexcept {
 };
 
 template <typename T>
-inline constexpr T integral_reverse(
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr T integral_reverse(
   T value,
   std::size_t end_phase,
   std::size_t phase,
@@ -69,7 +74,8 @@ template <
   typename U = typename std::make_unsigned<T>::type,
   std::size_t Phase = ((sizeof(T) * CHAR_BIT) >> 1)
 >
-inline constexpr T integral_reverse(T value, std::size_t end_phase) noexcept {
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr T integral_reverse(T value, std::size_t end_phase) noexcept {
   static_assert(sizeof(T) == sizeof(U), "internal error");
   static_assert(!(Phase & (Phase - 1)), "phase must be a power of two");
   static_assert(std::is_integral<T>::value, "only integrals can be reversed");
@@ -82,7 +88,7 @@ inline constexpr T integral_reverse(T value, std::size_t end_phase) noexcept {
 }
 
 template <std::size_t BitSizeUpperBound>
-struct data_bits_filter {
+struct FATAL_HIDE_SYMBOL data_bits_filter {
   template <typename T>
   using apply = std::bool_constant<
     (most_significant_bit<T::value>::value <= BitSizeUpperBound)
@@ -90,8 +96,8 @@ struct data_bits_filter {
 };
 
 template <typename List, std::size_t BitCount>
-struct smallest_for_impl {
-  struct p {
+struct FATAL_HIDE_SYMBOL smallest_for_impl {
+  struct FATAL_HIDE_SYMBOL p {
     template <typename T>
     using apply = std::bool_constant<
       BitCount <= data_bits_v<T>

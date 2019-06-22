@@ -19,22 +19,22 @@ namespace i_g {
 // TODO: SKIP 2 AT A TIME
 // group by iteration //
 template <
-  template <typename...> class,
-  template <typename...> class,
+  template <typename...> typename,
+  template <typename...> typename,
   typename...
 >
-struct g;
+struct FATAL_HIDE_SYMBOL g;
 
 // group match //
 template <
-  template <typename...> class Outer,
-  template <typename...> class Grouping,
+  template <typename...> typename Outer,
+  template <typename...> typename Grouping,
   typename... Result,
   typename Key, typename... Group,
   typename T,
   typename... Args
 >
-struct g<
+struct FATAL_HIDE_SYMBOL g<
   Outer, Grouping,
   list<Result...>,
   Key, list<Group...>,
@@ -45,14 +45,14 @@ struct g<
 
 // group no match //
 template <
-  template <typename...> class Outer,
-  template <typename...> class Grouping,
+  template <typename...> typename Outer,
+  template <typename...> typename Grouping,
   typename... Result,
   typename G, typename... Group,
   typename Key, typename T,
   typename... Args
 >
-struct g<
+struct FATAL_HIDE_SYMBOL g<
   Outer, Grouping,
   list<Result...>,
   G, list<Group...>,
@@ -63,36 +63,36 @@ struct g<
 
 // done //
 template <
-  template <typename...> class Outer,
-  template <typename...> class Grouping,
+  template <typename...> typename Outer,
+  template <typename...> typename Grouping,
   typename... Result,
   typename Key, typename... Group
 >
-struct g<Outer, Grouping, list<Result...>, Key, list<Group...>> {
+struct FATAL_HIDE_SYMBOL g<Outer, Grouping, list<Result...>, Key, list<Group...>> {
   using type = Outer<Result..., Grouping<Group...>>;
 };
 
 // group by entry point //
-template <typename, typename, template <typename...> class...> struct G;
+template <typename, typename, template <typename...> typename...> struct FATAL_HIDE_SYMBOL G;
 
 template <
-  template <typename...> class List,
+  template <typename...> typename List,
   typename Key,
-  template <typename...> class Grouping,
-  template <typename...> class Outer
+  template <typename...> typename Grouping,
+  template <typename...> typename Outer
 >
-struct G<List<>, Key, Grouping, Outer> {
+struct FATAL_HIDE_SYMBOL G<List<>, Key, Grouping, Outer> {
   using type = Outer<>;
 };
 
 template <
-  template <typename...> class List,
+  template <typename...> typename List,
   typename T, typename... Args,
   typename Key,
-  template <typename...> class Grouping,
-  template <typename...> class Outer
+  template <typename...> typename Grouping,
+  template <typename...> typename Outer
 >
-struct G<List<T, Args...>, Key, Grouping, Outer>:
+struct FATAL_HIDE_SYMBOL G<List<T, Args...>, Key, Grouping, Outer>:
   g<
     Outer,
     Grouping,
@@ -106,22 +106,22 @@ struct G<List<T, Args...>, Key, Grouping, Outer>:
 // TODO: SKIP 2 AT A TIME
 // filtered_group_by: recursion //
 template <
-  template <typename...> class,
-  template <typename...> class,
+  template <typename...> typename,
+  template <typename...> typename,
   typename...
-> struct f;
+> struct FATAL_HIDE_SYMBOL f;
 
 // group match //
 template <
-  template <typename...> class Pair, template <typename...> class Grouping,
-  template <typename...> class List,
+  template <typename...> typename Pair, template <typename...> typename Grouping,
+  template <typename...> typename List,
   typename... Filtered,
   typename... Result,
   typename Key, typename... Group,
   typename T,
   typename... Args
 >
-struct f<
+struct FATAL_HIDE_SYMBOL f<
   Pair, Grouping,
   List<Filtered...>,
   List<Result...>,
@@ -140,15 +140,15 @@ struct f<
 
 // group no match //
 template <
-  template <typename...> class Pair, template <typename...> class Grouping,
-  template <typename...> class List,
+  template <typename...> typename Pair, template <typename...> typename Grouping,
+  template <typename...> typename List,
   typename... Filtered,
   typename... Result,
   typename G, typename... Group,
   typename Key, typename T,
   typename... Args
 >
-struct f<
+struct FATAL_HIDE_SYMBOL f<
   Pair, Grouping,
   List<Filtered...>,
   List<Result...>,
@@ -167,14 +167,14 @@ struct f<
 
 // filtered out //
 template <
-  template <typename...> class Pair, template <typename...> class Grouping,
-  template <typename...> class List,
+  template <typename...> typename Pair, template <typename...> typename Grouping,
+  template <typename...> typename List,
   typename... Filtered,
   typename... Result,
   typename G, typename... Group,
   typename T, typename... Args
 >
-struct f<
+struct FATAL_HIDE_SYMBOL f<
   Pair, Grouping,
   List<Filtered...>,
   List<Result...>,
@@ -193,13 +193,13 @@ struct f<
 
 // done //
 template <
-  template <typename...> class Pair, template <typename...> class Grouping,
-  template <typename...> class List,
+  template <typename...> typename Pair, template <typename...> typename Grouping,
+  template <typename...> typename List,
   typename... Filtered,
   typename... Result,
   typename Key, typename... Group
 >
-struct f<
+struct FATAL_HIDE_SYMBOL f<
   Pair,
   Grouping,
   List<Filtered...>,
@@ -212,69 +212,69 @@ struct f<
 
 // pre-filter //
 template <bool, typename, typename T>
-struct p {
+struct FATAL_HIDE_SYMBOL p {
   using type = tag<T>;
 };
 
 template <typename Key, typename T>
-struct p<false, Key, T> {
+struct FATAL_HIDE_SYMBOL p<false, Key, T> {
   using type = pair<typename Key::template apply<T>, T>;
 };
 
 // group by entry point //
-template <typename, typename, typename, template <typename...> class...>
-struct F;
+template <typename, typename, typename, template <typename...> typename...>
+struct FATAL_HIDE_SYMBOL F;
 
 // filtered_group_by: initial filter //
 template <
-  template <typename...> class,
-  template <typename...> class,
+  template <typename...> typename,
+  template <typename...> typename,
   typename...
 >
-struct i;
+struct FATAL_HIDE_SYMBOL i;
 
 // filter out all input //
 template <
-  template <typename...> class Pair, template <typename...> class Grouping,
-  template <typename...> class List,
+  template <typename...> typename Pair, template <typename...> typename Grouping,
+  template <typename...> typename List,
   typename... Filtered
 >
-struct i<Pair, Grouping, List<Filtered...>> {
+struct FATAL_HIDE_SYMBOL i<Pair, Grouping, List<Filtered...>> {
   using type = Pair<List<Filtered...>, Grouping<>>;
 };
 
 // TODO: SKIP 2 AT A TIME
 // filter out next element //
 template <
-  template <typename...> class Pair, template <typename...> class Grouping,
-  template <typename...> class List,
+  template <typename...> typename Pair, template <typename...> typename Grouping,
+  template <typename...> typename List,
   typename... Filtered,
   typename T, typename... Args
 >
-struct i<Pair, Grouping, List<Filtered...>, tag<T>, Args...>:
+struct FATAL_HIDE_SYMBOL i<Pair, Grouping, List<Filtered...>, tag<T>, Args...>:
   i<Pair, Grouping, List<Filtered..., T>, Args...>
 {};
 
 // start recursion //
 template <
-  template <typename...> class Pair, template <typename...> class Grouping,
-  template <typename...> class List,
+  template <typename...> typename Pair, template <typename...> typename Grouping,
+  template <typename...> typename List,
   typename... Filtered,
   typename Key, typename T,
   typename... Args
 >
-struct i<Pair, Grouping, List<Filtered...>, pair<Key, T>, Args...>:
+struct FATAL_HIDE_SYMBOL i<Pair, Grouping, List<Filtered...>, pair<Key, T>, Args...>:
   f<Pair, Grouping, List<Filtered...>, List<>, Key, List<T>, Args...>
 {};
 
 // non-empty input //
 template <
-  template <typename...> class List, typename... Args,
+  template <typename...> typename List, typename... Args,
   typename Key,
   typename Filter,
-  template <typename...> class Pair, template <typename...> class Grouping
+  template <typename...> typename Pair, template <typename...> typename Grouping
 >
-struct F<List<Args...>, Key, Filter, Pair, Grouping>:
+struct FATAL_HIDE_SYMBOL F<List<Args...>, Key, Filter, Pair, Grouping>:
   i<
     Pair, Grouping,
     List<>,
@@ -284,12 +284,12 @@ struct F<List<Args...>, Key, Filter, Pair, Grouping>:
 
 // empty input //
 template <
-  template <typename...> class List,
+  template <typename...> typename List,
   typename Key,
   typename Filter,
-  template <typename...> class Pair, template <typename...> class Grouping
+  template <typename...> typename Pair, template <typename...> typename Grouping
 >
-struct F<List<>, Key, Filter, Pair, Grouping> {
+struct FATAL_HIDE_SYMBOL F<List<>, Key, Filter, Pair, Grouping> {
   using type = Pair<List<>, Grouping<>>;
 };
 
