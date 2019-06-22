@@ -10,9 +10,10 @@
 #ifndef FATAL_INCLUDE_fatal_type_foreach_h
 #define FATAL_INCLUDE_fatal_type_foreach_h
 
-#include <fatal/portability.h>
 #include <fatal/type/sequence.h>
 #include <fatal/type/size.h>
+
+#include <fatal/portability.h>
 
 #include <utility>
 
@@ -21,10 +22,20 @@
 namespace fatal {
 
 template <typename List, typename Visitor, typename... Args>
-FATAL_ATTR_ALWAYS_INLINE
-static void foreach(Visitor&& visitor, Args&&... args) {
-  impl_fe::f<List, make_index_sequence<size<List>::value>>::g(
+FATAL_HIDE_SYMBOL
+static inline void foreach(Visitor &&visitor, Args &&...args) {
+  i_fe::f<List, make_index_sequence<size<List>::value>>::g(
     std::forward<Visitor>(visitor),
+    std::forward<Args>(args)...
+  );
+}
+
+template <typename List, typename Visitor, typename Seed, typename... Args>
+FATAL_HIDE_SYMBOL
+static inline constexpr auto foreach_accumulate(Visitor &&visitor, Seed &&seed, Args &&...args) {
+  return i_fe::a<List>::g(
+    std::forward<Visitor>(visitor),
+    std::forward<Seed>(seed),
     std::forward<Args>(args)...
   );
 }

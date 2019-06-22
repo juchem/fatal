@@ -15,30 +15,73 @@
 #include <fatal/type/tag.h>
 
 namespace fatal {
-namespace impl_fe {
+namespace i_fe {
+
+// foreach
 
 template <typename, typename>
-struct f {
+struct FATAL_HIDE_SYMBOL f {
   template <typename... Args>
-  FATAL_ATTR_ALWAYS_INLINE FATAL_ATTR_VISIBILITY_HIDDEN
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void g(Args &&...) {}
 };
 
 template <typename... T, std::size_t... Indexes>
-struct f<list<T...>, index_sequence<Indexes...>> {
+struct FATAL_HIDE_SYMBOL f<list<T...>, index_sequence<Indexes...>> {
   static_assert(sizeof...(T) == sizeof...(Indexes), "size mismatch");
 
   template <typename Visitor, typename... Args>
-  FATAL_ATTR_ALWAYS_INLINE FATAL_ATTR_VISIBILITY_HIDDEN
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void g(Visitor &&visitor, Args &&...args) {
     bool _[sizeof...(T)] = {
-      (visitor(indexed<T, Indexes>{}, args...), false)...
+      (visitor(indexed<T, Indexes>(), args...), false)...
     };
     (void)_;
   }
 };
 
-} // namespace impl_fe {
+// foreach_accumulate
+
+template <std::size_t Index, typename...> struct FATAL_HIDE_SYMBOL A {};
+
+template <std::size_t Index, typename T, typename... Args>
+struct FATAL_HIDE_SYMBOL A<Index, T, Args...> {
+  template <typename Visitor, typename Seed, typename... UArgs>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr decltype(auto) g(Visitor &&visitor, Seed &&seed, UArgs &&... args) {
+    return A<Index + 1, Args...>::g(
+      visitor,
+      visitor(indexed<T, Index>(), std::forward<Seed>(seed), args...),
+      args...
+    );
+  }
+};
+
+template <std::size_t Index>
+struct FATAL_HIDE_SYMBOL A<Index> {
+  template <typename Visitor, typename Seed, typename... UArgs>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr decltype(auto) g(Visitor &&, Seed &&seed, UArgs &&...) {
+    return std::forward<Seed>(seed);
+  }
+};
+
+template <typename> struct FATAL_HIDE_SYMBOL a {};
+
+template <template <typename...> typename List, typename... Args>
+struct FATAL_HIDE_SYMBOL a<List<Args...>> {
+  template <typename Visitor, typename Seed, typename... UArgs>
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr decltype(auto) g(Visitor &&visitor, Seed &&seed, UArgs &&... args) {
+    return A<0, Args...>::g(
+      std::forward<Visitor>(visitor),
+      std::forward<Seed>(seed),
+      std::forward<UArgs>(args)...
+    );
+  }
+};
+
+} // namespace i_fe {
 } // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_foreach_h

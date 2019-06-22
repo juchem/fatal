@@ -12,11 +12,13 @@
 
 #include <fatal/type/debug.h>
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 
 namespace fatal {
 
-template <typename...> struct list {};
+template <typename...> struct FATAL_HIDE_SYMBOL list {};
 
 template <typename T, T... Values>
 using value_list = list<std::integral_constant<T, Values>...>;

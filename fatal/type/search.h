@@ -16,6 +16,8 @@
 #include <fatal/type/slice.h>
 #include <fatal/type/sort.h>
 
+#include <fatal/portability.h>
+
 #include <utility>
 
 #include <cassert>
@@ -33,6 +35,7 @@ template <
   typename Visitor,
   typename... Args
 >
+FATAL_HIDE_SYMBOL
 static inline constexpr bool sorted_search(
   Needle &&needle,
   Visitor &&visitor,
@@ -51,6 +54,7 @@ template <
   typename Comparer = value_comparer,
   typename Needle
 >
+FATAL_HIDE_SYMBOL
 static inline constexpr bool sorted_search(Needle &&needle) {
   return sorted_search<T, Filter, Comparer>(
     std::forward<Needle>(needle),
@@ -67,6 +71,7 @@ template <
   typename Visitor,
   typename... Args
 >
+FATAL_HIDE_SYMBOL
 static inline constexpr decltype(auto) sorted_find(
   Needle &&needle,
   Fallback &&fallback,
@@ -89,6 +94,7 @@ template <
   typename Visitor,
   typename... Args
 >
+FATAL_HIDE_SYMBOL
 static inline constexpr bool scalar_search(
   Needle &&needle,
   Visitor &&visitor,
@@ -107,6 +113,7 @@ template <
   typename Comparer = value_comparer,
   typename Needle
 >
+FATAL_HIDE_SYMBOL
 static inline constexpr bool scalar_search(Needle &&needle) {
   return scalar_search<T, Filter, Comparer>(
     std::forward<Needle>(needle),
@@ -123,6 +130,7 @@ template <
   typename Visitor,
   typename... Args
 >
+FATAL_HIDE_SYMBOL
 static inline constexpr decltype(auto) scalar_find(
   Needle &&needle,
   Fallback &&fallback,
@@ -138,6 +146,7 @@ static inline constexpr decltype(auto) scalar_find(
 }
 
 template <typename T, typename Visitor, typename... Args>
+FATAL_HIDE_SYMBOL
 static inline constexpr bool index_search(
   std::size_t needle,
   Visitor &&visitor,
@@ -151,6 +160,7 @@ static inline constexpr bool index_search(
 }
 
 template <typename T, typename Fallback, typename Visitor, typename... Args>
+FATAL_HIDE_SYMBOL
 static inline constexpr decltype(auto) index_find(
   std::size_t needle,
   Fallback &&fallback,

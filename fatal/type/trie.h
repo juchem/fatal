@@ -14,6 +14,8 @@
 #include <fatal/type/identity.h>
 #include <fatal/type/sort.h>
 
+#include <fatal/portability.h>
+
 #include <utility>
 
 #include <fatal/type/impl/trie.h>

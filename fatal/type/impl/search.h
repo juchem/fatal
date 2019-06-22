@@ -21,7 +21,7 @@ namespace i_S {
 // TODO: SWITCH CASE OPTIMIZATION
 
 template <typename T, std::size_t Offset = 0, std::size_t Size = size<T>::value>
-struct s {
+struct FATAL_HIDE_SYMBOL s {
   template <
     typename Comparer,
     typename Filter,
@@ -29,7 +29,8 @@ struct s {
     typename Visitor,
     typename... Args
   >
-  static constexpr inline bool S(Needle &&needle, Visitor &&visitor, Args &&...args) {
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr bool S(Needle &&needle, Visitor &&visitor, Args &&...args) {
     if constexpr (Size == 0) {
       return false;
     } else if constexpr (Size == 1) {
@@ -92,7 +93,7 @@ struct s {
 };
 
 template <typename T, std::size_t Offset = 0, std::size_t Size = size<T>::value>
-struct f {
+struct FATAL_HIDE_SYMBOL f {
   template <
     typename Comparer,
     typename Filter,
@@ -101,7 +102,8 @@ struct f {
     typename Visitor,
     typename... Args
   >
-  static constexpr inline decltype(auto) S(
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static constexpr decltype(auto) S(
     Needle &&needle,
     Fallback &&fallback,
     Visitor &&visitor,

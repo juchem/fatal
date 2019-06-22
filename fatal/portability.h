@@ -45,36 +45,36 @@
 # define FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
 #endif
 
-//////////////////////////////
-// FATAL_ATTR_ALWAYS_INLINE //
-//////////////////////////////
+/////////////////////////
+// FATAL_ALWAYS_INLINE //
+/////////////////////////
 
 /**
  * TODO: DOCUMENT
  */
 
 #if _MSC_VER
-# define FATAL_ATTR_ALWAYS_INLINE __forceinline
+# define FATAL_ALWAYS_INLINE __forceinline
 #elif __clang__ || __GNUC__
-# define FATAL_ATTR_ALWAYS_INLINE inline __attribute__((always_inline))
+# define FATAL_ALWAYS_INLINE inline __attribute__((always_inline))
 #else
-# define FATAL_ATTR_ALWAYS_INLINE inline
+# define FATAL_ALWAYS_INLINE inline
 #endif
 
-//////////////////////////////////
-// FATAL_ATTR_VISIBILITY_HIDDEN //
-//////////////////////////////////
+///////////////////////
+// FATAL_HIDE_SYMBOL //
+///////////////////////
 
 /**
  * TODO: DOCUMENT
  */
 
 #if _MSC_VER
-# define FATAL_ATTR_VISIBILITY_HIDDEN
+# define FATAL_HIDE_SYMBOL
 #elif __clang__ || __GNUC__
-# define FATAL_ATTR_VISIBILITY_HIDDEN __attribute__((visibility("hidden")))
+# define FATAL_HIDE_SYMBOL __attribute__((visibility("hidden")))
 #else
-# define FATAL_ATTR_VISIBILITY_HIDDEN
+# define FATAL_HIDE_SYMBOL
 #endif
 
 #endif
