@@ -103,10 +103,14 @@ template <bool Condition, typename... Args>
 using debug_type_if_t = typename debug_type_if<Condition, Args...>::type;
 
 template <typename T>
-constexpr T &&debug_type(T &&value) {
-  return std::forward<FATAL_DEBUG_TYPE(T)>(value);
+constexpr T const *debug_type() {
+  return static_cast<FATAL_DEBUG_TYPE(T)>(nullptr);
 }
 
+template <typename T>
+constexpr T &&debug_type_of(T &&value) {
+  return std::forward<FATAL_DEBUG_TYPE(T)>(value);
+}
 
 /**
  * Helper to conditionally use `FATAL_DEBUG_TYPE` depending on a boolean
