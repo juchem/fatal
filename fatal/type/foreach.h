@@ -38,7 +38,7 @@ namespace fatal {
  * Notes:
  * - the result of the visitor is ignored.
  *
- * Author: Marcelo Juchem <juchem@gmail.com>
+ * Author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <typename List, typename Visitor, typename... Args>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -78,7 +78,7 @@ static  void foreach(Visitor &&visitor, Args &&...args) {
  * - the return type of `foreach_accumulate` is the `T` returned by the visitor to the last
  *   element of the list
  *
- * Author: Marcelo Juchem <juchem@gmail.com>
+ * Author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <typename List, typename Visitor, typename Seed, typename... Args>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL

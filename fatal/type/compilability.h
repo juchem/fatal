@@ -25,7 +25,7 @@ namespace fatal {
  * Due to the lack of robustness, this is not intended to be used outside of
  * unit tests.
  *
- * @author: Marcelo Juchem <juchem@gmail.com>
+ * @author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <template <typename...> class T, typename... Args>
 using check_compilability = decltype(

@@ -64,7 +64,7 @@ template <typename...> struct debugged;
  *    foo<A, B, C>();
  *  }
  *
- * @author: Marcelo Juchem <juchem@gmail.com>
+ * @author: Marcelo Juchem <juchem at gmail dot com>
  */
 #define FATAL_DEBUG_TYPE(...) decltype(::fatal::debugged<__VA_ARGS__>())
 
@@ -85,7 +85,7 @@ template <typename...> struct debugged;
  *    foo(10);
  *  }
  *
- * @author: Marcelo Juchem <juchem@gmail.com>
+ * @author: Marcelo Juchem <juchem at gmail dot com>
  */
 #define FATAL_DEBUG_TYPE_OF(...) FATAL_DEBUG_TYPE(decltype(__VA_ARGS__))
 
@@ -140,7 +140,7 @@ constexpr T &&debug_type_of(T &&value) {
  *    foo<X, Z>();
  *  }
  *
- * @author: Marcelo Juchem <juchem@gmail.com>
+ * @author: Marcelo Juchem <juchem at gmail dot com>
  */
 #define FATAL_DEBUG_TYPE_IF(Condition, ...) \
   ::fatal::debug_type_if_t<Condition, __VA_ARGS__>

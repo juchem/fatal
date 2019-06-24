@@ -220,7 +220,7 @@ static constexpr T bitwise_filter(T const value, Args const... args) {
  *  // returns `E::a | E::b | E::c`
  *  bitwise_disable(a | b | c);
  *
- * @author: Marcelo Juchem <juchem@gmail.com>
+ * @author: Marcelo Juchem <juchem at gmail dot com>
  */
 template <typename T>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL

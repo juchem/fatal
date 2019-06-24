@@ -170,7 +170,7 @@ struct string_view {
    *
    * See also: `seek*`, `skip*`, `operator +=`, `operator +`
    *
-   * @author: Marcelo Juchem <juchem@gmail.com>
+   * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   string_view &skip(size_type size) {
     return *this += size;
@@ -195,7 +195,7 @@ struct string_view {
    *
    * See also: `seek*`, `skip*`, `operator +=`, `operator +`
    *
-   * @author: Marcelo Juchem <juchem@gmail.com>
+   * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
   string_view &skip_past(U &&delimiter) {
@@ -224,7 +224,7 @@ struct string_view {
    *
    * See also: `seek*`, `skip*`, `operator +=`, `operator +`
    *
-   * @author: Marcelo Juchem <juchem@gmail.com>
+   * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
   string_view &skip_to(U &&delimiter) {
@@ -251,7 +251,7 @@ struct string_view {
    *
    * See also: `seek*`, `skip*`, `operator +=`, `operator +`
    *
-   * @author: Marcelo Juchem <juchem@gmail.com>
+   * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
   string_view seek_past(U &&delimiter) {
@@ -279,7 +279,7 @@ struct string_view {
    *
    * See also: `seek*`, `skip*`, `operator +=`, `operator +`
    *
-   * @author: Marcelo Juchem <juchem@gmail.com>
+   * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
   string_view seek_for(U &&delimiter) {
@@ -307,7 +307,7 @@ struct string_view {
    *
    * See also: `seek*`, `skip*`, `operator +=`, `operator +`
    *
-   * @author: Marcelo Juchem <juchem@gmail.com>
+   * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   string_view seek(size_type size) {
     string_view result(begin_, size);
