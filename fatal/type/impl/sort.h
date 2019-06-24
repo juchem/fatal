@@ -733,6 +733,8 @@ struct FATAL_HIDE_SYMBOL Q<T, Less>: q<T, Less> {};
 template <typename T, typename Less, typename By>
 struct FATAL_HIDE_SYMBOL Q<T, Less, By>: q<T, C<Less, By>> {};
 
+// reverse
+
 template <typename> struct FATAL_HIDE_SYMBOL i;
 
 template <template <typename, typename> typename Pair, typename LHS, typename RHS>

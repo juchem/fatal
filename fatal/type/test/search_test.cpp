@@ -67,44 +67,64 @@ FATAL_TEST(sorted_find, list) {
   FATAL_EXPECT_EQ(999, sorted_find<haystack>(60, 999, value_search_visitor<60, 5>(), 600));
 }
 
-FATAL_TEST(scalar_search, empty) {
+FATAL_TEST(unsorted_search, empty) {
   using haystack = index_list<>;
-  FATAL_EXPECT_FALSE(scalar_search<haystack>(10, value_search_visitor<10, 0>()));
-  FATAL_EXPECT_FALSE(scalar_search<haystack>(20, value_search_visitor<20, 1>()));
-  FATAL_EXPECT_FALSE(scalar_search<haystack>(30, value_search_visitor<30, 2>()));
-  FATAL_EXPECT_FALSE(scalar_search<haystack>(40, value_search_visitor<40, 3>()));
-  FATAL_EXPECT_FALSE(scalar_search<haystack>(50, value_search_visitor<50, 4>()));
-  FATAL_EXPECT_FALSE(scalar_search<haystack>(60, value_search_visitor<60, 5>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(10, value_search_visitor<10, 0>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(20, value_search_visitor<20, 1>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(30, value_search_visitor<30, 2>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(40, value_search_visitor<40, 3>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(50, value_search_visitor<50, 4>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(60, value_search_visitor<60, 5>()));
 }
 
-FATAL_TEST(scalar_search, list) {
+FATAL_TEST(unsorted_search, sorted list) {
+  using haystack = index_list<10, 20, 30, 40, 50>;
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(10, value_search_visitor<10, 0>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(20, value_search_visitor<20, 1>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(30, value_search_visitor<30, 2>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(40, value_search_visitor<40, 3>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(50, value_search_visitor<50, 4>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(60, value_search_visitor<60, 5>()));
+}
+
+FATAL_TEST(unsorted_search, unsorted list) {
   using haystack = index_list<50, 20, 10, 40, 30>;
-  FATAL_EXPECT_TRUE(scalar_search<haystack>(10, value_search_visitor<10, 0>()));
-  FATAL_EXPECT_TRUE(scalar_search<haystack>(20, value_search_visitor<20, 1>()));
-  FATAL_EXPECT_TRUE(scalar_search<haystack>(30, value_search_visitor<30, 2>()));
-  FATAL_EXPECT_TRUE(scalar_search<haystack>(40, value_search_visitor<40, 3>()));
-  FATAL_EXPECT_TRUE(scalar_search<haystack>(50, value_search_visitor<50, 4>()));
-  FATAL_EXPECT_FALSE(scalar_search<haystack>(60, value_search_visitor<60, 5>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(10, value_search_visitor<10, 0>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(20, value_search_visitor<20, 1>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(30, value_search_visitor<30, 2>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(40, value_search_visitor<40, 3>()));
+  FATAL_EXPECT_TRUE(unsorted_search<haystack>(50, value_search_visitor<50, 4>()));
+  FATAL_EXPECT_FALSE(unsorted_search<haystack>(60, value_search_visitor<60, 5>()));
 }
 
-FATAL_TEST(scalar_find, empty) {
+FATAL_TEST(unsorted_find, empty) {
   using haystack = index_list<>;
-  FATAL_EXPECT_EQ(999, scalar_find<haystack>(10, 999, value_search_visitor<10, 0>(), 100));
-  FATAL_EXPECT_EQ(999, scalar_find<haystack>(20, 999, value_search_visitor<20, 1>(), 200));
-  FATAL_EXPECT_EQ(999, scalar_find<haystack>(30, 999, value_search_visitor<30, 2>(), 300));
-  FATAL_EXPECT_EQ(999, scalar_find<haystack>(40, 999, value_search_visitor<40, 3>(), 400));
-  FATAL_EXPECT_EQ(999, scalar_find<haystack>(50, 999, value_search_visitor<50, 4>(), 500));
-  FATAL_EXPECT_EQ(999, scalar_find<haystack>(60, 999, value_search_visitor<60, 5>(), 600));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(10, 999, value_search_visitor<10, 0>(), 100));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(20, 999, value_search_visitor<20, 1>(), 200));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(30, 999, value_search_visitor<30, 2>(), 300));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(40, 999, value_search_visitor<40, 3>(), 400));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(50, 999, value_search_visitor<50, 4>(), 500));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(60, 999, value_search_visitor<60, 5>(), 600));
 }
 
-FATAL_TEST(scalar_find, list) {
+FATAL_TEST(unsorted_find, sorted list) {
   using haystack = index_list<50, 20, 10, 40, 30>;
-  FATAL_EXPECT_EQ(100, scalar_find<haystack>(10, 999, value_search_visitor<10, 0>(), 100));
-  FATAL_EXPECT_EQ(200, scalar_find<haystack>(20, 999, value_search_visitor<20, 1>(), 200));
-  FATAL_EXPECT_EQ(300, scalar_find<haystack>(30, 999, value_search_visitor<30, 2>(), 300));
-  FATAL_EXPECT_EQ(400, scalar_find<haystack>(40, 999, value_search_visitor<40, 3>(), 400));
-  FATAL_EXPECT_EQ(500, scalar_find<haystack>(50, 999, value_search_visitor<50, 4>(), 500));
-  FATAL_EXPECT_EQ(999, scalar_find<haystack>(60, 999, value_search_visitor<60, 5>(), 600));
+  FATAL_EXPECT_EQ(100, unsorted_find<haystack>(10, 999, value_search_visitor<10, 0>(), 100));
+  FATAL_EXPECT_EQ(200, unsorted_find<haystack>(20, 999, value_search_visitor<20, 1>(), 200));
+  FATAL_EXPECT_EQ(300, unsorted_find<haystack>(30, 999, value_search_visitor<30, 2>(), 300));
+  FATAL_EXPECT_EQ(400, unsorted_find<haystack>(40, 999, value_search_visitor<40, 3>(), 400));
+  FATAL_EXPECT_EQ(500, unsorted_find<haystack>(50, 999, value_search_visitor<50, 4>(), 500));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(60, 999, value_search_visitor<60, 5>(), 600));
+}
+
+FATAL_TEST(unsorted_find, unsorted list) {
+  using haystack = index_list<10, 20, 30, 40, 50>;
+  FATAL_EXPECT_EQ(100, unsorted_find<haystack>(10, 999, value_search_visitor<10, 0>(), 100));
+  FATAL_EXPECT_EQ(200, unsorted_find<haystack>(20, 999, value_search_visitor<20, 1>(), 200));
+  FATAL_EXPECT_EQ(300, unsorted_find<haystack>(30, 999, value_search_visitor<30, 2>(), 300));
+  FATAL_EXPECT_EQ(400, unsorted_find<haystack>(40, 999, value_search_visitor<40, 3>(), 400));
+  FATAL_EXPECT_EQ(500, unsorted_find<haystack>(50, 999, value_search_visitor<50, 4>(), 500));
+  FATAL_EXPECT_EQ(999, unsorted_find<haystack>(60, 999, value_search_visitor<60, 5>(), 600));
 }
 
 FATAL_TEST(index_search, empty) {
@@ -145,6 +165,31 @@ FATAL_TEST(index_find, list) {
   FATAL_EXPECT_EQ(400, index_find<haystack>(3, 999, search_visitor<int, 3>(), 400));
   FATAL_EXPECT_EQ(500, index_find<haystack>(4, 999, search_visitor<unsigned, 4>(), 500));
   FATAL_EXPECT_EQ(999, index_find<haystack>(5, 999, search_visitor<void *, 5>(), 600));
+}
+
+FATAL_TEST(sorted_find, fallback/visitor type compatibility) {
+  using haystack = index_list<10, 20, 30, 40, 50>;
+  constexpr auto const value = "hello, world!";
+  FATAL_EXPECT_EQ(
+    value,
+    sorted_find<haystack>(10, nullptr, [=](auto, auto) { return value; })
+  );
+  FATAL_EXPECT_EQ(
+    nullptr,
+    sorted_find<haystack>(60, nullptr, [=](auto, auto) { return value; })
+  );
+}
+FATAL_TEST(unsorted_find, fallback/visitor type compatibility) {
+  using haystack = index_list<10, 20, 30, 40, 50>;
+  constexpr auto const value = "hello, world!";
+  FATAL_EXPECT_EQ(
+    value,
+    unsorted_find<haystack>(10, nullptr, [=](auto, auto) { return value; })
+  );
+  FATAL_EXPECT_EQ(
+    nullptr,
+    unsorted_find<haystack>(60, nullptr, [=](auto, auto) { return value; })
+  );
 }
 
 } // namespace fatal {

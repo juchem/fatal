@@ -32,19 +32,19 @@ using filter = typename i_s::F<Predicate, T>::type;
 template <typename T, typename Predicate>
 using reject = filter<T, negation<Predicate>>;
 
-// TODO: ACCEPT A CUSTOM PREDICATE
-template  <typename LHS, typename RHS>
-using merge = typename i_s::M<LHS, RHS>::type;
-
 template <typename T, typename Less = less, typename... By>
 using sort = typename i_s::Q<T, Less, By...>::type;
 
 template <typename T, typename... By>
 using sort_by = sort<T, less, By...>;
 
+// TODO: ACCEPT A CUSTOM PREDICATE
+template  <typename LHS, typename RHS>
+using merge = typename i_s::M<LHS, RHS>::type;
+
 // TODO: REVIEW / MOVE SOMEWHERE ELSE / GENERALIZE / ...
 template <typename T>
-using invert = typename i_s::i<T>::type;
+using reverse = typename i_s::i<T>::type;
 
 } // namespace fatal {
 

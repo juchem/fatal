@@ -21,6 +21,25 @@
 
 namespace fatal {
 
+// TODO: ADD EXAMPLES TO THE DOCUMENTATION
+
+/**
+ * Given a list `L<V0, V1, ..., Vn>`, calls the visitor for each element in the list, in order,
+ * as if calling:
+ *
+ *  visitor(indexed<V0, 0>(), args...);
+ *  visitor(indexed<V1, 1>(), args...);
+ *  ...
+ *  visitor(indexed<Vn, N>(), args...);
+ *
+ * Visitor signature:
+ *  T visitor(indexed<Vn, N>, Args...)
+ *
+ * Notes:
+ * - the result of the visitor is ignored.
+ *
+ * Author: Marcelo Juchem <juchem@gmail.com>
+ */
 template <typename List, typename Visitor, typename... Args>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static  void foreach(Visitor &&visitor, Args &&...args) {
@@ -30,6 +49,37 @@ static  void foreach(Visitor &&visitor, Args &&...args) {
   );
 }
 
+/**
+ * Given a list `L<V0, V1, V2, V3>`, returns a value as if evaluating the expression
+ *
+ *  visitor(
+ *    indexed<V3, 3>(),
+ *    visitor(
+ *      indexed<V2, 2>(),
+ *      visitor(
+ *        indexed<V1, 1>(),
+ *        visitor(
+ *          indexed<V0, 0>(),
+ *          seed,
+ *          args...
+ *        ),
+ *        args...
+ *      ),
+ *      args...
+ *    ),
+ *    args...
+ *  )
+ *
+ * Visitor signature:
+ *  T visitor(indexed<Vn, N>, Seed, Args...)
+ *
+ * Notes:
+ * - `T` doesn't need to have any relation to `Seed`
+ * - the return type of `foreach_accumulate` is the `T` returned by the visitor to the last
+ *   element of the list
+ *
+ * Author: Marcelo Juchem <juchem@gmail.com>
+ */
 template <typename List, typename Visitor, typename Seed, typename... Args>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 static constexpr auto foreach_accumulate(Visitor &&visitor, Seed &&seed, Args &&...args) {

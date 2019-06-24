@@ -280,7 +280,7 @@ private:
   struct FATAL_HIDE_SYMBOL to_string_fallback {
     FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     char const *operator ()(type e, char const *fallback) const {
-      scalar_search<fields, get_type::value>(e, to_string_visitor(), fallback);
+      unsorted_search<fields, get_type::value>(e, to_string_visitor(), fallback);
 
       return fallback;
     }
@@ -308,7 +308,7 @@ public:
    */
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool is_valid(type e) {
-    return scalar_search<fields, get_type::value>(e);
+    return unsorted_search<fields, get_type::value>(e);
   }
 
   /**
