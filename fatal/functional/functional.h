@@ -22,6 +22,9 @@
 #include <type_traits>
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace fn {
 
@@ -993,5 +996,7 @@ public:
 
 } // namespace fn {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_functional_functional_h

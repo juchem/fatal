@@ -20,6 +20,9 @@
 #include <type_traits>
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/convert.h>
 
 namespace fatal {
@@ -56,5 +59,7 @@ struct FATAL_HIDE_SYMBOL as_list {
 
 } // namespace bound {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_convert_h

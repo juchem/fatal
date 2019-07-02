@@ -11,6 +11,9 @@
 
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace udl {
 namespace string {
@@ -23,5 +26,7 @@ constexpr std::integer_sequence<T, Values...> operator ""_str() {
 } // namespace string {
 } // namespace udl {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_string_h

@@ -15,6 +15,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/logical.h>
 
 namespace fatal {
@@ -269,5 +272,7 @@ template <typename T>
 using logical_xnor_of = apply_to<T, logical_xnor>;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_logical_h

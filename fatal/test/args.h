@@ -12,6 +12,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace test_impl {
 namespace args {
@@ -48,5 +51,7 @@ Map parse_args(int const argc, char const *const *const argv) {
 } // namespace args {
 } // namespace test_impl {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_test_args_h

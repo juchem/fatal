@@ -28,22 +28,36 @@
 #if defined(__clang__) || defined(__GNUC__)
 # define FATAL_DIAGNOSTIC_PUSH _Pragma("GCC diagnostic push")
 # define FATAL_DIAGNOSTIC_POP _Pragma("GCC diagnostic pop")
-# define FATAL_GCC_DIAGNOSTIC_IGNORED_INTERNAL2(warningName) #warningName
-# define FATAL_GCC_DIAGNOSTIC_IGNORED(warningName) \
-  _Pragma(                                      \
-  FATAL_GCC_DIAGNOSTIC_IGNORED_INTERNAL2(GCC diagnostic ignored warningName))
+# define FATAL_DIAGNOSTIC_TO_STR(warningName) #warningName
+# define FATAL_DIAGNOSTIC_IGNORE(warningName) \
+  _Pragma(FATAL_DIAGNOSTIC_TO_STR(GCC diagnostic ignored warningName))
+# define FATAL_DIAGNOSTIC_WARNING(warningName) \
+  _Pragma(FATAL_DIAGNOSTIC_TO_STR(GCC diagnostic warning warningName))
+# define FATAL_DIAGNOSTIC_ERROR(warningName) \
+  _Pragma(FATAL_DIAGNOSTIC_TO_STR(GCC diagnostic error warningName))
 #else
 # define FATAL_DIAGNOSTIC_PUSH
 # define FATAL_DIAGNOSTIC_POP
-# define FATAL_GCC_DIAGNOSTIC_IGNORED(warningName)
+# define FATAL_DIAGNOSTIC_IGNORE(warningName)
+# define FATAL_DIAGNOSTIC_WARNING(warningName)
+# define FATAL_DIAGNOSTIC_ERROR(warningName)
 #endif
 
 #if __GNUC__ && __GNUC__ < 5
-# define FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN \
-  FATAL_GCC_DIAGNOSTIC_IGNORED("-Wshadow")
+# define FATAL_DIAGNOSTIC_IGNORE_SHADOW \
+  FATAL_DIAGNOSTIC_IGNORE("-Wshadow")
 #else
-# define FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
+# define FATAL_DIAGNOSTIC_IGNORE_SHADOW
 #endif
+
+#if __GNUC__
+# define FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES \
+  FATAL_DIAGNOSTIC_IGNORE("-Wattributes")
+#else
+# define FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+#endif
+
+#define FATAL_
 
 /////////////////////////
 // FATAL_ALWAYS_INLINE //

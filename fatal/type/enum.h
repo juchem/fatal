@@ -36,6 +36,9 @@
 
 #include <cstring>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace detail {
 namespace enum_impl {
@@ -778,5 +781,7 @@ using enum_values_array = as_array<
   FATAL_REGISTER_ENUM_TRAITS(ClassName)
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_enum_h

@@ -12,6 +12,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 /**
@@ -197,5 +200,7 @@ namespace get_type {
 } // namespace get_type {
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_get_type_h

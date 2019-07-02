@@ -148,7 +148,7 @@ struct checked_allocator {
   checked_allocator() = default;
 
 FATAL_DIAGNOSTIC_PUSH
-FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
+FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
   explicit checked_allocator(allocator_type allocator): allocator_(allocator) {}
 

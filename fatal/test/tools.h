@@ -17,6 +17,9 @@
 
 #include <cstdint>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -125,5 +128,7 @@ std::string string_as_literal(std::string const &s) {
 }
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_test_tools_h

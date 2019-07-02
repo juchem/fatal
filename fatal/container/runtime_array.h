@@ -70,7 +70,7 @@ private:
 public:
 
 FATAL_DIAGNOSTIC_PUSH
-FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
+FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
   explicit runtime_array(size_type size):
     size_(size)

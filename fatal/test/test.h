@@ -35,6 +35,9 @@
 
 // for internal use only
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace test {
 
@@ -276,7 +279,7 @@ struct FATAL_HIDE_SYMBOL test_issue {
   enum class FATAL_HIDE_SYMBOL severity_t { warning, error, fatal };
 
 FATAL_DIAGNOSTIC_PUSH
-FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
+FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
   template <typename... Args>
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -377,7 +380,7 @@ public:
   duration_t elapsed() const { return elapsed_; }
 
 FATAL_DIAGNOSTIC_PUSH
-FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
+FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void set_elapsed(duration_t elapsed) { elapsed_ = elapsed; }
@@ -1563,5 +1566,7 @@ int run_one(TOut &out, std::string const &full_name) {
 
 } // namespace test {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_test_test_h

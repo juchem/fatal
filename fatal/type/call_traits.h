@@ -18,6 +18,9 @@
 
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace detail {
 namespace call_traits_impl {
@@ -875,5 +878,7 @@ struct FATAL_HIDE_SYMBOL call_if<false> {
 } // namespace call_traits_impl {
 } // namespace detail {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_call_traits_h

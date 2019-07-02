@@ -14,6 +14,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/transform.h>
 
 namespace fatal {
@@ -30,5 +33,7 @@ template <
 using transform_if = transform<T, i_t::c<Predicate, WhenTrue, WhenFalse>>;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_transform_h

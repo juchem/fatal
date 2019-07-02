@@ -12,6 +12,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 /**
@@ -40,5 +43,7 @@ struct FATAL_HIDE_SYMBOL get_identity {
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_identity_h

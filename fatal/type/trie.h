@@ -18,6 +18,9 @@
 
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/trie.h>
 
 namespace fatal {
@@ -65,5 +68,7 @@ static bool trie_find(Begin &&begin, End &&end) {
 }
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_trie_h

@@ -12,6 +12,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/apply.h>
 
 namespace fatal {
@@ -53,5 +56,7 @@ struct FATAL_HIDE_SYMBOL curry_back {
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_apply_h

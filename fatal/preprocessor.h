@@ -24,7 +24,7 @@ namespace fatal {
 struct FATAL_HIDE_SYMBOL source_info {
 
 FATAL_DIAGNOSTIC_PUSH
-FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
+FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   source_info(char const *file, unsigned long line):

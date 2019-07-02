@@ -18,6 +18,9 @@
 
 #include <cstdint>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 /**
@@ -338,5 +341,7 @@ struct FATAL_HIDE_SYMBOL to_scalar<std::ratio<Numerator, Denominator>> {
 } // namespace scalar_impl {
 } // namespace detail {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_scalar_h

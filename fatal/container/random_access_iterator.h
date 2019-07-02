@@ -17,6 +17,9 @@
 #include <memory>
 #include <type_traits>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace detail {
 
@@ -215,5 +218,7 @@ private:
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_container_random_access_iterator_h

@@ -16,6 +16,9 @@
 
 #include <cstdint>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace detail {
 
@@ -33,5 +36,7 @@ void prevent_optimization(T const &what) {
 }
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_benchmark_prevent_optimization_h

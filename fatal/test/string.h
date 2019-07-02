@@ -23,6 +23,9 @@
 
 #include <cstring>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -185,5 +188,7 @@ FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string &&to_string(std::string &&s) { return std::move(s); }
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_test_string_h

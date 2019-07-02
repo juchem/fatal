@@ -22,6 +22,9 @@
 
 #include <cassert>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/search.h>
 
 namespace fatal {
@@ -344,5 +347,7 @@ static constexpr decltype(auto) index_find(
 }
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_search_h

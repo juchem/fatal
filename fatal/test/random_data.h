@@ -22,6 +22,9 @@
 #include <climits>
 #include <cstring>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace impl_rng {
 
@@ -151,5 +154,7 @@ private:
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_test_random_data_h

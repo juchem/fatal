@@ -17,6 +17,9 @@
 
 #include <cstdlib>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/sequence.h>
 
 namespace fatal {
@@ -60,5 +63,7 @@ using int_sequence = sequence<int, Values...>;
   )
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_sequence_h

@@ -14,6 +14,9 @@
 
 #include <cstdlib>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/longest_common_prefix.h>
 
 namespace fatal {
@@ -29,5 +32,7 @@ using longest_common_prefix = typename i_lcp::s<
 >::type;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_longest_common_prefix_h

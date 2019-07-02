@@ -20,6 +20,9 @@
 # include <cxxabi.h>
 #endif // __GLIBCXX__
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -78,6 +81,20 @@ std::string type_str(std::type_info const &type) {
   return result;
 }
 
+template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+std::string &type_str_for(std::string &out, T &&) {
+  return type_str<T>(out);
+}
+
+template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+std::string type_str_for(T &&) {
+  return type_str<T>();
+}
+
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_test_type_h

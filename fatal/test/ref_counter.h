@@ -18,6 +18,9 @@
 #include <cassert>
 #include <cstdint>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace detail {
 namespace ref_counter_impl {
@@ -473,5 +476,7 @@ private:
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_test_ref_counter_h

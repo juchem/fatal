@@ -18,6 +18,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/sort.h>
 
 namespace fatal {
@@ -47,5 +50,7 @@ template <typename T>
 using reverse = typename i_s::i<T>::type;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_sort_h

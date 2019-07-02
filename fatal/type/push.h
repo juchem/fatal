@@ -10,6 +10,9 @@
 #ifndef FATAL_INCLUDE_fatal_type_push_h
 #define FATAL_INCLUDE_fatal_type_push_h
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/push.h>
 
 namespace fatal {
@@ -30,5 +33,7 @@ template <bool Condition, typename T, typename... Args>
 using push_front_if = typename i_P::F<Condition, T, Args...>::type;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_push_h

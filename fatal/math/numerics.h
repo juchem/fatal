@@ -29,6 +29,9 @@
 #include <cstdint>
 #include <climits>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/math/impl/numerics.h>
 
 namespace fatal {
@@ -846,5 +849,7 @@ private:
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_math_numerics_h

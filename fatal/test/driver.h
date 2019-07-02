@@ -33,7 +33,7 @@ int main(int const argc, char const *const *const argv) {
   auto const arg_gtest_filter = std::string("--gtest_filter");
 
   if (argc == 0) {
-    return 1; // protect parse_args below
+    return EXIT_FAILURE; // protect parse_args below
   }
 
   using Opts = std::map<std::string, std::string>;
@@ -69,7 +69,7 @@ int main(int const argc, char const *const *const argv) {
     );
   }
 
-  return 1; // unrecognized input
+  return EXIT_FAILURE; // unrecognized input
 }
 
 #endif // FATAL_INCLUDE_fatal_test_driver_h

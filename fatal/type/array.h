@@ -16,6 +16,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/array.h>
 
 namespace fatal {
@@ -36,10 +39,17 @@ using as_array = i_a::C<Array, T...>;
 
 template <typename Array, typename... T>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-static constexpr typename std::decay<
-  decltype(i_a::z<Array, T...>::data)
->::type z_data() {
+static constexpr auto z_data() {
   return i_a::z<Array, T...>::data;
+}
+
+template <typename Array, typename... T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+static constexpr auto z_view() {
+  return std::basic_string_view<std::decay_t<decltype(*z_data<Array, T...>())>>(
+    z_data<Array, T...>(),
+    size_v<Array> + sizeof...(T)
+  );
 }
 
 template <typename Array, typename Factory, typename... T>
@@ -69,5 +79,7 @@ template <typename Array, typename StringView>
 using string_view_array = i_a::S<Array, StringView>;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_array_h

@@ -29,6 +29,9 @@
 #include <cassert>
 #include <cstdint>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace benchmark {
 
@@ -105,7 +108,7 @@ using iterations = std::uint_fast32_t;
 struct FATAL_HIDE_SYMBOL result_entry {
 
 FATAL_DIAGNOSTIC_PUSH
-FATAL_GCC_DIAGNOSTIC_IGNORED_SHADOW_IF_BROKEN
+FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
   result_entry(
     duration net_duration,
@@ -421,5 +424,7 @@ results run(TOut &out) {
 
 } // namespace benchmark {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_benchmark_benchmark_h

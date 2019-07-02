@@ -9,7 +9,7 @@
 namespace fatal {
 
 // TODO: add tests with visitors that take args... (1, 2 and 3 args should suffice)
-//  test for double moves
+//       test for double moves on those args
 
 template <typename Expected, std::size_t ExpectedIndex>
 struct search_visitor {

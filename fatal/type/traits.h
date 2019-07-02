@@ -30,6 +30,9 @@
 #include <type_traits>
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/traits.h>
 
 namespace fatal {
@@ -707,5 +710,7 @@ public:
 } // namespace traits_impl {
 } // namespace detail {
 } // namespace fatal
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_traits_h

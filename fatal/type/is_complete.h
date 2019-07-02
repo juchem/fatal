@@ -10,6 +10,9 @@
 #ifndef FATAL_INCLUDE_fatal_type_is_complete_h
 #define FATAL_INCLUDE_fatal_type_is_complete_h
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/is_complete.h>
 
 namespace fatal {
@@ -45,5 +48,7 @@ using is_complete = decltype(
 );
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_is_complete_h

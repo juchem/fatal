@@ -15,6 +15,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/group_by.h>
 
 namespace fatal {
@@ -42,5 +45,7 @@ template <
 using filtered_group_by = typename i_g::F<T, Key, Filter, Pair, Group>::type;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_group_by_h

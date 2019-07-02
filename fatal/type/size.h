@@ -14,6 +14,9 @@
 
 #include <type_traits>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/size.h>
 
 namespace fatal {
@@ -33,5 +36,7 @@ FATAL_HIDE_SYMBOL
 constexpr auto empty_v = empty<T>::value;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_size_h

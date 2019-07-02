@@ -14,6 +14,9 @@
 #include <fatal/type/constant.h>
 #include <fatal/type/slice.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/find.h>
 
 namespace fatal {
@@ -41,5 +44,7 @@ using contains = find<
 >;
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_find_h

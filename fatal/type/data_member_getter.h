@@ -21,6 +21,9 @@
 #include <type_traits>
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 /**
@@ -429,5 +432,7 @@ public:
 };
 
 } // namespace fatal
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_data_member_getter_h

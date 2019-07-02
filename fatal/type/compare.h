@@ -14,6 +14,9 @@
 
 #include <type_traits>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/compare.h>
 
 namespace fatal {
@@ -257,5 +260,7 @@ struct FATAL_HIDE_SYMBOL value_reverse_comparer:
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_compare_h

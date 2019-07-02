@@ -17,6 +17,9 @@
 
 #include <utility>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 #include <fatal/type/impl/foreach.h>
 
 namespace fatal {
@@ -91,5 +94,7 @@ static constexpr auto foreach_accumulate(Visitor &&visitor, Seed &&seed, Args &&
 }
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_foreach_h

@@ -12,6 +12,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 template <typename, typename>
@@ -27,5 +30,7 @@ struct FATAL_HIDE_SYMBOL FATAL_HIDE_SYMBOL to_pair {
 };
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_pair_h

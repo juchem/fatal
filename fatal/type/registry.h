@@ -12,6 +12,9 @@
 
 #include <type_traits>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace detail {
 namespace registry_impl {
@@ -186,5 +189,7 @@ public:
 } // namespace registry_impl {
 } // namespace detail {
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_type_registry_h
