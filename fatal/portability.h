@@ -24,8 +24,25 @@
 # define FATAL_HAS_BUILTIN(...) 0
 #endif
 
+#define FATAL_COMPILER_UNKNOWN 0
+#define FATAL_COMPILER_CLANG 1
+#define FATAL_COMPILER_GCC 1
+
+#if defined(__clang__)
+# define FATAL_COMPILER_IS_CLANG 1
+# define FATAL_COMPILER FATAL_COMPILER_CLANG
+# define FATAL_COMPILER_IS_CLANG_OR_GCC 1
+#elif defined(__GNUC__)
+# define FATAL_COMPILER_IS_GCC 1
+# define FATAL_COMPILER FATAL_COMPILER_GCC
+# define FATAL_COMPILER_IS_CLANG_OR_GCC 1
+#else
+# define FATAL_COMPILER_IS_UNKNOWN 1
+# define FATAL_COMPILER FATAL_COMPILER_UNKNOWN
+#endif
+
 // Generalize warning push/pop.
-#if defined(__clang__) || defined(__GNUC__)
+#ifdef FATAL_COMPILER_IS_CLANG_OR_GCC
 # define FATAL_DIAGNOSTIC_PUSH _Pragma("GCC diagnostic push")
 # define FATAL_DIAGNOSTIC_POP _Pragma("GCC diagnostic pop")
 # define FATAL_DIAGNOSTIC_TO_STR(warningName) #warningName
@@ -69,7 +86,7 @@
 
 #if _MSC_VER
 # define FATAL_ALWAYS_INLINE __forceinline
-#elif __clang__ || __GNUC__
+#elif FATAL_COMPILER_IS_CLANG_OR_GCC
 # define FATAL_ALWAYS_INLINE inline __attribute__((always_inline))
 #else
 # define FATAL_ALWAYS_INLINE inline
@@ -85,10 +102,32 @@
 
 #if _MSC_VER
 # define FATAL_HIDE_SYMBOL
-#elif __clang__ || __GNUC__
+#elif FATAL_COMPILER_IS_CLANG_OR_GCC
 # define FATAL_HIDE_SYMBOL __attribute__((visibility("hidden")))
 #else
 # define FATAL_HIDE_SYMBOL
 #endif
+
+#if __SIZEOF_INT128__ && FATAL_COMPILER_IS_CLANG
+
+#include <type_traits>
+
+namespace std {
+
+template <>
+struct is_signed<__int128_t>: std::true_type {};
+
+template <>
+struct is_signed<__uint128_t>: std::false_type {};
+
+template <>
+struct is_unsigned<__int128_t>: std::false_type {};
+
+template <>
+struct is_unsigned<__uint128_t>: std::true_type {};
+
+} // namespace std {
+
+#endif // __SIZEOF_INT128__ && FATAL_COMPILER_IS_CLANG
 
 #endif
