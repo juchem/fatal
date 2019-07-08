@@ -13,6 +13,7 @@
 #include <fatal/type/apply.h>
 #include <fatal/type/conditional.h>
 #include <fatal/type/get.h>
+#include <fatal/type/list.h>
 #include <fatal/type/logical.h>
 #include <fatal/type/scalar.h>
 #include <fatal/type/sort.h>
@@ -301,6 +302,9 @@ using known_signed_integers = adjacent_unique_by<
       short, int, long, long long,
       std::int8_t, std::int16_t, std::int32_t, std::int64_t,
       std::intptr_t, std::intmax_t, std::ptrdiff_t
+#if __SIZEOF_INT128__
+      , __int128_t
+#endif // __SIZEOF_INT128__
     >,
     get_data_bits
   >,
@@ -320,6 +324,9 @@ using known_unsigned_integers = adjacent_unique_by<
       bool, unsigned short, unsigned int, unsigned long, unsigned long long,
       std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t, std::size_t,
       std::uintptr_t, std::uintmax_t
+#if __SIZEOF_INT128__
+      , __uint128_t
+#endif // __SIZEOF_INT128__
     >,
     get_data_bits
   >,
@@ -797,51 +804,51 @@ using largest_mersenne_prime_for_type = typename std::enable_if<
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-template <typename TDiscrete, typename TContinuous>
+template <typename Discrete, typename Continuous>
 struct FATAL_HIDE_SYMBOL discrete_to_continuous {
-  using discrete_type = TDiscrete;
-  using continuous_type = TContinuous;
+  using discrete_type = Discrete;
+  using continuous_type = Continuous;
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   discrete_to_continuous(
-    discrete_type discreteMin, discrete_type discreteMax,
-    continuous_type continuousMin, continuous_type continuousMax
+    discrete_type discrete_min, discrete_type discrete_max,
+    continuous_type continuous_min, continuous_type continuous_max
   ):
-    discreteMin_(discreteMin),
-    continuousMin_(continuousMin),
-    normalizer_(discreteMax - discreteMin_),
-    adjustment_(continuousMax - continuousMin_)
+    discrete_min_(discrete_min),
+    continuous_min_(continuous_min),
+    normalizer_(discrete_max - discrete_min_),
+    adjustment_(continuous_max - continuous_min_)
   {
     if(!normalizer_) {
       throw std::invalid_argument(
-        "the difference between discreteMin and discreteMax cannot be zero"
+        "the difference between discrete_min and discrete_max cannot be zero"
       );
     }
   }
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-  continuous_type operator ()(fast_pass<discrete_type> discrete) const {
-    return (discrete - discreteMin_) / normalizer_
-      * adjustment_ + continuousMin_;
+  continuous_type operator ()(discrete_type discrete) const {
+    return (discrete - discrete_min_) / normalizer_
+      * adjustment_ + continuous_min_;
   }
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-  fast_pass<discrete_type> discrete_min() const { return discreteMin_; }
+  discrete_type discrete_min() const { return discrete_min_; }
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-  discrete_type discrete_max() const { return normalizer_ + discreteMin_; }
+  discrete_type discrete_max() const { return normalizer_ + discrete_min_; }
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-  fast_pass<continuous_type> min() const { return continuousMin_; }
+  continuous_type min() const { return continuous_min_; }
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-  continuous_type max() const { return adjustment_ + continuousMin_; }
+  continuous_type max() const { return adjustment_ + continuous_min_; }
 
 private:
   FATAL_HIDE_SYMBOL
-  discrete_type const discreteMin_;
+  discrete_type const discrete_min_;
   FATAL_HIDE_SYMBOL
-  continuous_type const continuousMin_;
+  continuous_type const continuous_min_;
   FATAL_HIDE_SYMBOL
   continuous_type const normalizer_;
   FATAL_HIDE_SYMBOL

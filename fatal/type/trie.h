@@ -25,6 +25,16 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 namespace fatal {
 
+/**
+ * Visitor signature:
+ *
+ *  T visitor(tag<Match>, Args...)
+ *
+ * Notes:
+ * - the result of the visitor is ignored.
+ *
+ * Author: Marcelo Juchem <juchem at gmail dot com>
+ */
 // TODO: INVERT COMPARER AND FILTER
 template <
   typename T,

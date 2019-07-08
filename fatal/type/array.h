@@ -16,6 +16,8 @@
 
 #include <fatal/portability.h>
 
+#include <string_view>
+
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 

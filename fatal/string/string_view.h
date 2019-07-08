@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <string_view>
 
 #include <cassert>
 #include <cstring>
@@ -63,18 +64,21 @@ struct string_view {
     begin_(begin),
     end_(end)
   {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
   }
 
   constexpr string_view(const_iterator s, std::size_t size):
     begin_(s),
     end_(s + size)
   {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
+  }
+
+  constexpr string_view(std::string_view view):
+    begin_(view.data()),
+    end_(view.data() + view.size())
+  {
+    assert(begin_ <= end_);
   }
 
   /* implicit */ string_view(value_type *s):
@@ -96,9 +100,7 @@ struct string_view {
     begin_(s),
     end_(s + (N - (s[N - 1] == 0)))
   {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
   }
 
   template <std::size_t N>
@@ -106,18 +108,14 @@ struct string_view {
     begin_(s),
     end_(s + (N - (s[N - 1] == 0)))
   {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
   }
 
   constexpr explicit string_view(value_type const &c):
     begin_(&c),
     end_(&c + 1)
   {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
   }
 
   template <typename U, typename = safe_overload<string_view, U>>
@@ -125,16 +123,12 @@ struct string_view {
     begin_(s.data()),
     end_(s.data() + s.size())
   {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
   }
 
   constexpr string_view slice(size_type offset, size_type end) const {
-#   if __cplusplus > 201400
     assert(offset <= size());
     assert(end <= size());
-#   endif // __cplusplus > 201400
     return string_view(begin_ + offset, begin_ + end);
   }
 
@@ -143,11 +137,33 @@ struct string_view {
   }
 
   const_iterator find(value_type needle, const_iterator offset) const {
-#   if __cplusplus > 201400
     assert(begin_ <= offset);
     assert(offset <= end_);
-#   endif // __cplusplus > 201400
     return std::find(offset, end_, needle);
+  }
+
+  template <typename CharMatcher>
+  const_iterator find_first_of(CharMatcher &&matcher) const {
+    return find_first_of(std::forward<CharMatcher>(matcher), begin_);
+  }
+
+  template <typename CharMatcher>
+  const_iterator find_first_of(CharMatcher &&matcher, const_iterator offset) const {
+    assert(begin_ <= offset);
+    assert(offset <= end_);
+    return std::find_if(offset, end_, matcher);
+  }
+
+  template <typename CharMatcher>
+  const_iterator find_first_not_of(CharMatcher &&matcher) const {
+    return find_first_not_of(std::forward<CharMatcher>(matcher), begin_);
+  }
+
+  template <typename CharMatcher>
+  const_iterator find_first_not_of(CharMatcher &&matcher, const_iterator offset) const {
+    assert(begin_ <= offset);
+    assert(offset <= end_);
+    return std::find_if_not(offset, end_, matcher);
   }
 
   /**
@@ -177,6 +193,41 @@ struct string_view {
     return *this += size;
   }
 
+  string_view &skip_up_to(size_type size) {
+    return skip(std::min(size, this->size()));
+  }
+
+  /**
+   * Removes the initial `size` characters of the view and returns the removed
+   * part as a separate view.
+   *
+   * No bounds check are performed.
+   *
+   * Example:
+   *
+   *  string_view v("hello, world");
+   *  auto c = v.seek(4);
+   *
+   *  // prints "hell"
+   *  std::cout << c;
+   *
+   *  // prints "o, world"
+   *  std::cout << v;
+   *
+   * See also: `seek*`, `skip*`, `operator +=`, `operator +`
+   *
+   * @author: Marcelo Juchem <juchem at gmail dot com>
+   */
+  string_view seek(size_type size) {
+    string_view result(begin_, size);
+    *this += size;
+    return result;
+  }
+
+  ////////////////////////////
+  // count/skip/seek to/for //
+  ////////////////////////////
+
   /**
    * Finds the first occurence of `delimiter`, removes all characters up to (and
    * including) such occurence and returns a reference to the view itself.
@@ -203,34 +254,6 @@ struct string_view {
     begin_ = find(std::forward<U>(delimiter));
     assert(begin_ <= end_);
     if (begin_ != end_) { ++begin_; }
-    return *this;
-  }
-
-  /**
-   * Finds the first occurence of `delimiter`, removes all characters before
-   * (not including) such occurence and returns a reference to the view itself.
-   *
-   * Example:
-   *
-   *  string_view v("hello, world");
-   *  auto &c = v.skip_to(',');
-   *
-   *  assert(&c == &v);
-   *
-   *  // prints ", world"
-   *  std::cout << c;
-   *
-   *  // prints ", world"
-   *  std::cout << v;
-   *
-   * See also: `seek*`, `skip*`, `operator +=`, `operator +`
-   *
-   * @author: Marcelo Juchem <juchem at gmail dot com>
-   */
-  template <typename U>
-  string_view &skip_to(U &&delimiter) {
-    begin_ = find(std::forward<U>(delimiter));
-    assert(begin_ <= end_);
     return *this;
   }
 
@@ -264,6 +287,34 @@ struct string_view {
 
   /**
    * Finds the first occurence of `delimiter`, removes all characters before
+   * (not including) such occurence and returns a reference to the view itself.
+   *
+   * Example:
+   *
+   *  string_view v("hello, world");
+   *  auto &c = v.skip_to(',');
+   *
+   *  assert(&c == &v);
+   *
+   *  // prints ", world"
+   *  std::cout << c;
+   *
+   *  // prints ", world"
+   *  std::cout << v;
+   *
+   * See also: `seek*`, `skip*`, `operator +=`, `operator +`
+   *
+   * @author: Marcelo Juchem <juchem at gmail dot com>
+   */
+  template <typename U>
+  string_view &skip_to(U &&delimiter) {
+    begin_ = find(std::forward<U>(delimiter));
+    assert(begin_ <= end_);
+    return *this;
+  }
+
+  /**
+   * Finds the first occurence of `delimiter`, removes all characters before
    * (not including) such occurence and returns the removed part as a separate
    * view.
    *
@@ -289,32 +340,37 @@ struct string_view {
     return string_view(begin, begin_);
   }
 
-  /**
-   * Removes the initial `size` characters of the view and returns the removed
-   * part as a separate view.
-   *
-   * No bounds check are performed.
-   *
-   * Example:
-   *
-   *  string_view v("hello, world");
-   *  auto c = v.seek(4);
-   *
-   *  // prints "hell"
-   *  std::cout << c;
-   *
-   *  // prints "o, world"
-   *  std::cout << v;
-   *
-   * See also: `seek*`, `skip*`, `operator +=`, `operator +`
-   *
-   * @author: Marcelo Juchem <juchem at gmail dot com>
-   */
-  string_view seek(size_type size) {
-    string_view result(begin_, size);
-    *this += size;
+  template <typename CharMatcher>
+  string_view &skip_over_match(CharMatcher &&matcher) {
+    begin_ = find_first_not_of(std::forward<CharMatcher>(matcher));
+    assert(begin_ <= end_);
+    return *this;
+  }
+
+  template <typename CharMatcher>
+  string_view seek_over_match(CharMatcher &&matcher) {
+    string_view result(begin_, find_first_not_of(std::forward<CharMatcher>(matcher)));
+    begin_ = result.end();
+    assert(begin_ <= end_);
     return result;
   }
+
+  template <typename CharMatcher>
+  string_view &skip_to_match(CharMatcher &&matcher) {
+    begin_ = find_first_of(std::forward<CharMatcher>(matcher));
+    assert(begin_ <= end_);
+    return *this;
+  }
+
+  template <typename CharMatcher>
+  string_view seek_for_match(CharMatcher &&matcher) {
+    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher)));
+    begin_ = result.end();
+    assert(begin_ <= end_);
+    return result;
+  }
+
+  // reset //
 
   void reset(const_iterator begin) {
     assert(begin_ <= begin);
@@ -347,35 +403,27 @@ struct string_view {
 
   constexpr value_type front() const { return *begin_; }
   constexpr value_type back() const {
-#   if __cplusplus > 201400
     assert(begin_ < end_);
-#   endif // __cplusplus > 201400
     return *(end_ - 1);
   }
 
   constexpr const_iterator data() const { return begin_; }
 
   constexpr value_type const &operator [](size_type i) const {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
     assert(i < static_cast<size_type>(end_ - begin_));
-#   endif // __cplusplus > 201400
     return begin_[i];
   }
 
   void clear() { begin_ = end_; }
 
   constexpr size_type size() const {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
     return end_ - begin_;
   }
 
   constexpr bool empty() const {
-#   if __cplusplus > 201400
     assert(begin_ <= end_);
-#   endif // __cplusplus > 201400
     return begin_ == end_;
   }
 

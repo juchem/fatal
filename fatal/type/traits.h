@@ -14,7 +14,7 @@
 #include <fatal/type/constify_from.h>
 #include <fatal/type/compilability.h>
 #include <fatal/type/data_member_getter.h>
-#include <fatal/type/fast_pass.h> // TODO: REMOVE AND FIX DEPENDENCIES
+#include <fatal/type/is_callable.h>
 #include <fatal/type/is_complete.h>
 #include <fatal/type/logical.h>
 #include <fatal/type/qualifier.h>
@@ -176,60 +176,6 @@ constexpr integral_of<typename std::decay<T>::type> as_integral(T value) noexcep
     typename std::decay<T>::type
   >::convert(value);
 }
-
-/////////////////
-// is_callable //
-/////////////////
-
-namespace detail {
-namespace traits_impl {
-template <typename...>
-class FATAL_HIDE_SYMBOL is_callable;
-} // namespace traits_impl {
-} // namespace detail {
-
-/**
- * Tells whether an instance of a given type supports the
- * call operator, when passing arguments of given types.
- *
- * Example:
- *
- *  void noop();
- *
- *  int fn(std::string const &s, bool b);
- *
- *  struct non_callable {};
- *
- *  struct callable {
- *    void operator ()(int i, double d);
- *  };
- *
- *  // yields `true`
- *  is_callable<noop>::value
- *
- *  // yields `false`
- *  is_callable<decltype(fn), int, double>::value
- *
- *  // yields `true`
- *  is_callable<decltype(fn), char const *, bool>::value
- *
- *  // yields `false`
- *  is_callable<non_callable>::value
- *
- *  // yields `false`
- *  is_callable<non_callable, int>::value
- *
- *  // yields `true`
- *  is_callable<callable, int, double>::value
- *
- *  // yields `false`
- *  is_callable<callable, int, double, std::string>::value
- *
- * @author: Marcelo Juchem <marcelo@fb.com>
- */
-template <typename T, typename... Args>
-using is_callable = typename detail::traits_impl::is_callable<Args...>
-  ::template type<T>;
 
 /////////////////
 // enable_when //
@@ -630,7 +576,7 @@ struct FATAL_HIDE_SYMBOL enable_when {
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <typename T, typename... Args>
-  using callable = is_true<is_callable<T, Args...>>;
+  using callable = is_true<is_callable_t<T, Args...>>;
 };
 
 ////////////////////////////
@@ -675,42 +621,10 @@ struct FATAL_HIDE_SYMBOL integral_of<T, false> {
   static type convert(T value) { return value; }
 };
 
-/////////////////
-// is_callable //
-/////////////////
-
-template <typename... Args>
-class FATAL_HIDE_SYMBOL is_callable {
-  struct FATAL_HIDE_SYMBOL impl {
-    template <
-      typename T,
-      typename = decltype(
-        std::declval<T>()(
-          std::forward<Args>(std::declval<Args>())...
-        )
-      )
-    >
-    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-    static std::true_type sfinae(T *);
-
-    template <typename = void>
-    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-    static std::false_type sfinae(...);
-  };
-
-public:
-  template <typename T>
-  using type = decltype(
-    impl::sfinae(
-      static_cast<typename std::remove_reference<T>::type *>(nullptr)
-    )
-  );
-};
+FATAL_DIAGNOSTIC_POP
 
 } // namespace traits_impl {
 } // namespace detail {
-} // namespace fatal
-
-FATAL_DIAGNOSTIC_POP
+} // namespace fatal {
 
 #endif // FATAL_INCLUDE_fatal_type_traits_h

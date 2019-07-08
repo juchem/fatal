@@ -699,50 +699,6 @@ FATAL_TEST(traits, as_integral) {
   >();
 }
 
-/////////////////
-// is_callable //
-/////////////////
-
-struct foonctor {
-  void operator ()() {}
-  void operator ()(int, std::string) {}
-};
-
-using foonction = void(*)();
-using foonction_is = void(*)(int, std::string);
-
-FATAL_TEST(traits, is_callable) {
-  auto const lambda = []() {};
-  auto const lambda_is = [](int, std::string) {};
-
-  FATAL_EXPECT_TRUE((is_callable<foonctor>::value));
-  FATAL_EXPECT_FALSE((is_callable<foonctor, int>::value));
-  FATAL_EXPECT_FALSE((is_callable<foonctor, int, double>::value));
-  FATAL_EXPECT_TRUE((is_callable<foonctor, int, std::string>::value));
-
-  FATAL_EXPECT_TRUE((is_callable<decltype(lambda)>::value));
-  FATAL_EXPECT_FALSE((is_callable<decltype(lambda), int>::value));
-  FATAL_EXPECT_FALSE((is_callable<decltype(lambda), int, double>::value));
-  FATAL_EXPECT_FALSE((is_callable<decltype(lambda), int, std::string>::value));
-
-  FATAL_EXPECT_FALSE((is_callable<decltype(lambda_is)>::value));
-  FATAL_EXPECT_FALSE((is_callable<decltype(lambda_is), int>::value));
-  FATAL_EXPECT_FALSE((is_callable<decltype(lambda_is), int, double>::value));
-  FATAL_EXPECT_TRUE((
-    is_callable<decltype(lambda_is), int, std::string>::value
-  ));
-
-  FATAL_EXPECT_TRUE((is_callable<foonction>::value));
-  FATAL_EXPECT_FALSE((is_callable<foonction, int>::value));
-  FATAL_EXPECT_FALSE((is_callable<foonction, int, double>::value));
-  FATAL_EXPECT_FALSE((is_callable<foonction, int, std::string>::value));
-
-  FATAL_EXPECT_FALSE((is_callable<foonction_is>::value));
-  FATAL_EXPECT_FALSE((is_callable<foonction_is, int>::value));
-  FATAL_EXPECT_FALSE((is_callable<foonction_is, int, double>::value));
-  FATAL_EXPECT_TRUE((is_callable<foonction_is, int, std::string>::value));
-}
-
 //////////////////////////
 // enable_when::is_true //
 //////////////////////////
