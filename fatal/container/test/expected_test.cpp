@@ -35,6 +35,8 @@ struct custom_error:
     return message_ == rhs.message_ && code_ == rhs.code_;
   }
 
+  auto const &message() const { return message_; }
+
 private:
   std::string_view const message_;
   int const code_ = 0;
@@ -221,6 +223,8 @@ FATAL_TEST(expected, failure with multiple arguments example) {
   };
 }
 
+
+
 FATAL_TEST(expected, default_ctor int / int) {
   expected<int, int> e;
 
@@ -361,6 +365,42 @@ FATAL_TEST(expected, error custom_error / custom_error) {
   FATAL_EXPECT_EQ(custom_error("message"), *e.try_error());
 
   FATAL_EXPECT_THROW(custom_error) { e.raise(); };
+}
+
+FATAL_TEST(expected, on_error with value) {
+  auto computation = []() -> expected<int, custom_error> {
+    return 10;
+  };
+
+  FATAL_EXPECT_NO_THROW {
+    computation().on_error([]{
+      throw custom_error();
+    });
+  };
+}
+
+FATAL_TEST(expected, on_error with error / no arguments) {
+  auto computation = []() -> expected<int, custom_error> {
+    return {unexpected, "error message"};
+  };
+
+  FATAL_EXPECT_THROW(custom_error) {
+    computation().on_error([]{
+      throw custom_error();
+    });
+  };
+}
+
+FATAL_TEST(expected, on_error with error / error argument) {
+  auto computation = []() -> expected<int, custom_error> {
+    return {unexpected, "error message"};
+  };
+
+  FATAL_EXPECT_THROW(custom_error) {
+    computation().on_error([](custom_error const &e){
+      throw e;
+    });
+  };
 }
 
 

@@ -10,7 +10,7 @@
 #define FATAL_INCLUDE_fatal_container_expected_h
 
 #include <fatal/type/safe_overload.h>
-#include <fatal/type/traits.h>
+#include <fatal/type/is_callable.h>
 
 #include <exception>
 #include <memory>
@@ -306,6 +306,122 @@ public:
   bool has_value() const { return !data_.index(); }
 
   /**
+   * Calls the given function `fn` if a value is present, otherwise doesn't do anything.
+   *
+   * `fn` will be given the value as its sole argument if such overload exists, otherwise
+   * it will be called with no arguments.
+   */
+  template <typename Fn>
+  expected const &on_value(Fn &&fn) const {
+    if (has_value()) {
+      if constexpr (is_callable_v<Fn &&, value_type const &>) {
+        std::forward<Fn>(fn)(value());
+      } else {
+        std::forward<Fn>(fn)();
+      }
+    }
+
+    return *this;
+  }
+
+  /**
+   * Calls the given function `fn` if a value is present, otherwise doesn't do anything.
+   *
+   * `fn` will be given the value as its sole argument if such overload exists, otherwise
+   * it will be called with no arguments.
+   */
+  template <typename Fn>
+  expected &on_value(Fn &&fn) {
+    if (has_value()) {
+      if constexpr (is_callable_v<Fn &&, value_type &>) {
+        std::forward<Fn>(fn)(value());
+      } else {
+        std::forward<Fn>(fn)();
+      }
+    }
+
+    return *this;
+  }
+
+  /**
+   * Calls the given function `fn` if an error is present, otherwise doesn't do anything.
+   *
+   * `fn` will be given the error as its sole argument if such overload exists, otherwise
+   * it will be called with no arguments.
+   */
+  template <typename Fn>
+  expected const &on_error(Fn &&fn) const {
+    if (!has_value()) {
+      if constexpr (is_callable_v<Fn &&, error_type const &>) {
+        std::forward<Fn>(fn)(error());
+      } else {
+        std::forward<Fn>(fn)();
+      }
+    }
+
+    return *this;
+  }
+
+  /**
+   * Calls the given function `fn` if an error is present, otherwise doesn't do anything.
+   *
+   * `fn` will be given the error as its sole argument if such overload exists, otherwise
+   * it will be called with no arguments.
+   */
+  template <typename Fn>
+  expected &on_error(Fn &&fn) {
+    if (!has_value()) {
+      if constexpr (is_callable_v<Fn &&, error_type &>) {
+        std::forward<Fn>(fn)(error());
+      } else {
+        std::forward<Fn>(fn)();
+      }
+    }
+
+    return *this;
+  }
+
+  /**
+   * Returns the value if present, or the result of calling the given function `fn` if an
+   * error is present.
+   *
+   * `fn` will be given the error as its sole argument if such overload exists, otherwise
+   * it will be called with no arguments.
+   */
+  template <typename Fn>
+  value_type recover(Fn &&fn) const {
+    if (has_value()) {
+      return value();
+    }
+
+    if constexpr (is_callable_v<Fn &&, error_type const &>()) {
+      return std::forward<Fn>(fn)(error());
+    } else {
+      return std::forward<Fn>(fn)();
+    }
+  }
+
+  /**
+   * Returns the value if present, or the result of calling the given function `fn` if an
+   * error is present.
+   *
+   * `fn` will be given the error as its sole argument if such overload exists, otherwise
+   * it will be called with no arguments.
+   */
+  template <typename Fn>
+  value_type recover(Fn &&fn) {
+    if (has_value()) {
+      return value();
+    }
+
+    if constexpr (is_callable_v<Fn &&, error_type &>()) {
+      return std::forward<Fn>(fn)(error());
+    } else {
+      return std::forward<Fn>(fn)();
+    }
+  }
+
+  /**
    * This method can't be called on non-throwable error policies.
    */
   [[ noreturn ]]
@@ -325,6 +441,12 @@ public:
     if (has_value()) { return; }
     raise();
   }
+
+  value_type const &operator *() const { return value(); }
+  value_type &operator *() { return value(); }
+
+  value_type const *operator ->() const { return try_value(); }
+  value_type *operator ->() { return try_value(); }
 
   explicit operator bool() const { return has_value(); }
   bool operator !() const { return !has_value(); }
