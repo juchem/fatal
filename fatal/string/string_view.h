@@ -235,7 +235,7 @@ struct string_view {
    * Example:
    *
    *  string_view v("hello, world");
-   *  auto &c = v.skip_past(' ');
+   *  auto &c = v.skip_past_char(' ');
    *
    *  assert(&c == &v);
    *
@@ -250,7 +250,7 @@ struct string_view {
    * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
-  string_view &skip_past(U &&delimiter) {
+  string_view &skip_past_char(U &&delimiter) {
     begin_ = find(std::forward<U>(delimiter));
     assert(begin_ <= end_);
     if (begin_ != end_) { ++begin_; }
@@ -265,7 +265,7 @@ struct string_view {
    * Example:
    *
    *  string_view v("hello, world");
-   *  auto c = v.seek_past(' ');
+   *  auto c = v.seek_past_char(' ');
    *
    *  // prints "hello,"
    *  std::cout << c;
@@ -278,7 +278,7 @@ struct string_view {
    * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
-  string_view seek_past(U &&delimiter) {
+  string_view seek_past_char(U &&delimiter) {
     string_view result(begin_, find(std::forward<U>(delimiter)));
     begin_ = result.end() == end_ ? end_ : std::next(result.end());
     assert(begin_ <= end_);
@@ -292,7 +292,7 @@ struct string_view {
    * Example:
    *
    *  string_view v("hello, world");
-   *  auto &c = v.skip_to(',');
+   *  auto &c = v.skip_to_char(',');
    *
    *  assert(&c == &v);
    *
@@ -307,7 +307,7 @@ struct string_view {
    * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
-  string_view &skip_to(U &&delimiter) {
+  string_view &skip_to_char(U &&delimiter) {
     begin_ = find(std::forward<U>(delimiter));
     assert(begin_ <= end_);
     return *this;
@@ -321,7 +321,7 @@ struct string_view {
    * Example:
    *
    *  string_view v("hello, world");
-   *  auto c = v.seek_for(',');
+   *  auto c = v.seek_for_char(',');
    *
    *  // prints "hello"
    *  std::cout << c;
@@ -334,21 +334,30 @@ struct string_view {
    * @author: Marcelo Juchem <juchem at gmail dot com>
    */
   template <typename U>
-  string_view seek_for(U &&delimiter) {
+  string_view seek_for_char(U &&delimiter) {
     auto begin = begin_;
-    skip_to(std::forward<U>(delimiter));
+    skip_to_char(std::forward<U>(delimiter));
     return string_view(begin, begin_);
   }
 
   template <typename CharMatcher>
-  string_view &skip_over_match(CharMatcher &&matcher) {
-    begin_ = find_first_not_of(std::forward<CharMatcher>(matcher));
+  string_view seek_for(CharMatcher &&matcher) {
+    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher)));
+    begin_ = result.end();
     assert(begin_ <= end_);
-    return *this;
+    return result;
   }
 
   template <typename CharMatcher>
-  string_view seek_over_match(CharMatcher &&matcher) {
+  string_view seek_past(CharMatcher &&matcher) {
+    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher)));
+    begin_ = result.end() == end_ ? end_ : std::next(result.end());
+    assert(begin_ <= end_);
+    return result;
+  }
+
+  template <typename CharMatcher>
+  string_view seek_over(CharMatcher &&matcher) {
     string_view result(begin_, find_first_not_of(std::forward<CharMatcher>(matcher)));
     begin_ = result.end();
     assert(begin_ <= end_);
@@ -356,18 +365,25 @@ struct string_view {
   }
 
   template <typename CharMatcher>
-  string_view &skip_to_match(CharMatcher &&matcher) {
+  string_view &skip_to(CharMatcher &&matcher) {
     begin_ = find_first_of(std::forward<CharMatcher>(matcher));
     assert(begin_ <= end_);
     return *this;
   }
 
   template <typename CharMatcher>
-  string_view seek_for_match(CharMatcher &&matcher) {
-    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher)));
-    begin_ = result.end();
+  string_view &skip_past(CharMatcher &&matcher) {
+    begin_ = find_first_of(std::forward<CharMatcher>(matcher));
+    if (begin_ != end_) { ++begin_; }
     assert(begin_ <= end_);
-    return result;
+    return *this;
+  }
+
+  template <typename CharMatcher>
+  string_view &skip_over(CharMatcher &&matcher) {
+    begin_ = find_first_not_of(std::forward<CharMatcher>(matcher));
+    assert(begin_ <= end_);
+    return *this;
   }
 
   // reset //
