@@ -11,8 +11,18 @@
 
 #include <fatal/test/driver.h>
 
+namespace fatal {
+
 struct any_matcher {
   bool operator ()(char) const { return true; }
+};
+
+struct number_matcher {
+  bool operator ()(char c) const { return c >= '0' && c <= '9'; }
+};
+
+struct letter_matcher {
+  bool operator ()(char c) const { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); }
 };
 
 struct char_matcher {
@@ -23,12 +33,6 @@ struct char_matcher {
 private:
   char c_;
 };
-
-struct letter_matcher {
-  bool operator ()(char c) const { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); }
-};
-
-namespace fatal {
 
 #define TEST_IMPL(Haystack, Result, Operation, ...) \
   do { \
@@ -129,6 +133,7 @@ FATAL_TEST(string_view, seek_over) {
   TEST_IMPL("hello., world", "", "hello., world", seek_over, char_matcher('.'));
   TEST_IMPL("hello., world", "hello", "., world", seek_over, letter_matcher());
   TEST_IMPL("hello., world", "hello., world", "", seek_over, any_matcher());
+  TEST_IMPL("12345u8", "12345", "u8", seek_over, number_matcher());
 }
 
 #undef TEST_IMPL

@@ -6,8 +6,8 @@
  *  LICENSE file in the root directory of this source tree.
  */
 
-#ifndef FATAL_INCLUDE_fatal_string_ascii7_char_set_h
-#define FATAL_INCLUDE_fatal_string_ascii7_char_set_h
+#ifndef FATAL_INCLUDE_fatal_string_ascii7_character_set_h
+#define FATAL_INCLUDE_fatal_string_ascii7_character_set_h
 
 #include <fatal/math/numerics.h>
 
@@ -16,12 +16,12 @@
 
 namespace fatal {
 
-class ascii7_char_set {
+class ascii7_character_set {
   using set_type = smallest_unsigned_integral<128>;
 
 public:
   template <typename... Chars>
-  constexpr ascii7_char_set(Chars... c):
+  constexpr ascii7_character_set(Chars... c):
     set_((static_cast<set_type>(set_type(1) << set_type(c)) | ... | 0))
   {
     assert(((set_type(c) < 128) && ... && true));
@@ -37,4 +37,4 @@ private:
 
 } // namespace fatal {
 
-#endif // FATAL_INCLUDE_fatal_string_ascii7_char_set_h
+#endif // FATAL_INCLUDE_fatal_string_ascii7_character_set_h

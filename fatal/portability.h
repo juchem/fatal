@@ -108,7 +108,7 @@
 # define FATAL_HIDE_SYMBOL
 #endif
 
-#if __SIZEOF_INT128__ && FATAL_COMPILER_IS_CLANG
+#if __SIZEOF_INT128__
 
 #include <type_traits>
 
@@ -128,6 +128,6 @@ struct is_unsigned<__uint128_t>: std::true_type {};
 
 } // namespace std {
 
-#endif // __SIZEOF_INT128__ && FATAL_COMPILER_IS_CLANG
+#endif // __SIZEOF_INT128__
 
 #endif

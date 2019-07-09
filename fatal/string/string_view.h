@@ -126,6 +126,14 @@ struct string_view {
     assert(begin_ <= end_);
   }
 
+  constexpr string_view head(size_type size) const {
+    return slice(0, size);
+  }
+
+  constexpr string_view tail(size_type offset) const {
+    return slice(0, size());
+  }
+
   constexpr string_view slice(size_type offset, size_type end) const {
     assert(offset <= size());
     assert(end <= size());
@@ -140,6 +148,32 @@ struct string_view {
     assert(begin_ <= offset);
     assert(offset <= end_);
     return std::find(offset, end_, needle);
+  }
+
+  size_type naive_search(fatal::string_view needle) const {
+    auto const haystack_size = size();
+    auto const needle_size = needle.size();
+
+
+    if (haystack_size < needle_size) {
+      return haystack_size;
+    }
+
+    for (std::size_t i = 0; i <= haystack_size - needle_size; ++i) {
+      for (std::size_t j = 0;; ++j) {
+        assert(j <= needle_size);
+
+        if (j == needle_size) {
+          return i;
+        }
+
+        if (needle[j] != (*this)[i + j]) {
+          break;
+        }
+      }
+    }
+
+    return haystack_size;
   }
 
   template <typename CharMatcher>
