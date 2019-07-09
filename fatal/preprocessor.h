@@ -12,6 +12,9 @@
 
 #include <fatal/portability.h>
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 
 /////////////////
@@ -762,5 +765,7 @@ Out &operator <<(Out &out, source_info source) {
   FATAL_CAT(Prefix, FATAL_CAT(_, __LINE__))
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_preprocessor_h

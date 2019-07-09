@@ -27,6 +27,9 @@
 
 // for internal use only
 
+FATAL_DIAGNOSTIC_PUSH
+FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
+
 namespace fatal {
 namespace log {
 namespace detail {
@@ -243,5 +246,7 @@ log::detail::log_impl::logger<std::ostream, TInfo> log(source_info source) {
 #endif // NDEBUG
 
 } // namespace fatal {
+
+FATAL_DIAGNOSTIC_POP
 
 #endif // FATAL_INCLUDE_fatal_log_log_h

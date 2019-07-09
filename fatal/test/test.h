@@ -60,7 +60,6 @@ namespace test {
     ::fatal::test::results Results; \
   }; \
   \
-  FATAL_HIDE_SYMBOL \
   static auto const RegistryPlaceholder \
     = ::fatal::test::detail::test_impl::registry::get().add<Class>(); \
   \
@@ -1092,16 +1091,16 @@ class FATAL_HIDE_SYMBOL registry {
     FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
     virtual ~entry() {}
 
-    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    FATAL_HIDE_SYMBOL
     virtual results run(issue_sink sink) const = 0;
 
-    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    FATAL_HIDE_SYMBOL
     virtual char const *group() const = 0;
 
-    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    FATAL_HIDE_SYMBOL
     virtual char const *name() const = 0;
 
-    FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+    FATAL_HIDE_SYMBOL
     virtual source_info const &source() const = 0;
   };
 
