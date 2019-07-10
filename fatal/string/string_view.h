@@ -67,7 +67,7 @@ struct string_view {
     assert(begin_ <= end_);
   }
 
-  constexpr string_view(const_iterator s, std::size_t size):
+  constexpr string_view(const_iterator s, size_type size):
     begin_(s),
     end_(s + size)
   {
@@ -95,18 +95,18 @@ struct string_view {
     assert(begin_ <= end_);
   }
 
-  template <std::size_t N>
+  template <size_type N>
   constexpr string_view(value_type const (&s)[N]):
     begin_(s),
-    end_(s + (N - (s[N - 1] == 0)))
+    end_(s + (N - (N && s[N - 1] == 0)))
   {
     assert(begin_ <= end_);
   }
 
-  template <std::size_t N>
+  template <size_type N>
   constexpr string_view(value_type (&s)[N]):
     begin_(s),
-    end_(s + (N - (s[N - 1] == 0)))
+    end_(s + (N - (N && s[N - 1] == 0)))
   {
     assert(begin_ <= end_);
   }
@@ -130,8 +130,14 @@ struct string_view {
     return slice(0, size);
   }
 
-  constexpr string_view tail(size_type offset) const {
-    return slice(0, size());
+  constexpr string_view tail(size_type size) const {
+    assert(size <= this->size());
+    return string_view(end_ - size, end_);
+  }
+
+  constexpr string_view slice(size_type offset) const {
+    assert(offset <= size());
+    return string_view(begin_ + offset, end_);
   }
 
   constexpr string_view slice(size_type offset, size_type end) const {
@@ -140,17 +146,13 @@ struct string_view {
     return string_view(begin_ + offset, begin_ + end);
   }
 
-  const_iterator find(value_type needle) const {
-    return find(needle, begin_);
-  }
-
-  const_iterator find(value_type needle, const_iterator offset) const {
-    assert(begin_ <= offset);
-    assert(offset <= end_);
-    return std::find(offset, end_, needle);
+  const_iterator find(value_type needle, size_type offset = 0) const {
+    assert(offset <= size());
+    return std::find(begin_ + offset, end_, needle);
   }
 
   size_type naive_search(fatal::string_view needle) const {
+    // TODO: use optimized find char then follow up with std::equal for the remaining characters
     auto const haystack_size = size();
     auto const needle_size = needle.size();
 
@@ -159,8 +161,8 @@ struct string_view {
       return haystack_size;
     }
 
-    for (std::size_t i = 0; i <= haystack_size - needle_size; ++i) {
-      for (std::size_t j = 0;; ++j) {
+    for (size_type i = 0; i <= haystack_size - needle_size; ++i) {
+      for (size_type j = 0;; ++j) {
         assert(j <= needle_size);
 
         if (j == needle_size) {
@@ -177,27 +179,15 @@ struct string_view {
   }
 
   template <typename CharMatcher>
-  const_iterator find_first_of(CharMatcher &&matcher) const {
-    return find_first_of(std::forward<CharMatcher>(matcher), begin_);
+  const_iterator find_first_of(CharMatcher &&matcher, size_type offset = 0) const {
+    assert(offset <= size());
+    return std::find_if(begin_ + offset, end_, matcher);
   }
 
   template <typename CharMatcher>
-  const_iterator find_first_of(CharMatcher &&matcher, const_iterator offset) const {
-    assert(begin_ <= offset);
-    assert(offset <= end_);
-    return std::find_if(offset, end_, matcher);
-  }
-
-  template <typename CharMatcher>
-  const_iterator find_first_not_of(CharMatcher &&matcher) const {
-    return find_first_not_of(std::forward<CharMatcher>(matcher), begin_);
-  }
-
-  template <typename CharMatcher>
-  const_iterator find_first_not_of(CharMatcher &&matcher, const_iterator offset) const {
-    assert(begin_ <= offset);
-    assert(offset <= end_);
-    return std::find_if_not(offset, end_, matcher);
+  const_iterator find_first_not_of(CharMatcher &&matcher, size_type offset = 0) const {
+    assert(offset <= size());
+    return std::find_if_not(begin_ + offset, end_, matcher);
   }
 
   /**
@@ -374,6 +364,11 @@ struct string_view {
     return string_view(begin, begin_);
   }
 
+  size_type count_over_char(char needle) {
+    // TODO: OPTIMIZE
+    return count_over([needle](char haystack) { return needle == haystack; });
+  }
+
   template <typename CharMatcher>
   string_view seek_for(CharMatcher &&matcher) {
     string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher)));
@@ -399,25 +394,39 @@ struct string_view {
   }
 
   template <typename CharMatcher>
-  string_view &skip_to(CharMatcher &&matcher) {
+  size_type skip_to(CharMatcher &&matcher) {
+    auto const begin = begin_;
     begin_ = find_first_of(std::forward<CharMatcher>(matcher));
     assert(begin_ <= end_);
-    return *this;
+    assert(begin <= begin_);
+    return begin_ - begin;
   }
 
   template <typename CharMatcher>
-  string_view &skip_past(CharMatcher &&matcher) {
+  size_type skip_past(CharMatcher &&matcher) {
+    auto const begin = begin_;
     begin_ = find_first_of(std::forward<CharMatcher>(matcher));
     if (begin_ != end_) { ++begin_; }
     assert(begin_ <= end_);
-    return *this;
+    assert(begin <= begin_);
+    return begin_ - begin;
   }
 
   template <typename CharMatcher>
-  string_view &skip_over(CharMatcher &&matcher) {
+  size_type skip_over(CharMatcher &&matcher) {
+    auto const begin = begin_;
     begin_ = find_first_not_of(std::forward<CharMatcher>(matcher));
     assert(begin_ <= end_);
-    return *this;
+    assert(begin <= begin_);
+    return begin_ - begin;
+  }
+
+  template <typename CharMatcher>
+  size_type count_over(CharMatcher &&matcher) const {
+    auto const i = find_first_not_of(std::forward<CharMatcher>(matcher));
+    assert(begin_ <= i);
+    assert(i <= end_);
+    return i - begin_;
   }
 
   // reset //
@@ -455,6 +464,16 @@ struct string_view {
   constexpr value_type back() const {
     assert(begin_ < end_);
     return *(end_ - 1);
+  }
+
+  constexpr value_type pop_front() {
+    assert(begin_ < end_);
+    return *begin_++;
+  }
+
+  constexpr value_type pop_back() {
+    assert(begin_ < end_);
+    return *--end_;
   }
 
   constexpr const_iterator data() const { return begin_; }
@@ -543,8 +562,20 @@ struct string_view {
     return *begin_;
   }
 
-  bool operator ==(string_view rhs) const {
-    return size() == rhs.size() && !std::strncmp(begin_, rhs.begin_, size());
+  constexpr bool operator ==(string_view rhs) const {
+    return size() == rhs.size() && std::equal(begin_, end_, rhs.begin_);
+  }
+
+  template <size_type N>
+  constexpr bool operator ==(value_type const (&rhs)[N]) const {
+    return size() == (N - (N && rhs[N - 1] == 0))
+      && std::equal(begin_, end_, rhs);
+  }
+
+  template <size_type N>
+  constexpr bool operator ==(value_type (&rhs)[N]) const {
+    return size() == (N - (N && rhs[N - 1] == 0))
+      && std::equal(begin_, end_, rhs);
   }
 
   template <
@@ -554,7 +585,7 @@ struct string_view {
       typename std::decay<U>::type
     >
   >
-  bool operator ==(U &&rhs) const {
+  constexpr bool operator ==(U &&rhs) const {
     return *this == string_view(std::forward<U>(rhs));
   }
 
@@ -605,7 +636,7 @@ struct string_view {
 
   struct hasher {
     using argument = string_view;
-    using result_type = std::size_t;
+    using result_type = size_type;
 
     result_type operator ()(string_view s) const {
       return *bytes_hasher<result_type>()(s.data(), s.size());

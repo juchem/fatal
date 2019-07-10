@@ -136,6 +136,48 @@ FATAL_TEST(string_view, seek_over) {
   TEST_IMPL("12345u8", "12345", "u8", seek_over, number_matcher());
 }
 
+FATAL_TEST(string_view, skip_to) {
+  TEST_IMPL("", 0, "", skip_to, char_matcher('-'));
+  TEST_IMPL("hello., world", 13, "", skip_to, char_matcher('-'));
+  TEST_IMPL("hello., world", 7, " world", skip_to, char_matcher(' '));
+  TEST_IMPL("hello., world", 6, ", world", skip_to, char_matcher(','));
+  TEST_IMPL("hello., world", 5, "., world", skip_to, char_matcher('.'));
+  TEST_IMPL("hello., world", 0, "hello., world", skip_to, letter_matcher());
+  TEST_IMPL("hello., world", 0, "hello., world", skip_to, any_matcher());
+}
+
+FATAL_TEST(string_view, skip_past) {
+  TEST_IMPL("", 0, "", skip_past, char_matcher('-'));
+  TEST_IMPL("hello., world", 13, "", skip_past, char_matcher('-'));
+  TEST_IMPL("hello., world", 8, "world", skip_past, char_matcher(' '));
+  TEST_IMPL("hello., world", 7, " world", skip_past, char_matcher(','));
+  TEST_IMPL("hello., world", 6, ", world", skip_past, char_matcher('.'));
+  TEST_IMPL("hello., world", 1, "ello., world", skip_past, letter_matcher());
+  TEST_IMPL("hello., world", 1, "ello., world", skip_past, any_matcher());
+}
+
+FATAL_TEST(string_view, skip_over) {
+  TEST_IMPL("", 0, "", skip_over, letter_matcher());
+  TEST_IMPL("hello., world", 0, "hello., world", skip_over, char_matcher(' '));
+  TEST_IMPL("hello., world", 0, "hello., world", skip_over, char_matcher(' '));
+  TEST_IMPL("hello., world", 0, "hello., world", skip_over, char_matcher(','));
+  TEST_IMPL("hello., world", 0, "hello., world", skip_over, char_matcher('.'));
+  TEST_IMPL("hello., world", 5, "., world", skip_over, letter_matcher());
+  TEST_IMPL("hello., world", 13, "", skip_over, any_matcher());
+}
+
+FATAL_TEST(string_view, count_over) {
+  TEST_IMPL("", 0, "", count_over, letter_matcher());
+  TEST_IMPL("hello., world", 0, "hello., world", count_over, char_matcher(' '));
+  TEST_IMPL("hello., world", 0, "hello., world", count_over, char_matcher(' '));
+  TEST_IMPL("hello., world", 0, "hello., world", count_over, char_matcher(','));
+  TEST_IMPL("hello., world", 0, "hello., world", count_over, char_matcher('.'));
+  TEST_IMPL("hello., world", 1, "hello., world", count_over, char_matcher('h'));
+  TEST_IMPL("hello., world", 5, "hello., world", count_over, letter_matcher());
+  TEST_IMPL("hello., world", 13, "hello., world", count_over, any_matcher());
+  TEST_IMPL("12345u8", 5, "12345u8", count_over, number_matcher());
+}
+
 #undef TEST_IMPL
 
 #define TEST_IMPL(Haystack, Remaining, Operation, ...) \
@@ -183,36 +225,6 @@ FATAL_TEST(string_view, skip) {
   TEST_IMPL("hello, world", "world", skip, 7);
   TEST_IMPL("hello, world", "d", skip, 11);
   TEST_IMPL("hello, world", "", skip, 12);
-}
-
-FATAL_TEST(string_view, skip_to) {
-  TEST_IMPL("", "", skip_to, char_matcher('-'));
-  TEST_IMPL("hello., world", "", skip_to, char_matcher('-'));
-  TEST_IMPL("hello., world", " world", skip_to, char_matcher(' '));
-  TEST_IMPL("hello., world", ", world", skip_to, char_matcher(','));
-  TEST_IMPL("hello., world", "., world", skip_to, char_matcher('.'));
-  TEST_IMPL("hello., world", "hello., world", skip_to, letter_matcher());
-  TEST_IMPL("hello., world", "hello., world", skip_to, any_matcher());
-}
-
-FATAL_TEST(string_view, skip_past) {
-  TEST_IMPL("", "", skip_past, char_matcher('-'));
-  TEST_IMPL("hello., world", "", skip_past, char_matcher('-'));
-  TEST_IMPL("hello., world", "world", skip_past, char_matcher(' '));
-  TEST_IMPL("hello., world", " world", skip_past, char_matcher(','));
-  TEST_IMPL("hello., world", ", world", skip_past, char_matcher('.'));
-  TEST_IMPL("hello., world", "ello., world", skip_past, letter_matcher());
-  TEST_IMPL("hello., world", "ello., world", skip_past, any_matcher());
-}
-
-FATAL_TEST(string_view, skip_over) {
-  TEST_IMPL("", "", skip_over, letter_matcher());
-  TEST_IMPL("hello., world", "hello., world", skip_over, char_matcher(' '));
-  TEST_IMPL("hello., world", "hello., world", skip_over, char_matcher(' '));
-  TEST_IMPL("hello., world", "hello., world", skip_over, char_matcher(','));
-  TEST_IMPL("hello., world", "hello., world", skip_over, char_matcher('.'));
-  TEST_IMPL("hello., world", "., world", skip_over, letter_matcher());
-  TEST_IMPL("hello., world", "", skip_over, any_matcher());
 }
 
 #undef TEST_IMPL
