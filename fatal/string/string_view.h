@@ -146,6 +146,19 @@ struct string_view {
     return string_view(begin_ + offset, begin_ + end);
   }
 
+  constexpr string_view slide(size_type count) const {
+    return string_view(begin_ + count, end_ + count);
+  }
+
+  constexpr string_view slide(size_type count, size_type extension) const {
+    assert(begin_ + count <= end_ + extension);
+    return string_view(begin_ + count, end_ + extension);
+  }
+
+  constexpr string_view extend(size_type count) const {
+    return string_view(begin_, end_ + count);
+  }
+
   const_iterator find(value_type needle, size_type offset = 0) const {
     assert(offset <= size());
     return std::find(begin_ + offset, end_, needle);
@@ -370,42 +383,42 @@ struct string_view {
   }
 
   template <typename CharMatcher>
-  string_view seek_for(CharMatcher &&matcher) {
-    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher)));
+  string_view seek_for(CharMatcher &&matcher, size_type offset = 0) {
+    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher), offset));
     begin_ = result.end();
     assert(begin_ <= end_);
     return result;
   }
 
   template <typename CharMatcher>
-  string_view seek_past(CharMatcher &&matcher) {
-    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher)));
+  string_view seek_past(CharMatcher &&matcher, size_type offset = 0) {
+    string_view result(begin_, find_first_of(std::forward<CharMatcher>(matcher), offset));
     begin_ = result.end() == end_ ? end_ : std::next(result.end());
     assert(begin_ <= end_);
     return result;
   }
 
   template <typename CharMatcher>
-  string_view seek_over(CharMatcher &&matcher) {
-    string_view result(begin_, find_first_not_of(std::forward<CharMatcher>(matcher)));
+  string_view seek_over(CharMatcher &&matcher, size_type offset = 0) {
+    string_view result(begin_, find_first_not_of(std::forward<CharMatcher>(matcher), offset));
     begin_ = result.end();
     assert(begin_ <= end_);
     return result;
   }
 
   template <typename CharMatcher>
-  size_type skip_to(CharMatcher &&matcher) {
+  size_type skip_to(CharMatcher &&matcher, size_type offset = 0) {
     auto const begin = begin_;
-    begin_ = find_first_of(std::forward<CharMatcher>(matcher));
+    begin_ = find_first_of(std::forward<CharMatcher>(matcher), offset);
     assert(begin_ <= end_);
     assert(begin <= begin_);
     return begin_ - begin;
   }
 
   template <typename CharMatcher>
-  size_type skip_past(CharMatcher &&matcher) {
+  size_type skip_past(CharMatcher &&matcher, size_type offset = 0) {
     auto const begin = begin_;
-    begin_ = find_first_of(std::forward<CharMatcher>(matcher));
+    begin_ = find_first_of(std::forward<CharMatcher>(matcher), offset);
     if (begin_ != end_) { ++begin_; }
     assert(begin_ <= end_);
     assert(begin <= begin_);
@@ -413,9 +426,9 @@ struct string_view {
   }
 
   template <typename CharMatcher>
-  size_type skip_over(CharMatcher &&matcher) {
+  size_type skip_over(CharMatcher &&matcher, size_type offset = 0) {
     auto const begin = begin_;
-    begin_ = find_first_not_of(std::forward<CharMatcher>(matcher));
+    begin_ = find_first_not_of(std::forward<CharMatcher>(matcher), offset);
     assert(begin_ <= end_);
     assert(begin <= begin_);
     return begin_ - begin;
