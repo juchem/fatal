@@ -11,6 +11,7 @@
 #define FATAL_INCLUDE_fatal_test_string_h
 
 #include <fatal/string/string_view.h>
+#include <fatal/test/type.h>
 #include <fatal/time/units.h>
 #include <fatal/type/tag.h>
 
@@ -19,7 +20,9 @@
 #include <chrono>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 #include <type_traits>
+#include <utility>
 
 #include <cstring>
 
@@ -33,10 +36,23 @@ void append(std::string &out, bool from) {
   out.append(from ? "true" : "false");
 }
 
-template <typename T, typename = decltype(std::to_string(std::declval<T>()))>
+template <
+  typename T,
+  typename = decltype(std::to_string(std::declval<T>())),
+  typename = std::enable_if_t<!std::is_enum_v<T>>
+>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void append(std::string &out, T from) {
   out.append(std::to_string(from));
+}
+
+template <typename T, typename = std::enable_if_t<std::is_enum_v<T>>>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+void append(std::string &out, T from) {
+  type_str<T>(out);
+  out.push_back('(');
+  out.append(std::to_string(static_cast<std::underlying_type_t<T>>(from)));
+  out.push_back(')');
 }
 
 template <typename R, typename P>
@@ -64,6 +80,31 @@ void append(std::string &out, char from) {
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void append(std::string &out, char const *from) {
   out.append(from);
+}
+
+namespace impl {
+
+template <typename... Args, std::size_t... Index>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+void append_tuple(
+  std::string &out,
+  std::tuple<Args...> const &from,
+  std::index_sequence<Index...>
+) {
+  out.append("tuple { ");
+  bool _[sizeof...(Args)] = {
+    (append(out.append(Index ? ", " : ""), std::get<Index>(from)), false)...
+  };
+  (void)_;
+  out.append(" }");
+}
+
+} // namespace impl {
+
+template <typename... Args>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+void append(std::string &out, std::tuple<Args...> const &from) {
+  impl::append_tuple(out, from, std::make_index_sequence<sizeof...(Args)>());
 }
 
 namespace detail {

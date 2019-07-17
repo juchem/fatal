@@ -679,7 +679,7 @@ private:
     Value const &value
   ) {
     issue.append(
-      "\n    '", std::get<0>(arg), "' -> '", any_to_string(value),
+      "\n    '", std::get<0>(arg), "'\n      -> '", any_to_string(value),
       "'\n      ", predicate_.text()
     );
   }
@@ -705,9 +705,9 @@ private:
     RHS const &rhs
   ) {
     issue.append(
-      "\n    lhs: '", std::get<0>(args), "' -> '", any_to_string(lhs),
+      "\n    lhs: '", std::get<0>(args), "'\n      -> '", any_to_string(lhs),
       "'\n      ", predicate_.text(),
-      "\n    rhs: '", std::get<1>(args), "' -> '", any_to_string(rhs), '\''
+      "\n    rhs: '", std::get<1>(args), "'\n      -> '", any_to_string(rhs), '\''
     );
   }
 
