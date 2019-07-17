@@ -557,23 +557,33 @@ using exact_floating_point = exact_type_for_bit_count<
 >;
 
 /**
- * smallest_uint_for_value gives you the smallest possible unsigned integer type
+ * smallest_unsigned_for_value gives you the smallest possible unsigned integer type
  * able to store the given value.
  *
  * Example:
  *
- *  smallest_uint_for_value<255> data = 255;
+ *  smallest_unsigned_for_value<255> data = 255;
  *
  * template <typename ...Args>
  * struct Foo {
- *   using type_id = smallest_uint_for_value<sizeof...(Args)>;
+ *   using type_id = smallest_unsigned_for_value<sizeof...(Args)>;
  *   ...
  * };
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-template <unsigned long long Value>
-using smallest_uint_for_value = smallest_unsigned_integral<
+template <std::uintmax_t Value>
+using smallest_unsigned_for_value = smallest_unsigned_integral<
+  most_significant_bit<Value>::value
+>;
+
+template <std::uintmax_t Value>
+using smallest_fast_unsigned_for_value = smallest_fast_unsigned_integral<
+  most_significant_bit<Value>::value
+>;
+
+template <std::uintmax_t Value>
+using smallest_least_unsigned_for_value = smallest_least_unsigned_integral<
   most_significant_bit<Value>::value
 >;
 
@@ -741,7 +751,7 @@ using mersenne_number = std::integral_constant<
  */
 template <typename T>
 using mersenne_number_exponent = std::integral_constant<
-  smallest_uint_for_value<most_significant_bit<T::value>::value>,
+  smallest_unsigned_for_value<most_significant_bit<T::value>::value>,
   most_significant_bit<T::value>::value
 >;
 
