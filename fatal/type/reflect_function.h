@@ -10,7 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_reflect_function_h
 #define FATAL_INCLUDE_fatal_type_reflect_function_h
 
-#include <fatal/type/deprecated/type_list.h>
+#include <fatal/type/list.h>
+#include <fatal/type/push.h>
 
 #include <type_traits>
 
@@ -65,7 +66,7 @@ template <typename Result, typename... Args>
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  using args = type_list<Args...>;
+  using args = list<Args...>;
 
   /**
    * A type representing the signature of the function.
@@ -86,7 +87,7 @@ template <typename Result, typename... Args>
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  using types = typename args::template push_front<result>;
+  using types = push_front<args, result>;
 };
 
 } // namespace fatal {

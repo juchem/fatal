@@ -22,13 +22,10 @@ FATAL_TEST(reflect_function, free_functions) {
   do { \
     using actual = reflect_function<decltype(Name)>; \
     FATAL_EXPECT_SAME<Result, actual::result>(); \
-    FATAL_EXPECT_SAME<type_list<__VA_ARGS__>, actual::args>(); \
+    FATAL_EXPECT_SAME<list<__VA_ARGS__>, actual::args>(); \
     FATAL_EXPECT_SAME<decltype(Name), actual::signature>(); \
     FATAL_EXPECT_SAME<decltype(&Name), actual::pointer>(); \
-    FATAL_EXPECT_SAME< \
-      type_list<__VA_ARGS__>::push_front<Result>, \
-      actual::types \
-    >(); \
+    FATAL_EXPECT_SAME<push_front<list<__VA_ARGS__>, Result>, actual::types>(); \
   } while (false)
 
   TEST_IMPL(foo, void);
@@ -49,13 +46,10 @@ FATAL_TEST(reflect_function, static_functions) {
   do { \
     using actual = reflect_function<decltype(static_fn::Name)>; \
     FATAL_EXPECT_SAME<Result, actual::result>(); \
-    FATAL_EXPECT_SAME<type_list<__VA_ARGS__>, actual::args>(); \
+    FATAL_EXPECT_SAME<list<__VA_ARGS__>, actual::args>(); \
     FATAL_EXPECT_SAME<decltype(static_fn::Name), actual::signature>(); \
     FATAL_EXPECT_SAME<decltype(&static_fn::Name), actual::pointer>(); \
-    FATAL_EXPECT_SAME< \
-      type_list<__VA_ARGS__>::push_front<Result>, \
-      actual::types \
-    >(); \
+    FATAL_EXPECT_SAME<push_front<list<__VA_ARGS__>, Result>, actual::types>(); \
   } while (false)
 
   TEST_IMPL(foo, void);
