@@ -19,43 +19,25 @@ jobs:
           command: apt-get update
       - run:
           name: install toolchains
-          command: apt-get -y install clang-9 g++-9 clang-8 g++-8 clang-7 g++-7 clang-6.0 g++-6
-      - run:
-          name: clang 6 c++17
-          command: ./contbuild.sh clang++-6.0 c++17
-      - run:
-          name: clang 6 c++2a
-          command: ./contbuild.sh clang++-6.0 c++2a
-      - run:
-          name: gcc 6 c++17
-          command: ./contbuild.sh g++-6 c++17
-      - run:
-          name: gcc 6 c++2a
-          command: ./contbuild.sh g++-6 c++2a
-      - run:
-          name: clang 7 c++2a
-          command: ./contbuild.sh clang++-7 c++2a
+          command: apt-get -y install clang-9 g++-9 clang-8 g++-8 clang-7 g++-7
       - run:
           name: clang 7 c++17
           command: ./contbuild.sh clang++-7 c++17
       - run:
-          name: gcc 7 c++2a
-          command: ./contbuild.sh g++-7 c++2a
-      - run:
-          name: gcc 7 c++17
-          command: ./contbuild.sh g++-7 c++17
+          name: clang 7 c++2a
+          command: ./contbuild.sh clang++-7 c++2a
       - run:
           name: clang 8 c++17
           command: ./contbuild.sh clang++-8 c++17
       - run:
-          name: clang 8 c++17
-          command: ./contbuild.sh clang++-8 c++17
+          name: clang 8 c++2a
+          command: ./contbuild.sh clang++-8 c++2a
       - run:
           name: gcc 8 c++17
           command: ./contbuild.sh g++-8 c++17
       - run:
-          name: gcc 8 c++17
-          command: ./contbuild.sh g++-8 c++17
+          name: gcc 8 c++2a
+          command: ./contbuild.sh g++-8 c++2a
       - run:
           name: clang 9 c++17
           command: ./contbuild.sh clang++-9 c++17
