@@ -260,27 +260,6 @@ using shift_left_upperbound = std::integral_constant<
   T, (static_cast<T>(1) << shift_left_count_upperbound<T, Shift>::value)
 >;
 
-/**
- * most_significant_bit returns the 1-based position of the
- * most significant bit (0 for no bits set) for n
- *
- * This is the same as log_2(n) + 1, except for n = 0
- *
- * Usage:
- *
- * auto msb = most_significant_bit<10>::value;
- *  // msb is now 4
- *
- * template <std::uintmax_t msb>
- * struct Foo { ... };
- *
- * Foo<most_significant_bit<1024>::value> foo;
- *
- * @author: Marcelo Juchem <marcelo@fb.com>
- */
-template <std::uintmax_t Value>
-using most_significant_bit = i_nm::most_significant_bit<Value>;
-
 ///////////////
 // pop_count //
 ///////////////
@@ -291,6 +270,43 @@ using pop_count = std::integral_constant<
   std::size_t,
   i_nm::pop_count_impl(Value)
 >;
+
+/**
+ * lg_2 returns the floor of the base 2 logarithm of n, which is the same as 
+ * the 0-based position of the most significant bit of n, or 0 for no bits set
+ *
+ * Usage:
+ *
+ * // yields `4`
+ * auto msb = lg_2(10);
+ *
+ * // yields `std::integral_constant<std::size_t, 4>`
+ * using result = std::integral_constant<std::size_t, lg_2(10)>;
+ *
+ * @author: Marcelo Juchem <marcelo@fb.com>
+ */
+template <typename T>
+constexpr std::size_t lg_2(T value) noexcept {
+  return i_nm::lg_2(value);
+}
+
+/**
+ * most_significant_bit returns the 1-based position of the
+ * most significant bit of n, or 0 for no bits set
+ *
+ * This is the same as log_2(n) + 1, except for n = 0
+ *
+ * Usage:
+ *
+ * auto msb = most_significant_bit(10);
+ *  // msb is now 4
+ *
+ * @author: Marcelo Juchem <marcelo@fb.com>
+ */
+template <typename T>
+constexpr std::size_t most_significant_bit(T value) noexcept {
+  return lg_2(value) + static_cast<bool>(value);
+}
 
 ////////////////////
 // known integers //
@@ -574,17 +590,17 @@ using exact_floating_point = exact_type_for_bit_count<
  */
 template <std::uintmax_t Value>
 using smallest_unsigned_for_value = smallest_unsigned_integral<
-  most_significant_bit<Value>::value
+  most_significant_bit(Value)
 >;
 
 template <std::uintmax_t Value>
 using smallest_fast_unsigned_for_value = smallest_fast_unsigned_integral<
-  most_significant_bit<Value>::value
+  most_significant_bit(Value)
 >;
 
 template <std::uintmax_t Value>
 using smallest_least_unsigned_for_value = smallest_least_unsigned_integral<
-  most_significant_bit<Value>::value
+  most_significant_bit(Value)
 >;
 
 /**
@@ -699,7 +715,7 @@ struct FATAL_HIDE_SYMBOL unchecked_pow_mp<0, 0>:
 template <typename T>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 constexpr bool is_power_of_two(T n) noexcept {
-  return n != 0 && !(n & (n - 1));
+  return i_nm::is_power_of_two(n);
 }
 
 /**
@@ -751,8 +767,8 @@ using mersenne_number = std::integral_constant<
  */
 template <typename T>
 using mersenne_number_exponent = std::integral_constant<
-  smallest_unsigned_for_value<most_significant_bit<T::value>::value>,
-  most_significant_bit<T::value>::value
+  smallest_unsigned_for_value<most_significant_bit(T::value)>,
+  most_significant_bit(T::value)
 >;
 
 /**

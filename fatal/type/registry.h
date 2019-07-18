@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_registry_h
 #define FATAL_INCLUDE_fatal_type_registry_h
 
+#include <fatal/portability.h>
+
 #include <type_traits>
 
 FATAL_DIAGNOSTIC_PUSH

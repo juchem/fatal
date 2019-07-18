@@ -984,17 +984,17 @@ private:
     // bits_size is the amount of bits needed to represent the type_tag for
     // the given types passed as variadic template parameters (Args...)
     constexpr static std::size_t bits_size() {
-      return most_significant_bit<sizeof...(Args)>::value;
+      return most_significant_bit(sizeof...(Args));
     }
 
-    using type_tag = smallest_uint_for_value<sizeof...(Args)>;
+    using type_tag = smallest_unsigned_for_value<sizeof...(Args)>;
 
     control_block(allocator_type *allocator, type_tag storedType):
       allocator_(std::move(allocator)),
       tag_(std::move(storedType))
     {}
 
-    fast_pass<type_tag> storedType() const { return tag_; }
+    type_tag const &storedType() const { return tag_; }
     void setStoredType(type_tag tag) { tag_ = std::move(tag); }
 
     allocator_type *allocator() const { return allocator_; }
@@ -1761,7 +1761,7 @@ struct visitor_wrapper {
 
   bool has_value() const { return !result_.empty(); }
 
-  fast_pass<result_type> value() const { return *result_; }
+  result_type const &value() const { return *result_; }
 
   result_type &value() { return result_.ref(); }
 

@@ -495,39 +495,39 @@ FATAL_TEST(numerics, shift_left_upperbound) {
 //////////////////////////
 
 FATAL_TEST(numerics, most_significant_bit) {
-  FATAL_EXPECT_EQ(0, most_significant_bit<0>::value);
-  FATAL_EXPECT_EQ(1, most_significant_bit<1>::value);
-  FATAL_EXPECT_EQ(2, most_significant_bit<2>::value);
-  FATAL_EXPECT_EQ(2, most_significant_bit<3>::value);
-  FATAL_EXPECT_EQ(3, most_significant_bit<7>::value);
-  FATAL_EXPECT_EQ(4, most_significant_bit<8>::value);
-  FATAL_EXPECT_EQ(4, most_significant_bit<15>::value);
-  FATAL_EXPECT_EQ(5, most_significant_bit<16>::value);
-  FATAL_EXPECT_EQ(5, most_significant_bit<31>::value);
-  FATAL_EXPECT_EQ(6, most_significant_bit<32>::value);
-  FATAL_EXPECT_EQ(6, most_significant_bit<63>::value);
-  FATAL_EXPECT_EQ(7, most_significant_bit<64>::value);
-  FATAL_EXPECT_EQ(7, most_significant_bit<127>::value);
-  FATAL_EXPECT_EQ(10, most_significant_bit<997>::value);
-  FATAL_EXPECT_EQ(16, most_significant_bit<65535>::value);
-  FATAL_EXPECT_EQ(17, most_significant_bit<65536>::value);
+  FATAL_EXPECT_EQ(0, most_significant_bit(0));
+  FATAL_EXPECT_EQ(1, most_significant_bit(1));
+  FATAL_EXPECT_EQ(2, most_significant_bit(2));
+  FATAL_EXPECT_EQ(2, most_significant_bit(3));
+  FATAL_EXPECT_EQ(3, most_significant_bit(7));
+  FATAL_EXPECT_EQ(4, most_significant_bit(8));
+  FATAL_EXPECT_EQ(4, most_significant_bit(15));
+  FATAL_EXPECT_EQ(5, most_significant_bit(16));
+  FATAL_EXPECT_EQ(5, most_significant_bit(31));
+  FATAL_EXPECT_EQ(6, most_significant_bit(32));
+  FATAL_EXPECT_EQ(6, most_significant_bit(63));
+  FATAL_EXPECT_EQ(7, most_significant_bit(64));
+  FATAL_EXPECT_EQ(7, most_significant_bit(127));
+  FATAL_EXPECT_EQ(10, most_significant_bit(997));
+  FATAL_EXPECT_EQ(16, most_significant_bit(65535));
+  FATAL_EXPECT_EQ(17, most_significant_bit(65536));
 
-  FATAL_EXPECT_EQ(0, most_significant_bit<0ull>::value);
-  FATAL_EXPECT_EQ(1, most_significant_bit<1ull>::value);
-  FATAL_EXPECT_EQ(2, most_significant_bit<2ull>::value);
-  FATAL_EXPECT_EQ(2, most_significant_bit<3ull>::value);
-  FATAL_EXPECT_EQ(3, most_significant_bit<7ull>::value);
-  FATAL_EXPECT_EQ(4, most_significant_bit<8ull>::value);
-  FATAL_EXPECT_EQ(4, most_significant_bit<15ull>::value);
-  FATAL_EXPECT_EQ(5, most_significant_bit<16ull>::value);
-  FATAL_EXPECT_EQ(5, most_significant_bit<31ull>::value);
-  FATAL_EXPECT_EQ(6, most_significant_bit<32ull>::value);
-  FATAL_EXPECT_EQ(6, most_significant_bit<63ull>::value);
-  FATAL_EXPECT_EQ(7, most_significant_bit<64ull>::value);
-  FATAL_EXPECT_EQ(7, most_significant_bit<127ull>::value);
-  FATAL_EXPECT_EQ(10, most_significant_bit<997ull>::value);
-  FATAL_EXPECT_EQ(16, most_significant_bit<65535ull>::value);
-  FATAL_EXPECT_EQ(17, most_significant_bit<65536ull>::value);
+  FATAL_EXPECT_EQ(0, most_significant_bit(0ull));
+  FATAL_EXPECT_EQ(1, most_significant_bit(1ull));
+  FATAL_EXPECT_EQ(2, most_significant_bit(2ull));
+  FATAL_EXPECT_EQ(2, most_significant_bit(3ull));
+  FATAL_EXPECT_EQ(3, most_significant_bit(7ull));
+  FATAL_EXPECT_EQ(4, most_significant_bit(8ull));
+  FATAL_EXPECT_EQ(4, most_significant_bit(15ull));
+  FATAL_EXPECT_EQ(5, most_significant_bit(16ull));
+  FATAL_EXPECT_EQ(5, most_significant_bit(31ull));
+  FATAL_EXPECT_EQ(6, most_significant_bit(32ull));
+  FATAL_EXPECT_EQ(6, most_significant_bit(63ull));
+  FATAL_EXPECT_EQ(7, most_significant_bit(64ull));
+  FATAL_EXPECT_EQ(7, most_significant_bit(127ull));
+  FATAL_EXPECT_EQ(10, most_significant_bit(997ull));
+  FATAL_EXPECT_EQ(16, most_significant_bit(65535ull));
+  FATAL_EXPECT_EQ(17, most_significant_bit(65536ull));
 }
 
 /////////////////////////////////
@@ -537,7 +537,7 @@ FATAL_TEST(numerics, most_significant_bit) {
 #define SEL_TEST(Expected, Selector, ...) \
   FATAL_EXPECT_EQ(data_bits<Expected>::value, data_bits<Selector<__VA_ARGS__>>::value)
 
-#define LEAST_TEST(Expected, Selector, __VA_ARGS__) \
+#define LEAST_TEST(Expected, Selector, ...) \
   FATAL_EXPECT_LE(sizeof(Expected), sizeof(Selector<__VA_ARGS__>))
 
 FATAL_TEST(numerics, smallest_signed_integral) {
@@ -759,7 +759,7 @@ FATAL_TEST(numerics, smallest_floating_point long double) {
 #define SEL_TEST(Expected, Selector, ...) \
   FATAL_EXPECT_EQ(data_bits<Expected>::value, data_bits<Selector<__VA_ARGS__>>::value)
 
-#define LEAST_TEST(Expected, Selector, __VA_ARGS__) \
+#define LEAST_TEST(Expected, Selector, ...) \
   FATAL_EXPECT_LE(sizeof(Expected), sizeof(Selector<__VA_ARGS__>))
 
 FATAL_TEST(numerics, exact_signed_integral) {
@@ -786,12 +786,12 @@ FATAL_TEST(numerics, exact_floating_point) {
 
 #define SMALLEST_FOR_VALUE_TEST(N, Expected) \
   FATAL_VLOG(1) << "expected = " << #Expected << ", actual = " \
-    << ::fatal::type_str<smallest_uint_for_value<N>>(); \
+    << ::fatal::type_str<smallest_unsigned_for_value<N>>(); \
   FATAL_EXPECT_EQ( \
-    data_bits<Expected>::value, data_bits<smallest_uint_for_value<N>>::value \
+    data_bits<Expected>::value, data_bits<smallest_unsigned_for_value<N>>::value \
   )
 
-FATAL_TEST(numerics, smallest_uint_for_value) {
+FATAL_TEST(numerics, smallest_unsigned_for_value) {
   SMALLEST_FOR_VALUE_TEST(0u, bool);
   SMALLEST_FOR_VALUE_TEST(1, bool);
   SMALLEST_FOR_VALUE_TEST(2, uint8_t);

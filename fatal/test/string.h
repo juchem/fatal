@@ -82,7 +82,7 @@ void append(std::string &out, char const *from) {
   out.append(from);
 }
 
-namespace impl {
+namespace i_str {
 
 template <typename... Args, std::size_t... Index>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -99,12 +99,12 @@ void append_tuple(
   out.append(" }");
 }
 
-} // namespace impl {
+} // namespace i_str {
 
 template <typename... Args>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void append(std::string &out, std::tuple<Args...> const &from) {
-  impl::append_tuple(out, from, std::make_index_sequence<sizeof...(Args)>());
+  i_str::append_tuple(out, from, std::make_index_sequence<sizeof...(Args)>());
 }
 
 namespace detail {

@@ -24,21 +24,39 @@ constexpr std::size_t data_bits_v = std::is_same_v<bool, std::decay_t<T>>
   : sizeof(std::decay_t<T>) * CHAR_BIT;
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-constexpr std::size_t msb_mp_impl(std::uintmax_t Value) noexcept {
-  return Value
-    ? 1 + msb_mp_impl(Value >> 1)
-    : 0;
-}
-
-template <std::uintmax_t Value>
-using most_significant_bit = size_constant<msb_mp_impl(Value)>;
-
-FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 constexpr std::size_t pop_count_impl(std::uintmax_t Value) noexcept {
   return Value
     ? pop_count_impl(Value & (Value - 1)) + 1
     : 0;
 }
+
+template <typename T>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr bool is_power_of_two(T n) noexcept {
+  return n != 0 && !(n & (n - 1));
+}
+
+template <typename T, std::size_t Stage = data_bits_v<T> / 2>
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+constexpr std::size_t lg_2([[maybe_unused]] T value, std::size_t result = 0) noexcept {
+  static_assert(is_power_of_two(data_bits_v<T>));
+
+  if constexpr (!Stage) {
+    return result;
+  } else {
+    if (value & (static_cast<T>(static_cast<T>(static_cast<T>(1) << Stage) - 1) << Stage)) {
+      return lg_2<T, Stage / 2>(value >> Stage, result |= Stage);
+    } else {
+      return lg_2<T, Stage / 2>(value, result);
+    }
+  }
+}
+
+static_assert(lg_2(0) == 0);
+static_assert(lg_2(1) == 0);
+static_assert(lg_2(2) == 1);
+static_assert(lg_2(4) == 2);
+static_assert(lg_2(8) == 3);
 
 template <typename T, std::size_t Size>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -90,9 +108,7 @@ constexpr T integral_reverse(T value, std::size_t end_phase) noexcept {
 template <std::size_t BitSizeUpperBound>
 struct FATAL_HIDE_SYMBOL data_bits_filter {
   template <typename T>
-  using apply = std::bool_constant<
-    (most_significant_bit<T::value>::value <= BitSizeUpperBound)
-  >;
+  using apply = std::bool_constant<(lg_2(T::value) < BitSizeUpperBound)>;
 };
 
 template <typename List, std::size_t BitCount>

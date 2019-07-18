@@ -152,7 +152,7 @@ struct data_traits {
   >;
 
   static_assert(
-    most_significant_bit<continuation_bit::value>::value == data_size::value,
+    most_significant_bit(continuation_bit::value) == data_size::value,
     "invalid continuation bit"
   );
 
@@ -167,7 +167,7 @@ struct data_traits {
   >;
 
   static_assert(
-    most_significant_bit<filter_mask::value>::value == payload_size::value,
+    most_significant_bit(filter_mask::value) == payload_size::value,
     "invalid filter mask"
   );
 
@@ -189,11 +189,11 @@ struct data_traits {
     using type = size<data_bits<T>::value, payload_size::value>;
   };
 
-  static unsigned_unit from(fast_pass<data_unit> value) {
+  static unsigned_unit from(data_unit const &value) {
     return *reinterpret_cast<unsigned_unit const *>(std::addressof(value));
   }
 
-  static data_unit to(fast_pass<unsigned_unit> value) {
+  static data_unit to(unsigned_unit const &value) {
     return *reinterpret_cast<data_unit const *>(std::addressof(value));
   }
 };
@@ -217,7 +217,7 @@ struct value_traits<true, T> {
   static_assert(std::is_signed<external>::value, "implementation mismatch");
   static_assert(sizeof(external) == sizeof(internal), "invalid integral");
 
-  static internal pre(fast_pass<external> value) noexcept {
+  static internal pre(external const &value) noexcept {
     return (*reinterpret_cast<internal const *>(std::addressof(value)) << 1)
       | (value < 0 ? 1 : 0);
   }
@@ -238,7 +238,7 @@ struct varint {
 
 private:
   using shift_counter = smallest_fast_unsigned_integral<
-    most_significant_bit<data_bits<type>::value>::value
+    most_significant_bit(data_bits_v<type>)
   >;
 
   using value_traits = detail::varint_impl::value_traits<
@@ -258,7 +258,7 @@ public:
   using automatic_buffer = std::array<TData, max_size<TData>::value>;
 
   struct encoder {
-    explicit encoder(fast_pass<type> value) noexcept:
+    explicit encoder(type const &value) noexcept:
       value_(value_traits::pre(value))
     {}
 
@@ -290,7 +290,7 @@ public:
       return begin;
     }
 
-    void reset(fast_pass<type> value) noexcept {
+    void reset(type const &value) noexcept {
       value_ = value;
       continued_ = true;
     }

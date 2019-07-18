@@ -9,6 +9,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_string_h
 #define FATAL_INCLUDE_fatal_type_string_h
 
+#include <fatal/portability.h>
+
 #include <utility>
 
 FATAL_DIAGNOSTIC_PUSH

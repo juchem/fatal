@@ -48,14 +48,14 @@ class impl {
 
 public:
   struct encode {
-    encoded operator ()(fast_pass<type> value) const {
+    encoded operator ()(type const &value) const {
       buffer out;
       return result(out, codec::encode(value, out.begin()));
     }
   };
 
   struct encoder {
-    encoded operator ()(fast_pass<type> value) const {
+    encoded operator ()(type const &value) const {
       buffer out;
       typename codec::encoder e(value);
       auto const begin = out.begin();
@@ -68,7 +68,7 @@ public:
   };
 
   struct decode {
-    type operator ()(fast_pass<encoded> data) const {
+    type operator ()(encoded const &data) const {
       auto const begin = data.first.begin();
       auto const end = std::next(begin, data.second);
       auto const value = codec::decode(begin, end);
@@ -78,7 +78,7 @@ public:
   };
 
   struct tracking_decode {
-    type operator ()(fast_pass<encoded> data) const {
+    type operator ()(encoded const &data) const {
       auto begin = data.first.begin();
       auto const end = std::next(begin, data.second);
       auto const value = codec::tracking_decode(begin, end);
@@ -89,7 +89,7 @@ public:
   };
 
   struct decoder {
-    type operator ()(fast_pass<encoded> data) const {
+    type operator ()(encoded const &data) const {
       auto const begin = data.first.begin();
       auto const end = std::next(begin, data.second);
       typename codec::decoder d;
