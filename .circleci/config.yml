@@ -9,18 +9,23 @@ jobs:
     steps:
       - checkout
       - run:
+          name: add apt repositories
+          command: cp .circleci/apt-sources-* /etc/apt/sources.list.d/
+      - run:
+          name: setup apt
+          command: cp .circleci/apt-dont-install-recommended /etc/apt/apt.conf.d/
+      - run:
           name: update apt repositories
           command: apt-get update
       - run:
-          name: install ca-certificates
-          command: apt-get -y install ca-certificates g++-9 clang-8 g++-8 clang-7 g++-7 clang-6.0 g++-6
-          #command: apt-get -y install ca-certificates clang-9 g++-9 clang-8 g++-8 clang-7 g++-7 clang-6.0 g++-6
-      #- run:
-      #    name: clang 9 c++17
-      #    command: ./contbuild.sh clang++-9 c++17
-      #- run:
-      #    name: clang 9 c++2a
-      #    command: ./contbuild.sh clang++-9 c++2a
+          name: install toolchains
+          command: apt-get -y install clang-9 g++-9 clang-8 g++-8 clang-7 g++-7 clang-6.0 g++-6
+      - run:
+          name: clang 9 c++17
+          command: ./contbuild.sh clang++-9 c++17
+      - run:
+          name: clang 9 c++2a
+          command: ./contbuild.sh clang++-9 c++2a
       - run:
           name: gcc 9 c++17
           command: ./contbuild.sh g++-9 c++17
