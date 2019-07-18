@@ -92,7 +92,7 @@ public:
     return random_access_iterator(*container_, i_--);
   }
 
-  random_access_iterator &operator +=(fatal::fast_pass<size_type> diff) {
+  random_access_iterator &operator +=(size_type const &diff) {
     assert(!container_ || i_ <= container_->size());
     assert(!container_ || (
       std::numeric_limits<size_type>::max() - (container_->size() - i_) <= diff
@@ -101,25 +101,25 @@ public:
     return *this;
   }
 
-  random_access_iterator &operator -=(fatal::fast_pass<size_type> diff) {
+  random_access_iterator &operator -=(size_type const &diff) {
     assert(diff <= i_);
     i_ -= diff;
     return *this;
   }
 
-  random_access_iterator operator +(fatal::fast_pass<size_type> diff) const {
+  random_access_iterator operator +(size_type const &diff) const {
     auto copy = &this;
     copy += diff;
     return copy;
   }
 
-  random_access_iterator operator -(fatal::fast_pass<size_type> diff) const {
+  random_access_iterator operator -(size_type const &diff) const {
     auto copy = &this;
     copy -= diff;
     return copy;
   }
 
-  random_access_iterator &operator +=(fatal::fast_pass<difference_type> diff) {
+  random_access_iterator &operator +=(difference_type const &diff) {
     assert(!container_ || (
       diff < 0
         ? -diff <= i_
@@ -136,7 +136,7 @@ public:
     return *this;
   }
 
-  random_access_iterator &operator -=(fatal::fast_pass<difference_type> diff) {
+  random_access_iterator &operator -=(difference_type const &diff) {
     assert(!container_ || (
       diff < 0
         ? std::numeric_limits<size_type>::max() - container_->size() <= -diff
@@ -153,25 +153,19 @@ public:
     return *this;
   }
 
-  random_access_iterator operator +(
-    fatal::fast_pass<difference_type> diff
-  ) const {
+  random_access_iterator operator +(difference_type const &diff) const {
     auto copy = &this;
     copy += diff;
     return copy;
   }
 
-  random_access_iterator operator -(
-    fatal::fast_pass<difference_type> diff
-  ) const {
+  random_access_iterator operator -(difference_type const &diff) const {
     auto copy = &this;
     copy -= diff;
     return copy;
   }
 
-  difference_type operator -(
-    fatal::fast_pass<random_access_iterator> rhs
-  ) const {
+  difference_type operator -(random_access_iterator const &rhs) const {
     assert(container_ == rhs.container_);
     assert(rhs.i_ <= i_);
 
@@ -180,11 +174,11 @@ public:
       : static_cast<difference_type>(i_ - rhs.i_);
   }
 
-  bool operator ==(fatal::fast_pass<random_access_iterator> rhs) const {
+  bool operator ==(random_access_iterator const &rhs) const {
     return container_ == rhs.container_ && i_ == rhs.i_;
   }
 
-  bool operator !=(fatal::fast_pass<random_access_iterator> rhs) const {
+  bool operator !=(random_access_iterator const &rhs) const {
     return !(*this == rhs);
   }
 

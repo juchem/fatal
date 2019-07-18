@@ -308,6 +308,23 @@ constexpr std::size_t most_significant_bit(T value) noexcept {
   return lg_2(value) + static_cast<bool>(value);
 }
 
+template <typename T>
+constexpr std::size_t most_significant_bit_mask(T value) noexcept {
+  return static_cast<T>(1) << lg_2(value);
+}
+
+template <typename T>
+constexpr std::size_t least_significant_bit_mask(T value) noexcept {
+  // TODO: can this be optimized further?
+  return (value ^ (value - 1)) & value;
+}
+
+template <typename T>
+constexpr std::size_t least_significant_bit_lg_2(T value) noexcept {
+  // TODO: can this be optimized further?
+  return lg_2(value ^ (value - 1));
+}
+
 ////////////////////
 // known integers //
 ////////////////////

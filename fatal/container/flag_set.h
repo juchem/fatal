@@ -734,7 +734,7 @@ public:
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  fast_pass<flags_type> get() const { return flags_; }
+  flags_type const &get() const { return flags_; }
 
   ////////////
   // equals //
@@ -771,7 +771,7 @@ public:
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  flag_set &operator =(fast_pass<flag_set> const &rhs) {
+  flag_set &operator =(flag_set const &const &rhs) {
     flags_ = rhs.flags_;
     assert((flags_ & range_mask::value) == flags_);
 

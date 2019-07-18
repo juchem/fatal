@@ -169,7 +169,7 @@ struct tuple {
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <typename Tag>
-  constexpr fast_pass<type_of<Tag>> get() const noexcept {
+  constexpr type_of<Tag> const &get() const noexcept {
     return tags::template get<Tag>(data_);
   }
 
@@ -213,7 +213,7 @@ struct tuple {
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <std::size_t Index>
-  constexpr fast_pass<type_at<Index>> at() const noexcept {
+  constexpr type_at<Index> const &at() const noexcept {
     return std::get<Index>(data_);
   }
 
@@ -253,7 +253,7 @@ struct tuple {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  constexpr fast_pass<type> data() const noexcept { return data_; }
+  constexpr type const &data() const noexcept { return data_; }
 
   /**
    * Gets the non-tagged `std::tuple` wrapped by this tagged tuple.

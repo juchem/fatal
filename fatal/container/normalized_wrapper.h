@@ -45,7 +45,7 @@ struct normalized_wrapper {
     wrapped_(std::forward<type>(rhs.wrapped_))
   {}
 
-  fast_pass<type> get() const { return wrapped_; }
+  type const &get() const { return wrapped_; }
   type &get() { return wrapped_; }
 
   const_reference ref() const { return wrapped_; }
@@ -110,7 +110,7 @@ struct normalized_wrapper<T *> {
     rhs.wrapped_ = nullptr;
   }
 
-  fast_pass<type> get() noexcept const { return wrapped_; }
+  type const &get() noexcept const { return wrapped_; }
   type &get() noexcept { return wrapped_; }
 
   const_reference cref() noexcept const {

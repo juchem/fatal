@@ -200,7 +200,7 @@ public:
 
   id_type type() const { return which_; }
 
-  fast_pass<payload_type> payload() const { return payload_; }
+  payload_type const &payload() const { return payload_; }
 
 private:
   union union_t {

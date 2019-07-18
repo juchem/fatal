@@ -61,7 +61,7 @@ public:
   using pointer = typename std::add_pointer<T>::type;
 
 private:
-  size_type loose_real_index(fatal::fast_pass<size_type> i) const {
+  size_type loose_real_index(size_type const &i) const {
     FATAL_ASSUME_LE(i, size_);
     auto const index = offset_ + i;
     auto const size = queue_.size();
@@ -70,7 +70,7 @@ private:
     return result;
   }
 
-  size_type real_index(fatal::fast_pass<size_type> i) const {
+  size_type real_index(size_type const &i) const {
     FATAL_ASSUME_LT(i, size_);
     return loose_real_index(i);
   }
@@ -447,11 +447,11 @@ public:
     return queue_[real_index(size_ - 1)].value;
   }
 
-  const_reference operator [](fatal::fast_pass<size_type> index) const {
+  const_reference operator [](size_type const &index) const {
     return queue_[real_index(index)].value;
   }
 
-  reference operator [](fatal::fast_pass<size_type> index) {
+  reference operator [](size_type const &index) {
     return queue_[real_index(index)].value;
   }
 
@@ -476,7 +476,7 @@ public:
     queue_.clear();
   }
 
-  fatal::fast_pass<size_type> size() const noexcept { return size_; }
+  size_type const &size() const noexcept { return size_; }
 
   bool empty() const noexcept {
     static_assert(
