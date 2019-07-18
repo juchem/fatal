@@ -1,5 +1,5 @@
-# Facebook Template Library [![Build Status](https://secure.travis-ci.org/facebook/fatal.png?branch=master "Build Status")](https://travis-ci.org/facebook/fatal)
-Fatal (Facebook Template Library) is a library for fast prototyping software in modern C++.
+# Fatal Template Library [![Build Status](https://circleci.com/gh/juchem/fatal.svg?style=svg)](https://circleci.com/gh/juchem/fatal)
+Fatal (Fatal Template Library) is a library for fast prototyping software in modern C++.
 
 It provides facilities heavily based on template meta-programming, while keeping most of the complexity under-the-hood, to enhance the expressive power of C++.
 
@@ -21,23 +21,27 @@ Fatal is a header only library, therefore no building is required.
 
 
 ## Requirements
-A compliant C++11 compiler. Currently tested under Clang {[3.5](https://packages.debian.org/sid/clang-3.5), [3.6](https://packages.debian.org/sid/clang-3.6), [3.7](https://packages.debian.org/sid/clang-3.7), [3.8](https://packages.debian.org/sid/clang-3.8), [3.9](https://packages.debian.org/sid/clang-3.9), [5.0](https://packages.debian.org/sid/clang-5.0)} and GCC {[4.9](https://packages.debian.org/sid/g++-4.9), [5](https://packages.debian.org/sid/g++-5), [6](https://packages.debian.org/sid/g++-6), [7](https://packages.debian.org/sid/g++-7)}.
+A compliant C++17 compiler. Currently tested under Clang {
+  [6](https://packages.debian.org/sid/clang-6),
+  [7](https://packages.debian.org/sid/clang-7),
+  [8](https://packages.debian.org/sid/clang-8),
+  [9](https://packages.debian.org/sid/clang-9)
+} and GCC {
+  [6](https://packages.debian.org/sid/g++-6),
+  [7](https://packages.debian.org/sid/g++-7),
+  [8](https://packages.debian.org/sid/g++-8),
+  [9](https://packages.debian.org/sid/g++-9)
+}.
 
 There are no other external dependencies.
-
-
-## Links
-[Discussions group](https://www.facebook.com/groups/libfatal/) on [Facebook](https://code.facebook.com/)
-
-[Try it online](http://metashell.org/about/demo/index.html) using [Metashell](https://github.com/metashell/metashell).
 
 
 ## Philosophy
 Fatal moves fast, therefore it uses the latest and greatest in C++ standards. It aims to adopt new standard features as soon as they're officially out, as long as they provide benefits like performance, productivity and usability improvements.
 
-Stable versions are tagged and can be found under the [list of releases](https://github.com/facebook/fatal/releases). Look out for breaking changes whenever a new release is made (see below) - they should be listed on the release notes.
+Stable versions are tagged and can be found under the [list of releases](https://github.com/juchem/fatal/releases). Look out for breaking changes whenever a new release is made (see below) - they should be listed on the release notes.
 
-The [`master`](https://github.com/facebook/fatal/) branch is considered the development version of the library and experiences frequent updates. If you want the bleeding edge, that's the branch for you. Be advised, though, that it is under heavy development: breaking changes might be introduced without notice. They'll be tagged with the string `[break]` in the first line of the commit message.
+The [`master`](https://github.com/juchem/fatal/) branch is considered the development version of the library and experiences frequent updates. If you want the bleeding edge, that's the branch for you. Be advised, though, that it is under heavy development: breaking changes might be introduced without notice. They'll be tagged with the string `[break]` in the first line of the commit message.
 
 
 ## Installation
@@ -50,19 +54,18 @@ For Clang and GCC, it suffices to either:
 
 ## Building Benchmarks and Unit Tests
 ```sh
-$ clang++ -Wall -Werror -O2 -std=c++11 -I path/to/fatal \
+$ clang++ -Wall -Werror -O2 -std=c++17 -I path/to/fatal \
   -o path/to/output/binary path/to/test/or/benchmark.cpp \
 ```
 or
 ```sh
-$ g++ -Wall -Werror -O2 -std=c++11 -I path/to/fatal \
+$ g++ -Wall -Werror -O2 -std=c++17 -I path/to/fatal \
   -o path/to/output/binary path/to/test/or/benchmark.cpp \
 ```
 
 
 ## Join the Fatal community
-- Website: https://github.com/facebook/fatal/
-- Facebook Group: https://www.facebook.com/groups/libfatal/
+- Website: https://github.com/juchem/fatal/
 - Talk at CppCon 2014: https://www.youtube.com/watch?v=0A9pYr8wevk
 
 See the CONTRIBUTING file for how to help out.
