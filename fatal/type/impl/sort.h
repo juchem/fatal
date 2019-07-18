@@ -733,25 +733,6 @@ struct FATAL_HIDE_SYMBOL Q<T, Less>: q<T, Less> {};
 template <typename T, typename Less, typename By>
 struct FATAL_HIDE_SYMBOL Q<T, Less, By>: q<T, C<Less, By>> {};
 
-// reverse
-
-template <typename> struct FATAL_HIDE_SYMBOL i;
-
-template <template <typename, typename> typename Pair, typename LHS, typename RHS>
-struct FATAL_HIDE_SYMBOL i<Pair<LHS, RHS>> {
-  using type = Pair<RHS, LHS>;
-};
-
-template <
-  template <typename...> typename Variadic,
-  typename LHS,
-  typename RHS,
-  typename... Args
->
-struct FATAL_HIDE_SYMBOL i<Variadic<LHS, RHS, Args...>> {
-  using type = Variadic<RHS, LHS, Args...>;
-};
-
 } // namespace i_s {
 } // namespace fatal {
 

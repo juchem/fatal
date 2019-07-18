@@ -45,10 +45,6 @@ using sort_by = sort<T, less, By...>;
 template  <typename LHS, typename RHS>
 using merge = typename i_s::M<LHS, RHS>::type;
 
-// TODO: REVIEW / MOVE SOMEWHERE ELSE / GENERALIZE / ...
-template <typename T>
-using reverse = typename i_s::i<T>::type;
-
 } // namespace fatal {
 
 FATAL_DIAGNOSTIC_POP
