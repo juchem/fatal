@@ -22,14 +22,14 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-#include <fatal/container/impl/bit_set.h>
+#include <fatal/container/impl/static_bit_set.h>
 
 namespace fatal {
 
 struct flipped_bit_set {};
 
 template <std::size_t Size, bool Compact = false>
-class bit_set {
+class static_bit_set {
   using bucket_type = std::conditional_t<
     Compact,
     std::uint8_t,
@@ -66,41 +66,41 @@ private:
   static_assert(bucket_size * bucket_count >= Size);
 
 public:
-  bit_set() = default;
+  static_bit_set() = default;
 
-  bit_set(flipped_bit_set):
-    bit_set(
+  static_bit_set(flipped_bit_set):
+    static_bit_set(
       std::integral_constant<bucket_type, static_cast<bucket_type>(~bucket_type(0))>(),
       std::make_integer_sequence<size_type, bucket_count>()
     )
   {}
 
-  bit_set &flip() {
+  static_bit_set &flip() {
     for (auto &bucket: bucket_) {
       bucket = ~bucket;
     }
     return *this;
   }
 
-  bit_set &flip(size_type i) {
+  static_bit_set &flip(size_type i) {
     bucket(i) ^= value_mask(i);
     return *this;
   }
 
-  bit_set &set() {
-    return *this = bit_set(flipped_bit_set{});
+  static_bit_set &set() {
+    return *this = static_bit_set(flipped_bit_set{});
   }
 
-  bit_set &set(size_type i) {
+  static_bit_set &set(size_type i) {
     bucket(i) |= value_mask(i);
     return *this;
   }
 
-  bit_set &reset() {
-    return *this = bit_set();
+  static_bit_set &reset() {
+    return *this = static_bit_set();
   }
 
-  bit_set &reset(size_type i) {
+  static_bit_set &reset(size_type i) {
     bucket(i) &= static_cast<bucket_type>(~value_mask(i));
     return *this;
   }
@@ -199,7 +199,7 @@ public:
   struct range_on_t {
     struct const_iterator {
       explicit const_iterator(): i_(Size){}
-      explicit const_iterator(bit_set const *set):
+      explicit const_iterator(static_bit_set const *set):
         set_(set),
         i_(Size ? (set_->get(0) ? 0 : set_->next_set(0)) : Size)
       {}
@@ -236,11 +236,11 @@ public:
       bool operator !=(const_iterator const &rhs) const { return !(*this == rhs); }
 
     private:
-      bit_set const *set_ = nullptr;
+      static_bit_set const *set_ = nullptr;
       size_type i_;
     };
 
-    explicit range_on_t(bit_set const *set): set_(set) {}
+    explicit range_on_t(static_bit_set const *set): set_(set) {}
 
     auto cbegin() const { return const_iterator(set_); }
     auto cend() const { return const_iterator(); }
@@ -249,7 +249,7 @@ public:
     auto end() const { return cend(); }
 
   private:
-    bit_set const *set_;
+    static_bit_set const *set_;
   };
 
   auto range_on() const { return range_on_t(this); }
@@ -258,7 +258,7 @@ public:
   struct range_off_t {
     struct const_iterator {
       explicit const_iterator(): i_(Size){}
-      explicit const_iterator(bit_set const *set):
+      explicit const_iterator(static_bit_set const *set):
         set_(set),
         i_(Size ? (set_->get(0) ? set_->next_reset(0) : 0) : Size)
       {}
@@ -295,11 +295,11 @@ public:
       bool operator !=(const_iterator const &rhs) const { return !(*this == rhs); }
 
     private:
-      bit_set const *set_ = nullptr;
+      static_bit_set const *set_ = nullptr;
       size_type i_;
     };
 
-    explicit range_off_t(bit_set const *set): set_(set) {}
+    explicit range_off_t(static_bit_set const *set): set_(set) {}
 
     auto cbegin() const { return const_iterator(set_); }
     auto cend() const { return const_iterator(); }
@@ -308,13 +308,13 @@ public:
     auto end() const { return cend(); }
 
   private:
-    bit_set const *set_;
+    static_bit_set const *set_;
   };
 
   auto range_off() const { return range_off_t(this); }
 
   struct const_iterator {
-    explicit const_iterator(bit_set const *set): set_(set) {}
+    explicit const_iterator(static_bit_set const *set): set_(set) {}
     explicit const_iterator(): i_(Size) {}
 
     auto index() const { return i_; }
@@ -349,7 +349,7 @@ public:
     bool operator !=(const_iterator const &rhs) const { return !(*this == rhs); }
 
   private:
-    bit_set const *set_ = nullptr;
+    static_bit_set const *set_ = nullptr;
     size_type i_ = 0;
   };
 
@@ -361,13 +361,10 @@ public:
 
   constexpr static size_type size() { return Size; }
 
-  bit_set &operator =(bit_set const &rhs) {
-    bucket_ = rhs.bucket_;
-    return *this;
-  }
+  static_bit_set &operator =(static_bit_set const &rhs) = default;
 
-  bool operator ==(bit_set const &rhs) const { return bucket_ == rhs.bucket_; }
-  bool operator !=(bit_set const &rhs) const { return bucket_ != rhs.bucket_; }
+  bool operator ==(static_bit_set const &rhs) const { return bucket_ == rhs.bucket_; }
+  bool operator !=(static_bit_set const &rhs) const { return bucket_ != rhs.bucket_; }
 
 private:
   constexpr size_type bucket_index(size_type i) const { return i >> bucket_index_shift; }
@@ -381,7 +378,7 @@ private:
   }
 
   template <bucket_type Value, size_type... Indexes>
-  bit_set(std::integral_constant<bucket_type, Value>, std::integer_sequence<size_type, Indexes...>):
+  static_bit_set(std::integral_constant<bucket_type, Value>, std::integer_sequence<size_type, Indexes...>):
     bucket_{((Indexes ^ Indexes) | Value)...}
   {}
 

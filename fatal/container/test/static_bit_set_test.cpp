@@ -6,412 +6,412 @@
  *  LICENSE file in the root directory of this source tree.
  */
 
-#include <fatal/container/bit_set.h>
+#include <fatal/container/static_bit_set.h>
 
 #include <fatal/test/driver.h>
 
 namespace fatal {
 
-FATAL_TEST(bit_set, ctor 0) {
-  bit_set<0> const s;
+FATAL_TEST(static_bit_set, ctor 0) {
+  static_bit_set<0> const s;
   FATAL_EXPECT_EQ(0, s.size());
 }
 
-FATAL_TEST(bit_set, flipped ctor 0) {
-  bit_set<0> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 0) {
+  static_bit_set<0> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(0, s.size());
 }
 
-FATAL_TEST(bit_set, ctor 1) {
-  bit_set<1> const s;
+FATAL_TEST(static_bit_set, ctor 1) {
+  static_bit_set<1> const s;
   FATAL_EXPECT_EQ(1, s.size());
   FATAL_EXPECT_FALSE(s.get(0));
 }
 
-FATAL_TEST(bit_set, flipped ctor 1) {
-  bit_set<1> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 1) {
+  static_bit_set<1> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(1, s.size());
   FATAL_EXPECT_TRUE(s.get(0));
 }
 
-FATAL_TEST(bit_set, ctor 2) {
-  bit_set<2> const s;
+FATAL_TEST(static_bit_set, ctor 2) {
+  static_bit_set<2> const s;
   FATAL_EXPECT_EQ(2, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 2) {
-  bit_set<2> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 2) {
+  static_bit_set<2> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(2, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 3) {
-  bit_set<3> const s;
+FATAL_TEST(static_bit_set, ctor 3) {
+  static_bit_set<3> const s;
   FATAL_EXPECT_EQ(3, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 3) {
-  bit_set<3> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 3) {
+  static_bit_set<3> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(3, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 4) {
-  bit_set<4> const s;
+FATAL_TEST(static_bit_set, ctor 4) {
+  static_bit_set<4> const s;
   FATAL_EXPECT_EQ(4, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 4) {
-  bit_set<4> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 4) {
+  static_bit_set<4> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(4, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 5) {
-  bit_set<5> const s;
+FATAL_TEST(static_bit_set, ctor 5) {
+  static_bit_set<5> const s;
   FATAL_EXPECT_EQ(5, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 5) {
-  bit_set<5> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 5) {
+  static_bit_set<5> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(5, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 6) {
-  bit_set<6> const s;
+FATAL_TEST(static_bit_set, ctor 6) {
+  static_bit_set<6> const s;
   FATAL_EXPECT_EQ(6, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 6) {
-  bit_set<6> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 6) {
+  static_bit_set<6> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(6, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 7) {
-  bit_set<7> const s;
+FATAL_TEST(static_bit_set, ctor 7) {
+  static_bit_set<7> const s;
   FATAL_EXPECT_EQ(7, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 7) {
-  bit_set<7> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 7) {
+  static_bit_set<7> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(7, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 8) {
-  bit_set<8> const s;
+FATAL_TEST(static_bit_set, ctor 8) {
+  static_bit_set<8> const s;
   FATAL_EXPECT_EQ(8, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 8) {
-  bit_set<8> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 8) {
+  static_bit_set<8> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(8, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 9) {
-  bit_set<9> const s;
+FATAL_TEST(static_bit_set, ctor 9) {
+  static_bit_set<9> const s;
   FATAL_EXPECT_EQ(9, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 9) {
-  bit_set<9> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 9) {
+  static_bit_set<9> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(9, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 10) {
-  bit_set<10> const s;
+FATAL_TEST(static_bit_set, ctor 10) {
+  static_bit_set<10> const s;
   FATAL_EXPECT_EQ(10, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 10) {
-  bit_set<10> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 10) {
+  static_bit_set<10> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(10, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 11) {
-  bit_set<11> const s;
+FATAL_TEST(static_bit_set, ctor 11) {
+  static_bit_set<11> const s;
   FATAL_EXPECT_EQ(11, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 11) {
-  bit_set<11> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 11) {
+  static_bit_set<11> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(11, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 31) {
-  bit_set<31> const s;
+FATAL_TEST(static_bit_set, ctor 31) {
+  static_bit_set<31> const s;
   FATAL_EXPECT_EQ(31, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 31) {
-  bit_set<31> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 31) {
+  static_bit_set<31> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(31, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 32) {
-  bit_set<32> const s;
+FATAL_TEST(static_bit_set, ctor 32) {
+  static_bit_set<32> const s;
   FATAL_EXPECT_EQ(32, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 32) {
-  bit_set<32> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 32) {
+  static_bit_set<32> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(32, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 33) {
-  bit_set<33> const s;
+FATAL_TEST(static_bit_set, ctor 33) {
+  static_bit_set<33> const s;
   FATAL_EXPECT_EQ(33, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 33) {
-  bit_set<33> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 33) {
+  static_bit_set<33> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(33, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 63) {
-  bit_set<63> const s;
+FATAL_TEST(static_bit_set, ctor 63) {
+  static_bit_set<63> const s;
   FATAL_EXPECT_EQ(63, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 63) {
-  bit_set<63> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 63) {
+  static_bit_set<63> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(63, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 64) {
-  bit_set<64> const s;
+FATAL_TEST(static_bit_set, ctor 64) {
+  static_bit_set<64> const s;
   FATAL_EXPECT_EQ(64, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 64) {
-  bit_set<64> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 64) {
+  static_bit_set<64> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(64, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 65) {
-  bit_set<65> const s;
+FATAL_TEST(static_bit_set, ctor 65) {
+  static_bit_set<65> const s;
   FATAL_EXPECT_EQ(65, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 65) {
-  bit_set<65> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 65) {
+  static_bit_set<65> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(65, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 100) {
-  bit_set<100> const s;
+FATAL_TEST(static_bit_set, ctor 100) {
+  static_bit_set<100> const s;
   FATAL_EXPECT_EQ(100, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 100) {
-  bit_set<100> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 100) {
+  static_bit_set<100> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(100, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 127) {
-  bit_set<127> const s;
+FATAL_TEST(static_bit_set, ctor 127) {
+  static_bit_set<127> const s;
   FATAL_EXPECT_EQ(127, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 127) {
-  bit_set<127> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 127) {
+  static_bit_set<127> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(127, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 128) {
-  bit_set<128> const s;
+FATAL_TEST(static_bit_set, ctor 128) {
+  static_bit_set<128> const s;
   FATAL_EXPECT_EQ(128, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 128) {
-  bit_set<128> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 128) {
+  static_bit_set<128> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(128, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 129) {
-  bit_set<129> const s;
+FATAL_TEST(static_bit_set, ctor 129) {
+  static_bit_set<129> const s;
   FATAL_EXPECT_EQ(129, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 129) {
-  bit_set<129> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 129) {
+  static_bit_set<129> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(129, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 511) {
-  bit_set<511> const s;
+FATAL_TEST(static_bit_set, ctor 511) {
+  static_bit_set<511> const s;
   FATAL_EXPECT_EQ(511, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 511) {
-  bit_set<511> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 511) {
+  static_bit_set<511> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(511, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 512) {
-  bit_set<512> const s;
+FATAL_TEST(static_bit_set, ctor 512) {
+  static_bit_set<512> const s;
   FATAL_EXPECT_EQ(512, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 512) {
-  bit_set<512> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 512) {
+  static_bit_set<512> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(512, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 513) {
-  bit_set<513> const s;
+FATAL_TEST(static_bit_set, ctor 513) {
+  static_bit_set<513> const s;
   FATAL_EXPECT_EQ(513, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 513) {
-  bit_set<513> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 513) {
+  static_bit_set<513> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(513, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, ctor 1000) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, ctor 1000) {
+  static_bit_set<1000> const s;
   FATAL_EXPECT_EQ(1000, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, flipped ctor 1000) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, flipped ctor 1000) {
+  static_bit_set<1000> const s(flipped_bit_set{});
   FATAL_EXPECT_EQ(1000, s.size());
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
@@ -420,8 +420,8 @@ FATAL_TEST(bit_set, flipped ctor 1000) {
 
 
 
-FATAL_TEST(bit_set, flip) {
-  bit_set<1000> s;
+FATAL_TEST(static_bit_set, flip) {
+  static_bit_set<1000> s;
 
   s.flip();
   for (auto i = s.size(); i--; ) {
@@ -444,8 +444,8 @@ FATAL_TEST(bit_set, flip) {
   }
 }
 
-FATAL_TEST(bit_set, set zeroed) {
-  bit_set<1000> s;
+FATAL_TEST(static_bit_set, set zeroed) {
+  static_bit_set<1000> s;
 
   s.set();
   for (auto i = s.size(); i--; ) {
@@ -458,8 +458,8 @@ FATAL_TEST(bit_set, set zeroed) {
   }
 }
 
-FATAL_TEST(bit_set, set flipped) {
-  bit_set<1000> s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, set flipped) {
+  static_bit_set<1000> s(flipped_bit_set{});
 
   s.set();
   for (auto i = s.size(); i--; ) {
@@ -472,8 +472,8 @@ FATAL_TEST(bit_set, set flipped) {
   }
 }
 
-FATAL_TEST(bit_set, set i zeroed) {
-  bit_set<1000> s;
+FATAL_TEST(static_bit_set, set i zeroed) {
+  static_bit_set<1000> s;
 
   for (auto i = s.size(); i--; ) {
     s.set(i);
@@ -486,8 +486,8 @@ FATAL_TEST(bit_set, set i zeroed) {
   }
 }
 
-FATAL_TEST(bit_set, set i flipped) {
-  bit_set<1000> s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, set i flipped) {
+  static_bit_set<1000> s(flipped_bit_set{});
 
   for (auto i = s.size(); i--; ) {
     s.set(i);
@@ -500,8 +500,8 @@ FATAL_TEST(bit_set, set i flipped) {
   }
 }
 
-FATAL_TEST(bit_set, reset zeroed) {
-  bit_set<1000> s;
+FATAL_TEST(static_bit_set, reset zeroed) {
+  static_bit_set<1000> s;
 
   s.reset();
   for (auto i = s.size(); i--; ) {
@@ -514,8 +514,8 @@ FATAL_TEST(bit_set, reset zeroed) {
   }
 }
 
-FATAL_TEST(bit_set, reset flipped) {
-  bit_set<1000> s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, reset flipped) {
+  static_bit_set<1000> s(flipped_bit_set{});
 
   s.reset();
   for (auto i = s.size(); i--; ) {
@@ -528,8 +528,8 @@ FATAL_TEST(bit_set, reset flipped) {
   }
 }
 
-FATAL_TEST(bit_set, reset i zeroed) {
-  bit_set<1000> s;
+FATAL_TEST(static_bit_set, reset i zeroed) {
+  static_bit_set<1000> s;
 
   for (auto i = s.size(); i--; ) {
     s.reset(i);
@@ -542,8 +542,8 @@ FATAL_TEST(bit_set, reset i zeroed) {
   }
 }
 
-FATAL_TEST(bit_set, reset i flipped) {
-  bit_set<1000> s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, reset i flipped) {
+  static_bit_set<1000> s(flipped_bit_set{});
 
   for (auto i = s.size(); i--; ) {
     s.reset(i);
@@ -556,26 +556,26 @@ FATAL_TEST(bit_set, reset i flipped) {
   }
 }
 
-FATAL_TEST(bit_set, next_set zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, next_set zeroed) {
+  static_bit_set<1000> const s;
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(s.size(), s.next_set(i));
   }
 }
 
-FATAL_TEST(bit_set, next_set flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, next_set flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(i + 1, s.next_set(i));
   }
 }
 
-FATAL_TEST(bit_set, next_set zeroed interleaved) {
+FATAL_TEST(static_bit_set, next_set zeroed interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s;
+    static_bit_set<size> s;
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.set(i);
     }
@@ -586,10 +586,10 @@ FATAL_TEST(bit_set, next_set zeroed interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, next_set flipped interleaved) {
+FATAL_TEST(static_bit_set, next_set flipped interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s(flipped_bit_set{});
+    static_bit_set<size> s(flipped_bit_set{});
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -600,26 +600,26 @@ FATAL_TEST(bit_set, next_set flipped interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, previous_set zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, previous_set zeroed) {
+  static_bit_set<1000> const s;
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(s.size(), s.previous_set(i));
   }
 }
 
-FATAL_TEST(bit_set, previous_set flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, previous_set flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(i ? i - 1 : s.size(), s.previous_set(i));
   }
 }
 
-FATAL_TEST(bit_set, previous_set zeroed interleaved) {
+FATAL_TEST(static_bit_set, previous_set zeroed interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s;
+    static_bit_set<size> s;
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.set(i);
     }
@@ -630,10 +630,10 @@ FATAL_TEST(bit_set, previous_set zeroed interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, previous_set flipped interleaved) {
+FATAL_TEST(static_bit_set, previous_set flipped interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s(flipped_bit_set{});
+    static_bit_set<size> s(flipped_bit_set{});
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -644,26 +644,26 @@ FATAL_TEST(bit_set, previous_set flipped interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, next_reset zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, next_reset zeroed) {
+  static_bit_set<1000> const s;
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(i + 1, s.next_reset(i));
   }
 }
 
-FATAL_TEST(bit_set, next_reset flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, next_reset flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(s.size(), s.next_reset(i));
   }
 }
 
-FATAL_TEST(bit_set, next_reset zeroed interleaved) {
+FATAL_TEST(static_bit_set, next_reset zeroed interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s;
+    static_bit_set<size> s;
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.set(i);
     }
@@ -674,10 +674,10 @@ FATAL_TEST(bit_set, next_reset zeroed interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, next_reset flipped interleaved) {
+FATAL_TEST(static_bit_set, next_reset flipped interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s(flipped_bit_set{});
+    static_bit_set<size> s(flipped_bit_set{});
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -688,26 +688,26 @@ FATAL_TEST(bit_set, next_reset flipped interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, previous_reset zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, previous_reset zeroed) {
+  static_bit_set<1000> const s;
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(i ? i - 1 : s.size(), s.previous_reset(i));
   }
 }
 
-FATAL_TEST(bit_set, previous_reset flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, previous_reset flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
 
   for (std::size_t i = 0; i < s.size(); ++i) {
     FATAL_EXPECT_EQ(s.size(), s.previous_reset(i));
   }
 }
 
-FATAL_TEST(bit_set, previous_reset zeroed interleaved) {
+FATAL_TEST(static_bit_set, previous_reset zeroed interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s;
+    static_bit_set<size> s;
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.set(i);
     }
@@ -718,10 +718,10 @@ FATAL_TEST(bit_set, previous_reset zeroed interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, previous_reset flipped interleaved) {
+FATAL_TEST(static_bit_set, previous_reset flipped interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s(flipped_bit_set{});
+    static_bit_set<size> s(flipped_bit_set{});
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -732,16 +732,16 @@ FATAL_TEST(bit_set, previous_reset flipped interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, range_on zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, range_on zeroed) {
+  static_bit_set<1000> const s;
 
   auto const range = s.range_on();
   FATAL_EXPECT_EQ(range.begin(), range.end());
   FATAL_EXPECT_EQ(range.cbegin(), range.cend());
 }
 
-FATAL_TEST(bit_set, range_on flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, range_on flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
 
   auto const range = s.range_on();
   auto k = range.begin();
@@ -772,10 +772,10 @@ FATAL_TEST(bit_set, range_on flipped) {
   FATAL_EXPECT_EQ(k, range.begin());
 }
 
-FATAL_TEST(bit_set, range_on zeroed interleaved) {
+FATAL_TEST(static_bit_set, range_on zeroed interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s;
+    static_bit_set<size> s;
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -813,10 +813,10 @@ FATAL_TEST(bit_set, range_on zeroed interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, range_on flipped interleaved) {
+FATAL_TEST(static_bit_set, range_on flipped interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s(flipped_bit_set{});
+    static_bit_set<size> s(flipped_bit_set{});
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -854,8 +854,8 @@ FATAL_TEST(bit_set, range_on flipped interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, range_off zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, range_off zeroed) {
+  static_bit_set<1000> const s;
 
   auto const range = s.range_off();
   auto k = range.begin();
@@ -886,18 +886,18 @@ FATAL_TEST(bit_set, range_off zeroed) {
   FATAL_ASSERT_EQ(k, range.begin());
 }
 
-FATAL_TEST(bit_set, range_off flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, range_off flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
 
   auto const range = s.range_off();
   FATAL_EXPECT_EQ(range.begin(), range.end());
   FATAL_EXPECT_EQ(range.cbegin(), range.cend());
 }
 
-FATAL_TEST(bit_set, range_off zeroed interleaved) {
+FATAL_TEST(static_bit_set, range_off zeroed interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s;
+    static_bit_set<size> s;
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.set(i);
     }
@@ -935,10 +935,10 @@ FATAL_TEST(bit_set, range_off zeroed interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, range_off flipped interleaved) {
+FATAL_TEST(static_bit_set, range_off flipped interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s(flipped_bit_set{});
+    static_bit_set<size> s(flipped_bit_set{});
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -976,24 +976,24 @@ FATAL_TEST(bit_set, range_off flipped interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, const_iterator zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, const_iterator zeroed) {
+  static_bit_set<1000> const s;
   for (auto const i: s) {
     FATAL_EXPECT_FALSE(i);
   }
 }
 
-FATAL_TEST(bit_set, const_iterator flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, const_iterator flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
   for (auto const i: s) {
     FATAL_EXPECT_TRUE(i);
   }
 }
 
-FATAL_TEST(bit_set, const_iterator zeroed interleaved) {
+FATAL_TEST(static_bit_set, const_iterator zeroed interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s;
+    static_bit_set<size> s;
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.set(i);
     }
@@ -1005,10 +1005,10 @@ FATAL_TEST(bit_set, const_iterator zeroed interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, const_iterator flipped interleaved) {
+FATAL_TEST(static_bit_set, const_iterator flipped interleaved) {
   constexpr auto size = 1000;
   for (std::size_t step = 2; step < size / 2; ++step) {
-    bit_set<size> s(flipped_bit_set{});
+    static_bit_set<size> s(flipped_bit_set{});
     for (std::size_t i = 0; i < s.size(); i += step) {
       s.reset(i);
     }
@@ -1020,66 +1020,66 @@ FATAL_TEST(bit_set, const_iterator flipped interleaved) {
   }
 }
 
-FATAL_TEST(bit_set, operator = zeroed) {
-  bit_set<1000> s;
+FATAL_TEST(static_bit_set, operator = zeroed) {
+  static_bit_set<1000> s;
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 
-  s = bit_set<1000>(flipped_bit_set{});
+  s = static_bit_set<1000>(flipped_bit_set{});
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 
-  s = bit_set<1000>();
+  s = static_bit_set<1000>();
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, operator = flipped) {
-  bit_set<1000> s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, operator = flipped) {
+  static_bit_set<1000> s(flipped_bit_set{});
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 
-  s = bit_set<1000>();
+  s = static_bit_set<1000>();
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_FALSE(s.get(i));
   }
 
-  s = bit_set<1000>(flipped_bit_set{});
+  s = static_bit_set<1000>(flipped_bit_set{});
   for (auto i = s.size(); i--; ) {
     FATAL_EXPECT_TRUE(s.get(i));
   }
 }
 
-FATAL_TEST(bit_set, operator == zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, operator == zeroed) {
+  static_bit_set<1000> const s;
   FATAL_EXPECT_TRUE(s == s);
-  FATAL_EXPECT_TRUE(s == bit_set<1000>());
-  FATAL_EXPECT_FALSE(s == bit_set<1000>(flipped_bit_set{}));
+  FATAL_EXPECT_TRUE(s == static_bit_set<1000>());
+  FATAL_EXPECT_FALSE(s == static_bit_set<1000>(flipped_bit_set{}));
 }
 
-FATAL_TEST(bit_set, operator == flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, operator == flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
   FATAL_EXPECT_TRUE(s == s);
-  FATAL_EXPECT_FALSE(s == bit_set<1000>());
-  FATAL_EXPECT_TRUE(s == bit_set<1000>(flipped_bit_set{}));
+  FATAL_EXPECT_FALSE(s == static_bit_set<1000>());
+  FATAL_EXPECT_TRUE(s == static_bit_set<1000>(flipped_bit_set{}));
 }
 
-FATAL_TEST(bit_set, operator != zeroed) {
-  bit_set<1000> const s;
+FATAL_TEST(static_bit_set, operator != zeroed) {
+  static_bit_set<1000> const s;
   FATAL_EXPECT_FALSE(s != s);
-  FATAL_EXPECT_FALSE(s != bit_set<1000>());
-  FATAL_EXPECT_TRUE(s != bit_set<1000>(flipped_bit_set{}));
+  FATAL_EXPECT_FALSE(s != static_bit_set<1000>());
+  FATAL_EXPECT_TRUE(s != static_bit_set<1000>(flipped_bit_set{}));
 }
 
-FATAL_TEST(bit_set, operator != flipped) {
-  bit_set<1000> const s(flipped_bit_set{});
+FATAL_TEST(static_bit_set, operator != flipped) {
+  static_bit_set<1000> const s(flipped_bit_set{});
   FATAL_EXPECT_FALSE(s != s);
-  FATAL_EXPECT_TRUE(s != bit_set<1000>());
-  FATAL_EXPECT_FALSE(s != bit_set<1000>(flipped_bit_set{}));
+  FATAL_EXPECT_TRUE(s != static_bit_set<1000>());
+  FATAL_EXPECT_FALSE(s != static_bit_set<1000>(flipped_bit_set{}));
 }
 
 } // namespace fatal {
