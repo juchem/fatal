@@ -9,7 +9,7 @@ int main() {
 
   for (std::string needle; std::cin >> needle; ) {
     std::cout << needle << ": " << std::boolalpha
-      << trie_find<random_250_words<list, sequence>>(
+      << trie_exact_match<random_250_words<list, sequence>>(
         needle.begin(),
         needle.end()
       )

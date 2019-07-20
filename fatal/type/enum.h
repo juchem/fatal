@@ -365,7 +365,7 @@ public:
   static type parse(TBegin &&begin, TEnd &&end) {
     type out;
 
-    if (!trie_find<fields, get_type::name>(
+    if (!trie_exact_match<fields, get_type::name>(
       std::forward<TBegin>(begin), std::forward<TEnd>(end), parser(), out
     )) {
       throw std::invalid_argument("unrecognized enum value");
@@ -421,7 +421,7 @@ public:
   template <typename TBegin, typename TEnd>
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr bool try_parse(type &out, TBegin &&begin, TEnd &&end) {
-    return trie_find<fields, get_type::name>(
+    return trie_exact_match<fields, get_type::name>(
       std::forward<TBegin>(begin), std::forward<TEnd>(end), parser(), out
     );
   }

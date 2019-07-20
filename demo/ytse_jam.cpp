@@ -245,7 +245,7 @@ private:
 
       auto type = args.next<std::string>();
       auto instance = args.next<std::string>();
-      auto found = trie_find<transform<supported, get_type::name>>(
+      auto found = trie_exact_match<transform<supported, get_type::name>>(
         type.begin(), type.end(),
         [&](auto data_type_name) { // tag<sequence>
           using ctor = get<ctor_index, type_of<decltype(data_type_name)>, get_type::name>;
@@ -341,7 +341,7 @@ private:
 ytse_jam::result_t ytse_jam::handle(std::string const &command, request_args &args) {
   result_t result;
 
-  if (!trie_find<adjacent_unique<sort<cat<built_ins, transform<op_list, get_type::verb>>, sequence_compare<less>>>>(
+  if (!trie_exact_match<adjacent_unique<sort<cat<built_ins, transform<op_list, get_type::verb>>, sequence_compare<less>>>>(
     command.begin(), command.end(), command_parser(), instances_, args, result
   )) {
     throw std::invalid_argument("command unknown");

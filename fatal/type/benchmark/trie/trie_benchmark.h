@@ -71,7 +71,7 @@ struct benchmark_impl {
     FATAL_BENCHMARK_SUSPEND {}
 
     for (auto const &s: str) {
-      trie_find<list<Strings...>>(s.begin(), s.end(), visitor{}, s, count);
+      trie_exact_match<list<Strings...>>(s.begin(), s.end(), visitor{}, s, count);
     }
 
     prevent_optimization(count);

@@ -23,6 +23,7 @@
 #include <exception>
 #include <functional>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <tuple>
 #include <type_traits>
@@ -472,9 +473,7 @@ struct FATAL_HIDE_SYMBOL abort_test_run_exception {};
 struct FATAL_HIDE_SYMBOL can_append_to_string {
   template <
     typename T,
-    typename = decltype(
-      append(std::declval<std::string &>(), std::declval<T>())
-    )
+    typename = decltype(append(std::declval<std::string &>(), std::declval<T>()))
   >
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static std::true_type sfinae(T *);
@@ -486,21 +485,40 @@ struct FATAL_HIDE_SYMBOL can_append_to_string {
   using apply = decltype(sfinae(static_cast<T *>(nullptr)));
 };
 
-template <typename T, bool = can_append_to_string::apply<T>::value>
+struct FATAL_HIDE_SYMBOL can_append_to_stream {
+  template <
+    typename T,
+    typename = decltype(std::declval<std::ostringstream &>() << std::declval<T const &>())
+  >
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static std::true_type sfinae(T *);
+
+  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+  static std::false_type sfinae(...);
+
+  template <typename T>
+  using apply = decltype(sfinae(static_cast<T *>(nullptr)));
+};
+
+template <
+  typename T,
+  bool CanAppend = can_append_to_string::apply<T>::value,
+  bool CanStream = can_append_to_stream::apply<T>::value
+>
 struct FATAL_HIDE_SYMBOL any_to_string_impl {
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static void do_append(std::string &out, T const &value) {
-    append(out, value);
-  }
-};
-
-template <typename T>
-struct FATAL_HIDE_SYMBOL any_to_string_impl<T, false> {
-  FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
-  static void do_append(std::string &out, T const &) {
-    out.append("<instance:");
-    out.append(type_str<T>());
-    out.push_back('>');
+    if constexpr (CanAppend) {
+      append(out, value);
+    } else if constexpr (CanStream) {
+      std::ostringstream ss;
+      ss << value;
+      append(out, ss.str());
+    } else {
+      out.append("<instance:");
+      out.append(type_str<T>());
+      out.push_back('>');
+    }
   }
 };
 

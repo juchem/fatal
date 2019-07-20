@@ -146,7 +146,7 @@ void check_trie_find_impl(std::string const &needle) {
   check_trie_find_visitor<Expected, Filter...> visitor;
 
   std::size_t matches = 0;
-  bool const result = trie_find<Tree, Filter...>(
+  bool const result = trie_exact_match<Tree, Filter...>(
     needle.begin(), needle.end(), visitor, needle, matches
   );
 
@@ -169,7 +169,7 @@ void check_trie_find(std::string const &needle) {
 // match_exact //
 /////////////////
 
-FATAL_TEST(trie, find variations) {
+FATAL_TEST(trie_exact_match, find variations) {
   check_trie_find<hs_tree>("");
   check_trie_find<hs_tree, h>("h");
   check_trie_find<hs_tree>("H");
@@ -205,7 +205,7 @@ FATAL_TEST(trie, find variations) {
 #define TEST_TRIE_FIND(Expected, Needle, ...) \
   do { \
     using needle = as_array<Needle, char>; \
-    bool const actual = trie_find<__VA_ARGS__>( \
+    bool const actual = trie_exact_match<__VA_ARGS__>( \
       static_cast<char const *>(needle::data), \
       std::next(needle::data, needle::size::value), \
       test_trie_find_visitor<Needle>() \
@@ -222,7 +222,7 @@ struct FATAL_HIDE_SYMBOL test_trie_find_visitor {
   }
 };
 
-FATAL_TEST(trie, find) {
+FATAL_TEST(trie_exact_match, find) {
   TEST_TRIE_FIND(false, seq::fat, list<>);
 
   TEST_TRIE_FIND(true, seq::empty, list<seq::empty>);
