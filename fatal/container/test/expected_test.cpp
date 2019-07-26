@@ -403,6 +403,19 @@ FATAL_TEST(expected, on_error with error / error argument) {
   };
 }
 
+FATAL_TEST(expected, try_raise on success) {
+  expected<int, custom_error> e{10};
+
+  FATAL_EXPECT_EQ(10, e.try_raise().value());
+}
+
+FATAL_TEST(expected, try_raise on success) {
+  expected<int, custom_error> e{unexpected, "error message"};
+
+  FATAL_EXPECT_THROW(custom_error) {
+    FATAL_EXPECT_EQ(10, e.try_raise().value());
+  };
+}
 
 
 FATAL_TEST(expected, value checked_expected) {

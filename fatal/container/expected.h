@@ -437,8 +437,13 @@ public:
     std::abort();
   }
 
-  void try_raise() const {
-    if (has_value()) { return; }
+  expected const &try_raise() const {
+    if (has_value()) { return *this; }
+    raise();
+  }
+
+  expected &try_raise() {
+    if (has_value()) { return *this; }
     raise();
   }
 
