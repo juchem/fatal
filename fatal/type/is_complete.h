@@ -10,6 +10,8 @@
 #ifndef FATAL_INCLUDE_fatal_type_is_complete_h
 #define FATAL_INCLUDE_fatal_type_is_complete_h
 
+#include <fatal/portability.h>
+
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
