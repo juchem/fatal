@@ -10,6 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_test_test_h
 #define FATAL_INCLUDE_fatal_test_test_h
 
+#include <fatal/test/ostream.h>
 #include <fatal/test/string.h>
 #include <fatal/test/type.h>
 #include <fatal/time/print.h>

@@ -23,6 +23,7 @@
 #include <tuple>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 #include <cstring>
 
@@ -65,6 +66,11 @@ void append(std::string &out, std::chrono::duration<R, P> from) {
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void append(std::string &out, std::string const &from) {
   out.append(from);
+}
+
+FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
+void append(std::string &out, std::string_view from) {
+  out.append(from.data(), from.size());
 }
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
