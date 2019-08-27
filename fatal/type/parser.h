@@ -30,7 +30,7 @@ struct FATAL_HIDE_SYMBOL parser {
   using value_type = T;
 
 private:
-  template <typename Char, Char Acc, Char Head, Char... Tail>
+  template <typename Char, value_type Acc, Char Head, Char... Tail>
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_octal_digits() {
     static_assert(Head >= '0' && Head <= '7', "invalid octal digit");
@@ -45,7 +45,7 @@ private:
     }
   }
 
-  template <typename Char, Char Acc, Char Head, Char... Tail>
+  template <typename Char, value_type Acc, Char Head, Char... Tail>
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_decimal_digits() {
     static_assert(Head >= '0' && Head <= '9', "invalid decimal digit");
@@ -60,7 +60,7 @@ private:
     }
   }
 
-  template <typename Char, Char Acc, Char Head, Char... Tail>
+  template <typename Char, value_type Acc, Char Head, Char... Tail>
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   static constexpr value_type parse_hexadecimal_digits() {
     static_assert(
