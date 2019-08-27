@@ -20,6 +20,9 @@ namespace fatal {
 template <typename... Args>
 using cat = typename impl_cat::c<Args...>::type;
 
+template <typename T, typename... Filter>
+using inner_cat = typename impl_cat::i<T, Filter...>::type;
+
 template <typename LHS, typename RHS>
 using vcat = impl_cat::v<LHS, RHS>;
 

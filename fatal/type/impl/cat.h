@@ -210,6 +210,14 @@ struct FATAL_HIDE_SYMBOL c<
   >;
 };
 
+template <typename, typename...> struct i;
+
+template <template <typename... T> typename L, typename... Args>
+struct i<L<Args...>>: c<Args...> {};
+
+template <template <typename... T> typename L, typename... Args, typename Filter>
+struct i<L<Args...>, Filter>: c<typename Filter::template apply<Args>...> {};
+
 template <typename...> struct FATAL_HIDE_SYMBOL v;
 
 template <
