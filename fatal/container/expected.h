@@ -422,6 +422,30 @@ public:
   }
 
   /**
+   * Returns the value if present, or the `with` if an error is present.
+   */
+  template <typename Value>
+  value_type recover_with(Value &&with) const {
+    if (has_value()) {
+      return value();
+    }
+
+    return std::forward<Value>(with);
+  }
+
+  /**
+   * Returns the value if present, or the `with` if an error is present.
+   */
+  template <typename Value>
+  value_type recover_with(Value &&with) {
+    if (has_value()) {
+      return value();
+    }
+
+    return std::forward<Value>(with);
+  }
+
+  /**
    * This method can't be called on non-throwable error policies.
    */
   [[ noreturn ]]

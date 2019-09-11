@@ -403,6 +403,57 @@ FATAL_TEST(expected, on_error with error / error argument) {
   };
 }
 
+
+FATAL_TEST(expected, recover with value (const)) {
+  expected<int, custom_error> const e{10};
+
+  FATAL_EXPECT_EQ(10, e.recover([]{ return 5; }));
+}
+
+FATAL_TEST(expected, recover with value) {
+  expected<int, custom_error> e{10};
+
+  FATAL_EXPECT_EQ(10, e.recover([]{ return 5; }));
+}
+
+FATAL_TEST(expected, recover with error (const)) {
+  expected<int, custom_error> const e{unexpected, "error message"};
+
+  FATAL_EXPECT_EQ(5, e.recover([]{ return 5; }));
+}
+
+FATAL_TEST(expected, recover with error) {
+  expected<int, custom_error> e{unexpected, "error message"};
+
+  FATAL_EXPECT_EQ(5, e.recover([]{ return 5; }));
+}
+
+
+FATAL_TEST(expected, recover_with with value (const)) {
+  expected<int, custom_error> const e{10};
+
+  FATAL_EXPECT_EQ(10, e.recover_with(5));
+}
+
+FATAL_TEST(expected, recover_with with value) {
+  expected<int, custom_error> e{10};
+
+  FATAL_EXPECT_EQ(10, e.recover_with(5));
+}
+
+FATAL_TEST(expected, recover_with with error (const)) {
+  expected<int, custom_error> const e{unexpected, "error message"};
+
+  FATAL_EXPECT_EQ(5, e.recover_with(5));
+}
+
+FATAL_TEST(expected, recover_with with error) {
+  expected<int, custom_error> e{unexpected, "error message"};
+
+  FATAL_EXPECT_EQ(5, e.recover_with(5));
+}
+
+
 FATAL_TEST(expected, try_raise on success) {
   expected<int, custom_error> e{10};
 
