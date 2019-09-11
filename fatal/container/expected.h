@@ -394,7 +394,7 @@ public:
       return value();
     }
 
-    if constexpr (is_callable_v<Fn &&, error_type const &>()) {
+    if constexpr (is_callable_v<Fn &&, error_type const &>) {
       return std::forward<Fn>(fn)(error());
     } else {
       return std::forward<Fn>(fn)();
@@ -414,7 +414,7 @@ public:
       return value();
     }
 
-    if constexpr (is_callable_v<Fn &&, error_type &>()) {
+    if constexpr (is_callable_v<Fn &&, error_type &>) {
       return std::forward<Fn>(fn)(error());
     } else {
       return std::forward<Fn>(fn)();
