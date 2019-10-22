@@ -480,6 +480,9 @@ public:
   explicit operator bool() const { return has_value(); }
   bool operator !() const { return !has_value(); }
 
+  expected &operator =(expected const &) = default;
+  expected &operator =(expected &&) = default;
+
   constexpr static bool throwing() { return error_policy::throwing(); }
 
 private:
