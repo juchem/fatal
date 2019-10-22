@@ -54,8 +54,8 @@ static constexpr auto z_view() {
   );
 }
 
-template <typename Array, typename Factory, typename... T>
-using as_array_from = i_a::A<i_a::c, Array, Factory, T...>;
+template <typename List, typename Factory, typename... T>
+using as_array_from = i_a::A<i_a::c, List, Factory, T...>;
 
 template <typename Array, typename Factory, typename... T>
 using as_runtime_array_from = i_a::A<i_a::n, Array, Factory, T...>;
