@@ -305,6 +305,24 @@ public:
    */
   bool has_value() const { return !data_.index(); }
 
+
+  /**
+   * Stores a value in-place constructed from the given arguments.
+   */
+  template <typename... UArgs>
+  expected &set_value(UArgs &&...args) {
+    data_.template emplace<0>(std::forward<UArgs>(args)...);
+    return *this;
+  }
+
+  /**
+   * Stores an error in-place constructed from the given arguments.
+   */
+  template <typename... UArgs>
+  expected &set_error(UArgs &&...args) {
+    data_.template emplace<1>(std::forward<UArgs>(args)...);
+    return *this;
+  }
   /**
    * Calls the given function `fn` if a value is present, otherwise doesn't do anything.
    *
