@@ -197,7 +197,7 @@ struct FATAL_HIDE_SYMBOL greater_equal {
 
 // TODO: DOCUMENT REQUIREMENTS OF PREDICATE
 //         http://en.cppreference.com/w/cpp/concept/Compare
-template <typename Less>
+template <typename Less = less>
 struct FATAL_HIDE_SYMBOL sequence_compare {
   template <typename LHS, typename RHS>
   using apply = std::bool_constant<i_c::sc<Less, LHS, RHS>::value>;

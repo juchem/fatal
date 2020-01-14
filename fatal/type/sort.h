@@ -41,6 +41,12 @@ using sort = typename i_s::Q<T, Less, By...>::type;
 template <typename T, typename... By>
 using sort_by = sort<T, less, By...>;
 
+template <typename T, typename Less = less, typename... By>
+using sequence_sort = sort<T, sequence_compare<Less>, By...>;
+
+template <typename T, typename... By>
+using sequence_sort_by = sequence_sort<T, less, By...>;
+
 // TODO: ACCEPT A CUSTOM PREDICATE
 template  <typename LHS, typename RHS>
 using merge = typename i_s::M<LHS, RHS>::type;
