@@ -118,7 +118,13 @@ template <typename T, typename Of>
 using index_of = typename index<T>::template apply<Of>;
 
 template <typename T, typename Of>
+constexpr std::size_t index_of_v = index_of<T, Of>::value;
+
+template <typename T, typename Of>
 using try_index_of = typename try_index<T>::template apply<Of>;
+
+template <typename T, typename Of>
+constexpr std::size_t try_index_of_v = try_index_of<T, Of>::value;
 
 namespace bound {
 
