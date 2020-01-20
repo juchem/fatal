@@ -661,6 +661,17 @@ private:
   const_iterator end_;
 };
 
+namespace udl {
+namespace string {
+
+template <typename T, T... Values>
+constexpr fatal::string_view operator ""_view() {
+  return z_view<std::integer_sequence<T, Values...>>();;
+}
+
+} // namespace string {
+} // namespace udl {
+
 // TODO: DOCUMENT, TEST AND BIKE-SHED
 template <typename String>
 struct string_view_from_type {
