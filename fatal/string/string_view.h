@@ -643,6 +643,10 @@ struct string_view {
     return *this > string_view(std::forward<U>(rhs));
   }
 
+  constexpr operator std::string_view() const {
+    return {begin_, size()};
+  }
+
   constexpr explicit operator bool() const { return begin_ < end_; }
 
   constexpr bool operator !() const { return empty(); }
