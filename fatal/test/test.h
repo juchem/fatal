@@ -1251,21 +1251,24 @@ public:
 
       printer.start_group(out, g->first, group.size(), clock::now());
 
-      for (auto const &i: group) {
-        if (!filter(*i)) {
+      std::size_t test_index = 0;
+      for (auto const &test: group) {
+        ++test_index;
+
+        if (!filter(*test)) {
           continue;
         }
 
-        printer.start_test(out, g->first, i->name(), i->source(), clock::now());
-
-        std::size_t issues = 0;
-        auto result = i->run(
-          [&](test_issue const &issue) {
-            printer.issue(out, i->name(), i->source(), issue, issues);
-          }
+        printer.start_test(
+          out, g->first, test->name(), test_index, group.size(), test->source(), clock::now()
         );
 
-        printer.end_test(out, result, g->first, i->name(), i->source());
+        std::size_t issues = 0;
+        auto result = test->run(
+          [&](test_issue const &issue) {
+            printer.issue(out, test->name(), test->source(), issue, issues);
+          }
+        );
 
         group_time += result.elapsed();
         ++total;
@@ -1274,7 +1277,12 @@ public:
           ++passed;
         }
 
-        summary.first[i->group()][i->name()] = std::move(result);
+        printer.end_test(
+          out, result, g->first, test->name(), test_index, group.size(),
+          test_index - passed, test->source()
+        );
+
+        summary.first[test->group()][test->name()] = std::move(result);
       }
 
       running_time += group_time;
@@ -1377,13 +1385,14 @@ struct FATAL_HIDE_SYMBOL default_printer {
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void start_test(
     TOut &out, TGroup const &, TName const &name,
+    std::size_t index, std::size_t total,
     source_info const &source, timestamp_t start
   ) {
     auto const time = start - group_start_;
 
     time::pretty_print(
-      out << ">> test '" << name << "' (" << source.file() << ':'
-        << source.line() << ") at [",
+      out << ">> test '" << name << "' at (" << source.file() << ':' << source.line() << ") "
+        << index << '/' << total << " [took ",
       time
     ) << "]:\n";
 
@@ -1412,11 +1421,19 @@ struct FATAL_HIDE_SYMBOL default_printer {
   template <typename TOut, typename TGroup, typename TName>
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void end_test(
-    TOut &out, results const &result,
-    TGroup const &, TName const &, source_info const &
+    TOut &out, results const &result, TGroup const &, TName const &,
+    std::size_t index, std::size_t total, std::size_t failure_count,
+    source_info const &source
   ) {
+    out << "<< ";
+    if (result.passed()) {
+      out << "SUCCEEDED";
+    } else {
+      out << "FAILURE #" << failure_count;
+    }
     time::pretty_print(
-      out << "<< " << (result.passed() ? "succeeded" : "failed") << " after [",
+      out << " at (" << source.file() << ':' << source.line()
+        << ") " << index << '/' << total << " [after ",
       result.elapsed()
     ) << "]\n\n";
   }
@@ -1489,7 +1506,7 @@ struct FATAL_HIDE_SYMBOL gtest_printer {
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void start_test(
     TOut &out, TGroup const &group, TName const &name,
-    source_info const &, timestamp_t
+    std::size_t, std::size_t, source_info const &, timestamp_t
   ) {
     out << "[ RUN      ] " << group << " - " << name << "\n";
   }
@@ -1513,7 +1530,7 @@ struct FATAL_HIDE_SYMBOL gtest_printer {
   void end_test(
     TOut &out, results const &result,
     TGroup const &group, TName const &name,
-    source_info const &
+    std::size_t, std::size_t, std::size_t, source_info const &
   ) {
     auto const result_str = result.passed() ? "    OK" : "FAILED";
     auto const elapsed_ms =
