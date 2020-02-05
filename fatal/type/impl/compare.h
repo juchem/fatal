@@ -78,15 +78,11 @@ struct FATAL_HIDE_SYMBOL sc<Less, Variadic<T, L, LHS...>, Variadic<T, R, RHS...>
     Less,
     Variadic<T, LHS...>,
     Variadic<T, RHS...>,
-    (L < R) ? -1 : (R < L) ? 1 : 0 // TODO: USE PREDICATE
-    // TODO: FIX PREDICATE FOR SEQUENCES
-    /*
-    Less::template apply<L, R>::value
+    Less::template vapply<T, L, R>::value
       ? -1
-      : Less::template apply<R, L>::value
+      : Less::template vapply<T, R, L>::value
         ? 1
         : 0
-    */
   >
 {};
 
