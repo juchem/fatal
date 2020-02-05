@@ -1239,6 +1239,7 @@ public:
 
     duration_t running_time(0);
     size_type passed = 0;
+    size_type test_index = 0;
     size_type total = 0;
 
     for (auto const &order: groups_order_) {
@@ -1251,19 +1252,21 @@ public:
 
       printer.start_group(out, g->first, group.size(), clock::now());
 
-      std::size_t test_index = 0;
+      size_type in_group_index = 0;
       for (auto const &test: group) {
         ++test_index;
+        ++in_group_index;
 
         if (!filter(*test)) {
           continue;
         }
 
         printer.start_test(
-          out, g->first, test->name(), test_index, group.size(), test->source(), clock::now()
+          out, g->first, test->name(), in_group_index, group.size(),
+          test->source(), clock::now()
         );
 
-        std::size_t issues = 0;
+        size_type issues = 0;
         auto result = test->run(
           [&](test_issue const &issue) {
             printer.issue(out, test->name(), test->source(), issue, issues);
@@ -1278,7 +1281,7 @@ public:
         }
 
         printer.end_test(
-          out, result, g->first, test->name(), test_index, group.size(),
+          out, result, g->first, test->name(), in_group_index, group.size(),
           test_index - passed, test->source()
         );
 
