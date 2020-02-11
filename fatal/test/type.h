@@ -16,9 +16,9 @@
 #include <type_traits>
 #include <typeinfo>
 
-#ifdef __GLIBCXX__
+#if defined __GLIBCXX__ || defined __clang__
 # include <cxxabi.h>
-#endif // __GLIBCXX__
+#endif // defined __GLIBCXX__ || defined __clang__
 
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
@@ -27,7 +27,7 @@ namespace fatal {
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string type_str(std::string &out, std::type_info const &type) {
-# ifdef __GLIBCXX__
+# if defined __GLIBCXX__ || defined __clang__
   int status;
   auto name = abi::__cxa_demangle(type.name(), 0, 0, &status);
 
@@ -36,7 +36,7 @@ std::string type_str(std::string &out, std::type_info const &type) {
     std::free(name);
     return out;
   }
-# endif // __GLIBCXX__
+# endif // defined __GLIBCXX__ || defined __clang__
 
   out.append(type.name());
   return out;
