@@ -352,7 +352,7 @@ public:
 
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   test_issue const &add(test_issue i) {
-    issues_.push_back(std::move(i));
+    issues_.emplace_back(std::move(i));
     return issues_.back();
   }
 
@@ -1133,7 +1133,7 @@ class FATAL_HIDE_SYMBOL registry {
     results run(issue_sink sink) const override {
       type subject;
 
-      auto &result = (result_tag() << subject);
+      auto &result = (result_tag{} << subject);
 
       controller::set_issues_sink(
         [&](test_issue &&issue) {
@@ -1150,7 +1150,7 @@ class FATAL_HIDE_SYMBOL registry {
         test_issue issue(test_issue::severity_t::error, clock::now(), source());
         issue.append("test case aborted by unexpected exception ");
         handle_exception(issue);
-        result.add(std::move(issue));
+        controller::add_issue(std::move(issue));
       }
 
       auto const elapsed = clock::now() - start;
@@ -1587,7 +1587,7 @@ int list(TOut &out) {
 template <typename TPrinter = default_printer, typename TOut>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 int run_all(TOut &out) {
-auto& registry = detail::test_impl::registry::get();
+  auto& registry = detail::test_impl::registry::get();
   auto const result = registry.run_all<TPrinter>(out);
 
   return result.second ? EXIT_SUCCESS : EXIT_FAILURE;
