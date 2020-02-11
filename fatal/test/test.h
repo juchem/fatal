@@ -556,7 +556,7 @@ void handle_exception(test_issue &issue) {
     std::rethrow_exception(e);
   } catch (std::exception const &e) {
     issue.append(
-      '(', type_str(typeid(e)), "): \"",
+      '(', type_str(typeid(e)), "):\n    \"",
       e.what() ? e.what() : "<no message>", '"'
     );
   } catch (std::string const &e) {
