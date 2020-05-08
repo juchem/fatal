@@ -630,6 +630,11 @@ struct string_view {
     return *this < string_view(std::forward<U>(rhs));
   }
 
+  template <typename U>
+  bool operator <=(U &&rhs) const {
+    return !(*this > std::forward<U>(rhs));
+  }
+
   bool operator >(string_view rhs) const { return rhs < *this; }
 
   template <
@@ -641,6 +646,11 @@ struct string_view {
   >
   bool operator >(U &&rhs) const {
     return *this > string_view(std::forward<U>(rhs));
+  }
+
+  template <typename U>
+  bool operator >=(U &&rhs) const {
+    return !(*this < std::forward<U>(rhs));
   }
 
   constexpr operator std::string_view() const {
@@ -694,21 +704,21 @@ string_view as_string_view() noexcept {
 /////////////////
 
 template <typename T, typename = detail::safe_overload<string_view, T>>
-bool operator ==(T const &lhs, string_view rhs) { return rhs == lhs; }
+bool operator ==(T const &lhs, string_view rhs) { return rhs.operator ==(rhs); }
 
 ////////////////
 // operator < //
 ////////////////
 
 template <typename T, typename = detail::safe_overload<string_view, T>>
-bool operator <(T const &lhs, string_view rhs) { return rhs > lhs; }
+bool operator <(T const &lhs, string_view rhs) { return rhs.operator >(lhs); }
 
 ////////////////
 // operator > //
 ////////////////
 
 template <typename T, typename = detail::safe_overload<string_view, T>>
-bool operator >(T const &lhs, string_view rhs) { return rhs < lhs; }
+bool operator >(T const &lhs, string_view rhs) { return rhs.operator <(lhs); }
 
 /////////////////
 // operator != //
