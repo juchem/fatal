@@ -26,6 +26,10 @@
 ////////////
 
 int main(int const argc, char const *const *const argv) {
+  std::ios_base::sync_with_stdio(false);
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+
   auto const arg_list = std::string("--list");
   auto const arg_filter = std::string("--filter");
   auto const arg_gtest = std::string("--gtest");
