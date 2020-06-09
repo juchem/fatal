@@ -60,6 +60,9 @@ struct string_view {
 
   constexpr string_view(): begin_(nullptr), end_(nullptr) {}
 
+  constexpr string_view(fatal::string_view const &) = default;
+  constexpr string_view(fatal::string_view &&) = default;
+
   constexpr string_view(const_iterator begin, const_iterator end):
     begin_(begin),
     end_(end)
@@ -508,6 +511,9 @@ struct string_view {
     assert(begin_ <= end_);
     return begin_ == end_;
   }
+
+  string_view &operator =(fatal::string_view const &) = default;
+  string_view &operator =(fatal::string_view &&) = default;
 
   constexpr const_iterator cbegin() const { return begin_; }
   constexpr const_iterator begin() const { return begin_; }
