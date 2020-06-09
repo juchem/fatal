@@ -761,8 +761,13 @@ Out &operator <<(Out &out, source_info source) {
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-#define FATAL_UID(Prefix) \
-  FATAL_CAT(Prefix, FATAL_CAT(_, __LINE__))
+#ifdef __COUNTER__
+# define FATAL_UID(Prefix) \
+    FATAL_CAT(Prefix, FATAL_CAT(_, __COUNTER__))
+#else // __COUNTER__
+# define FATAL_UID(Prefix) \
+    FATAL_CAT(Prefix, FATAL_CAT(_, __LINE__))
+#endif // __COUNTER__
 
 } // namespace fatal {
 
