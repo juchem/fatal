@@ -84,19 +84,17 @@ struct string_view {
     assert(begin_ <= end_);
   }
 
-  /* implicit */ string_view(value_type *s):
+  constexpr string_view(value_type const *s):
     begin_(s),
-    end_(std::next(s, std::strlen(s)))
+    end_(s)
   {
+    while (*end_) { ++end_; }
     assert(begin_ <= end_);
   }
 
-  /* implicit */ string_view(value_type const *s):
-    begin_(s),
-    end_(std::next(s, std::strlen(s)))
-  {
-    assert(begin_ <= end_);
-  }
+  constexpr string_view(value_type *s):
+    string_view(static_cast<value_type const *>(s))
+  {}
 
   template <size_type N>
   constexpr string_view(value_type const (&s)[N]):
@@ -159,7 +157,14 @@ struct string_view {
   }
 
   constexpr string_view extend(size_type count) const {
+    assert(begin_ <= end_);
     return string_view(begin_, end_ + count);
+  }
+
+  constexpr string_view shrink(size_type count) const {
+    assert(begin_ <= end_);
+    assert(end_ - begin_ >= count);
+    return string_view(begin_, end_ - count);
   }
 
   const_iterator find(value_type needle, size_type offset = 0) const {
@@ -676,6 +681,12 @@ struct string_view {
     }
   };
 
+  template <typename Out>
+  friend Out &&operator <<(Out &&out, string_view rhs) {
+    out.write(rhs.data(), rhs.size());
+    return std::forward<Out>(out);
+  }
+
 private:
   const_iterator begin_;
   const_iterator end_;
@@ -755,15 +766,6 @@ bool operator >=(string_view lhs, T const &rhs) { return !(lhs < rhs); }
 
 template <typename T, typename = detail::safe_overload<string_view, T>>
 bool operator >=(T const &lhs, string_view rhs) { return !(rhs > lhs); }
-
-/////////////////////////////////////
-// operator <<(std::basic_ostream) //
-/////////////////////////////////////
-
-template <typename C, typename T>
-std::ostream &operator <<(std::basic_ostream<C, T> &out, string_view rhs) {
-  return out.write(rhs.data(), rhs.size());
-}
 
 } // namespace fatal {
 
