@@ -163,7 +163,7 @@ struct string_view {
 
   constexpr string_view shrink(size_type count) const {
     assert(begin_ <= end_);
-    assert(end_ - begin_ >= count);
+    assert(static_cast<size_type>(end_ - begin_) >= count);
     return string_view(begin_, end_ - count);
   }
 
@@ -721,7 +721,7 @@ string_view as_string_view() noexcept {
 /////////////////
 
 template <typename T, typename = detail::safe_overload<string_view, T>>
-bool operator ==(T const &lhs, string_view rhs) { return rhs.operator ==(rhs); }
+bool operator ==(T const &lhs, string_view rhs) { return rhs.operator ==(lhs); }
 
 ////////////////
 // operator < //
