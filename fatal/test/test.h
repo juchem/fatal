@@ -1387,15 +1387,15 @@ struct FATAL_HIDE_SYMBOL default_printer {
   template <typename TOut, typename TGroup, typename TName>
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
   void start_test(
-    TOut &out, TGroup const &, TName const &name,
+    TOut &out, TGroup const &group, TName const &name,
     std::size_t index, std::size_t total,
     source_info const &source, timestamp_t start
   ) {
     auto const time = start - group_start_;
 
     time::pretty_print(
-      out << ">> test '" << name << "' at (" << source.file() << ':' << source.line() << ") "
-        << index << '/' << total << " [took ",
+      out << ">> test '" << name << "' [" << group << "] at (" << source.file() << ':'
+        << source.line() << ") " << index << '/' << total << " [took ",
       time
     ) << "]:\n";
 
