@@ -127,6 +127,11 @@ struct string_view {
     assert(begin_ <= end_);
   }
 
+  constexpr bool starts_with(fatal::string_view start) const {
+    return start.size() <= size()
+      && head(start.size()) == start;
+  }
+
   constexpr string_view head(size_type size) const {
     return slice(0, size);
   }
