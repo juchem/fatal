@@ -129,7 +129,7 @@ FATAL_TEST(head, list size 0) {
   >();
 }
 
-FATAL_TEST(head, list size 2) {
+FATAL_TEST(head, list size 1) {
   FATAL_EXPECT_SAME<
     fatal::list<>,
     head<fatal::list<int>, 0>
@@ -194,6 +194,81 @@ FATAL_TEST(head, list size 4) {
   FATAL_EXPECT_SAME<
     fatal::list<void, bool, int, double>,
     head<fatal::list<void, bool, int, double>, 4>
+  >();
+}
+
+FATAL_TEST(tail, list size 0) {
+  FATAL_EXPECT_SAME<
+    fatal::list<>,
+    tail<fatal::list<>, 0>
+  >();
+}
+
+FATAL_TEST(tail, list size 1) {
+  FATAL_EXPECT_SAME<
+    fatal::list<int>,
+    tail<fatal::list<int>, 0>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<>,
+    tail<fatal::list<int>, 1>
+  >();
+}
+
+FATAL_TEST(tail, list size 2) {
+  FATAL_EXPECT_SAME<
+    fatal::list<int, double>,
+    tail<fatal::list<int, double>, 0>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<double>,
+    tail<fatal::list<int, double>, 1>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<>,
+    tail<fatal::list<int, double>, 2>
+  >();
+}
+
+FATAL_TEST(tail, list size 3) {
+  FATAL_EXPECT_SAME<
+    fatal::list<bool, int, double>,
+    tail<fatal::list<bool, int, double>, 0>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<int, double>,
+    tail<fatal::list<bool, int, double>, 1>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<double>,
+    tail<fatal::list<bool, int, double>, 2>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<>,
+    tail<fatal::list<bool, int, double>, 3>
+  >();
+}
+
+FATAL_TEST(tail, list size 4) {
+  FATAL_EXPECT_SAME<
+    fatal::list<void, bool, int, double>,
+    tail<fatal::list<void, bool, int, double>, 0>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<bool, int, double>,
+    tail<fatal::list<void, bool, int, double>, 1>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<int, double>,
+    tail<fatal::list<void, bool, int, double>, 2>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<double>,
+    tail<fatal::list<void, bool, int, double>, 3>
+  >();
+  FATAL_EXPECT_SAME<
+    fatal::list<>,
+    tail<fatal::list<void, bool, int, double>, 4>
   >();
 }
 
