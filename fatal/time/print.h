@@ -27,13 +27,17 @@ namespace fatal::time {
 template <typename Out, typename R, typename P>
 FATAL_HIDE_SYMBOL
 Out &&pretty_print(Out &&out, std::chrono::duration<R, P> time) {
-  using ratios = reject<
-    typename impl_tm::pretty_print_ratios, curry<applier<std::ratio_greater>, P>
-  >;
-  static_assert(!empty<ratios>::value, "unsupported duration");
+  if (!time.count()) {
+    out << '0' << fatal::z_data<fatal::time::suffix_t<P>>();
+  } else {
+    using ratios = reject<
+      typename impl_tm::pretty_print_ratios, curry<applier<std::ratio_greater>, P>
+    >;
+    static_assert(!empty<ratios>::value, "unsupported duration");
 
-  using impl = apply_to<ratios, impl_tm::pretty>;
-  impl::print(out, time);
+    using impl = apply_to<ratios, impl_tm::pretty>;
+    impl::print(out, time);
+  }
 
   return std::forward<Out>(out);
 }
