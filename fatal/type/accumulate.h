@@ -14,11 +14,11 @@
 
 #include <fatal/type/impl/accumulate.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, typename Seed, typename Fn = i_A::f>
 using accumulate = typename i_A::F<Seed, Fn, T>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_accumulate_h

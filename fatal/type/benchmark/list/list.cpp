@@ -13,7 +13,7 @@
 template <int> struct foo {};
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
 # define WRAP(Value) foo<Value>
 # define OUTER(...) \

@@ -19,7 +19,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/size.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 using size = typename i_sz::s<T>::type;
@@ -35,7 +35,7 @@ template <typename T>
 FATAL_HIDE_SYMBOL
 constexpr auto empty_v = empty<T>::value;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

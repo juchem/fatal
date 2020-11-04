@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_cartesian_product_h
 #define FATAL_INCLUDE_fatal_type_impl_cartesian_product_h
 
-namespace fatal {
+namespace ftl {
 namespace impl_cp {
 
 template <template <typename...> class, typename...> struct cpe;
@@ -42,6 +42,6 @@ struct cpe<Inner, Outer, L<LHS...>, R<RHS...>>:
 {};
 
 } // namespace impl_cp {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_cartesian_product_h

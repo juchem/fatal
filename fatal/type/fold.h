@@ -14,11 +14,11 @@
 
 #include <fatal/type/impl/fold.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, typename Seed, typename Fn>
 using fold = typename i_fl::F<Seed, Fn, T>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_fold_h

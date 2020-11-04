@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, typename = void>
 struct has_type : std::false_type {};
@@ -26,4 +26,4 @@ FATAL_TEST(void_t, example) {
   FATAL_EXPECT_TRUE(has_type<std::decay<int>>::value);
 }
 
-} // namespace fatal {
+} // namespace ftl {

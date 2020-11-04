@@ -19,7 +19,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 namespace benchmark {
 
 std::chrono::milliseconds const big_delay(5);
@@ -122,4 +122,4 @@ FATAL_TEST(benchmark, sanity_check) {
 }
 
 } // namespace benchmark {
-} // namespace fatal {
+} // namespace ftl {

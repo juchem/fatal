@@ -16,7 +16,7 @@
 #include <string>
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(variadic_union, sanity_check) {
   variadic_union<int, double, bool> v;
@@ -422,4 +422,4 @@ FATAL_TEST(variadic_union, destroy) {
   FATAL_IMPL_CALL(FATAL_IMPL_CHECK_DESTROY);
 }
 
-} // namespace fatal {
+} // namespace ftl {

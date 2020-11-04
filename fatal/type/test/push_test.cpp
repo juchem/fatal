@@ -14,7 +14,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 using seq = index_sequence<0, 1, 2, 3, 4, 5, 6, 7>;
 using lst = list<int, double, bool, void, float, char, unsigned>;
@@ -235,4 +235,4 @@ FATAL_TEST(push, sequence back_if false) {
   */
 }
 
-} // namespace fatal {
+} // namespace ftl {

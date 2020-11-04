@@ -16,7 +16,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 /**
  * A helper class to test against double moves.
@@ -47,7 +47,7 @@ private:
   std::atomic_size_t moves_ = 0;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

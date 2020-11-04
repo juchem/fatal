@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace impl_arithmetic {
 
 template <typename...> struct add;
@@ -96,6 +96,6 @@ struct mod<LHS, RHS> {
 };
 
 } // namespace impl_arithmetic {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_arithmetic_h

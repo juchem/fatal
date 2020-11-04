@@ -47,7 +47,7 @@ FATAL_DIAGNOSTIC_IGNORE_SHADOW
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 
-namespace fatal {
+namespace ftl {
 
 /**
  * #######################
@@ -397,7 +397,7 @@ namespace detail {
 namespace variant_impl {
 
 /**
- * An internal traits class used by fatal::variant to handle variadic
+ * An internal traits class used by ftl::variant to handle variadic
  * recursion and runtime type erasure without the need for virtual calls.
  *
  * It basically provides a union comprised of all the types that need to
@@ -489,8 +489,8 @@ struct variadic_union_traits<TStoragePolicy, TSize, Depth, T> {
   static std::type_info const &type(size_type const depth) {
     assert(depth == Depth), (void) depth;
     return typeid(
-      typename fatal::try_transform<
-        fatal::compose<TTransforms...>::template apply
+      typename ftl::try_transform<
+        ftl::compose<TTransforms...>::template apply
       >::template apply<value_type>
     );
   }
@@ -959,7 +959,7 @@ using is_variant = is_complete<detail::variant_impl::is_variant_impl<T>>;
  *
  * The underlying storage used to hold these values can be fully customized
  * by means of a StoragePolicy. A default implementation for this policy is
- * provided (fatal::default_storage_policy) which allows the usage of
+ * provided (ftl::default_storage_policy) which allows the usage of
  * either automatic or dynamic allocation to store the values (this can be
  * further customized per type by means of an AllocationPolicy, search for
  * 'STORAGE POLICY' for more details).
@@ -2120,16 +2120,16 @@ result_type legacy_visit_def(
     : defaultValue;
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 namespace std {
 
 template <typename TStoragePolicy, typename... Args>
-struct hash<fatal::variant<TStoragePolicy, Args...>> {
+struct hash<ftl::variant<TStoragePolicy, Args...>> {
   using result_type = std::size_t;
 
   result_type operator ()(
-    fatal::variant<TStoragePolicy, Args...> const &v
+    ftl::variant<TStoragePolicy, Args...> const &v
   ) const {
     hash_visitor visitor(std::hash<decltype(v.tag())>()(v.tag()));
 

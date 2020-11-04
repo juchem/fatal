@@ -14,7 +14,7 @@
 
 #include <fatal/portability.h>
 
-namespace fatal {
+namespace ftl {
 namespace i_uq {
 
 /////////////////////
@@ -155,6 +155,6 @@ struct FATAL_HIDE_SYMBOL au<Variadic<>, Comparer> {
 };
 
 } // namespace i_uq {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_unique_h

@@ -17,7 +17,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace registry_impl {
 template <typename, typename> class lookup;
@@ -190,7 +190,7 @@ public:
 
 } // namespace registry_impl {
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

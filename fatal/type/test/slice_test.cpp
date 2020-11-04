@@ -6,7 +6,7 @@
 #include <fatal/test/driver.h>
 #include <fatal/log/log.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(index_of, list) {
   using ls = list<int, double, bool, void, float, char, unsigned>;
@@ -124,152 +124,152 @@ FATAL_TEST(try_index apply, sequence) {
 
 FATAL_TEST(head, list size 0) {
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    head<fatal::list<>, 0>
+    ftl::list<>,
+    head<ftl::list<>, 0>
   >();
 }
 
 FATAL_TEST(head, list size 1) {
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    head<fatal::list<int>, 0>
+    ftl::list<>,
+    head<ftl::list<int>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<int>,
-    head<fatal::list<int>, 1>
+    ftl::list<int>,
+    head<ftl::list<int>, 1>
   >();
 }
 
 FATAL_TEST(head, list size 2) {
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    head<fatal::list<int, double>, 0>
+    ftl::list<>,
+    head<ftl::list<int, double>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<int>,
-    head<fatal::list<int, double>, 1>
+    ftl::list<int>,
+    head<ftl::list<int, double>, 1>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<int, double>,
-    head<fatal::list<int, double>, 2>
+    ftl::list<int, double>,
+    head<ftl::list<int, double>, 2>
   >();
 }
 
 FATAL_TEST(head, list size 3) {
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    head<fatal::list<bool, int, double>, 0>
+    ftl::list<>,
+    head<ftl::list<bool, int, double>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<bool>,
-    head<fatal::list<bool, int, double>, 1>
+    ftl::list<bool>,
+    head<ftl::list<bool, int, double>, 1>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<bool, int>,
-    head<fatal::list<bool, int, double>, 2>
+    ftl::list<bool, int>,
+    head<ftl::list<bool, int, double>, 2>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<bool, int, double>,
-    head<fatal::list<bool, int, double>, 3>
+    ftl::list<bool, int, double>,
+    head<ftl::list<bool, int, double>, 3>
   >();
 }
 
 FATAL_TEST(head, list size 4) {
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    head<fatal::list<void, bool, int, double>, 0>
+    ftl::list<>,
+    head<ftl::list<void, bool, int, double>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<void>,
-    head<fatal::list<void, bool, int, double>, 1>
+    ftl::list<void>,
+    head<ftl::list<void, bool, int, double>, 1>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<void, bool>,
-    head<fatal::list<void, bool, int, double>, 2>
+    ftl::list<void, bool>,
+    head<ftl::list<void, bool, int, double>, 2>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<void, bool, int>,
-    head<fatal::list<void, bool, int, double>, 3>
+    ftl::list<void, bool, int>,
+    head<ftl::list<void, bool, int, double>, 3>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<void, bool, int, double>,
-    head<fatal::list<void, bool, int, double>, 4>
+    ftl::list<void, bool, int, double>,
+    head<ftl::list<void, bool, int, double>, 4>
   >();
 }
 
 FATAL_TEST(tail, list size 0) {
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    tail<fatal::list<>, 0>
+    ftl::list<>,
+    tail<ftl::list<>, 0>
   >();
 }
 
 FATAL_TEST(tail, list size 1) {
   FATAL_EXPECT_SAME<
-    fatal::list<int>,
-    tail<fatal::list<int>, 0>
+    ftl::list<int>,
+    tail<ftl::list<int>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    tail<fatal::list<int>, 1>
+    ftl::list<>,
+    tail<ftl::list<int>, 1>
   >();
 }
 
 FATAL_TEST(tail, list size 2) {
   FATAL_EXPECT_SAME<
-    fatal::list<int, double>,
-    tail<fatal::list<int, double>, 0>
+    ftl::list<int, double>,
+    tail<ftl::list<int, double>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<double>,
-    tail<fatal::list<int, double>, 1>
+    ftl::list<double>,
+    tail<ftl::list<int, double>, 1>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    tail<fatal::list<int, double>, 2>
+    ftl::list<>,
+    tail<ftl::list<int, double>, 2>
   >();
 }
 
 FATAL_TEST(tail, list size 3) {
   FATAL_EXPECT_SAME<
-    fatal::list<bool, int, double>,
-    tail<fatal::list<bool, int, double>, 0>
+    ftl::list<bool, int, double>,
+    tail<ftl::list<bool, int, double>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<int, double>,
-    tail<fatal::list<bool, int, double>, 1>
+    ftl::list<int, double>,
+    tail<ftl::list<bool, int, double>, 1>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<double>,
-    tail<fatal::list<bool, int, double>, 2>
+    ftl::list<double>,
+    tail<ftl::list<bool, int, double>, 2>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    tail<fatal::list<bool, int, double>, 3>
+    ftl::list<>,
+    tail<ftl::list<bool, int, double>, 3>
   >();
 }
 
 FATAL_TEST(tail, list size 4) {
   FATAL_EXPECT_SAME<
-    fatal::list<void, bool, int, double>,
-    tail<fatal::list<void, bool, int, double>, 0>
+    ftl::list<void, bool, int, double>,
+    tail<ftl::list<void, bool, int, double>, 0>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<bool, int, double>,
-    tail<fatal::list<void, bool, int, double>, 1>
+    ftl::list<bool, int, double>,
+    tail<ftl::list<void, bool, int, double>, 1>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<int, double>,
-    tail<fatal::list<void, bool, int, double>, 2>
+    ftl::list<int, double>,
+    tail<ftl::list<void, bool, int, double>, 2>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<double>,
-    tail<fatal::list<void, bool, int, double>, 3>
+    ftl::list<double>,
+    tail<ftl::list<void, bool, int, double>, 3>
   >();
   FATAL_EXPECT_SAME<
-    fatal::list<>,
-    tail<fatal::list<void, bool, int, double>, 4>
+    ftl::list<>,
+    tail<ftl::list<void, bool, int, double>, 4>
   >();
 }
 
-} // namespace fatal {
+} // namespace ftl {

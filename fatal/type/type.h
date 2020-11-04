@@ -12,7 +12,7 @@
 
 #include <fatal/type/impl/type.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 using type_of = typename impl_t::to<T>::type;
@@ -20,6 +20,6 @@ using type_of = typename impl_t::to<T>::type;
 template <typename T>
 using value_type_of = typename impl_t::vto<T>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_type_h

@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_void_h
 #define FATAL_INCLUDE_fatal_type_impl_void_h
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace void_impl {
 
@@ -21,6 +21,6 @@ struct void_t_ {
 
 } // namespace void_impl {
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_void_h

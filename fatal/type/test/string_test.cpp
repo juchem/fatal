@@ -10,7 +10,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 namespace udl {
 namespace string {
 
@@ -29,4 +29,4 @@ FATAL_TEST(make_sequence, make_sequence) {
 
 } // namespace string {
 } // namespace udl {
-} // namespace fatal {
+} // namespace ftl {

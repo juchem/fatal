@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_cat_h
 #define FATAL_INCLUDE_fatal_type_impl_cat_h
 
-namespace fatal {
+namespace ftl {
 namespace impl_cat {
 
 template <typename...> struct FATAL_HIDE_SYMBOL c;
@@ -254,6 +254,6 @@ struct FATAL_HIDE_SYMBOL l<Variadic<LHS...>, Variadic<RHS...>, Args...> {
 };
 
 } // namespace impl_cat {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_cat_h

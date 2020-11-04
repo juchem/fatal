@@ -14,7 +14,7 @@
 #include <vector>
 #include <unordered_map>
 
-namespace fatal {
+namespace ftl {
 
 struct custom_error:
   public std::exception
@@ -483,4 +483,4 @@ FATAL_TEST(expected, error checked_expected) {
   FATAL_EXPECT_NO_THROW { e.error(); };
 }
 
-} // namespace fatal {
+} // namespace ftl {

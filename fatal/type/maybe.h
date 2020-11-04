@@ -12,7 +12,7 @@
 
 #include <fatal/type/deprecated/apply.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * TODO: DOCUMENT
@@ -53,7 +53,7 @@ struct maybe<First, Args...> {
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <template <typename...> class U>
-  using all = fatal::apply<U, First, Args...>;
+  using all = ftl::apply<U, First, Args...>;
 };
 
 ////////////////////////////
@@ -87,7 +87,7 @@ struct maybe<First, Second, Args...> {
   using third = Default;
 
   template <template <typename...> class U>
-  using all = fatal::apply<U, First, Second, Args...>;
+  using all = ftl::apply<U, First, Second, Args...>;
 };
 
 template <typename First, typename Second, typename Third, typename... Args>
@@ -102,9 +102,9 @@ struct maybe<First, Second, Third, Args...> {
   using third = Third;
 
   template <template <typename...> class U>
-  using all = fatal::apply<U, First, Second, Third, Args...>;
+  using all = ftl::apply<U, First, Second, Third, Args...>;
 };
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_maybe_h

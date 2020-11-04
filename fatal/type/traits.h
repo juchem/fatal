@@ -32,7 +32,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 //////////////
 // all_same //
@@ -558,6 +558,6 @@ FATAL_DIAGNOSTIC_POP
 
 } // namespace traits_impl {
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_traits_h

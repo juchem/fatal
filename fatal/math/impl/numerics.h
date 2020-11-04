@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_math_impl_numerics_h
 #define FATAL_INCLUDE_fatal_math_impl_numerics_h
 
-namespace fatal {
+namespace ftl {
 
 struct FATAL_HIDE_SYMBOL get_data_bits;
 struct FATAL_HIDE_SYMBOL data_bits_eq;
@@ -136,6 +136,6 @@ struct FATAL_HIDE_SYMBOL smallest_for_impl {
 };
 
 } // namespace i_nm {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_math_impl_numerics_h

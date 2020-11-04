@@ -12,7 +12,7 @@
 #include <fatal/type/sort.h>
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
 # define OUTER(...) \
   do { \

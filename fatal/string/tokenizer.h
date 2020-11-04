@@ -19,7 +19,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 template <typename Token, char Delimiter>
 struct FATAL_HIDE_SYMBOL tokenizer {
@@ -110,6 +110,6 @@ using space_tokenizer = tokenizer<string_view, ' '>;
 
 using csv_tokenizer = tokenizer<comma_tokenizer, '\n'>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_string_tokenizer_h

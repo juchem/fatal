@@ -12,7 +12,7 @@
 #include <fatal/type/sort.h>
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
 # define WRAP(Value) std::integral_constant<int, Value>
 # define OUTER(...) \

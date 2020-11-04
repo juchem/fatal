@@ -17,7 +17,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 template <typename...> struct FATAL_HIDE_SYMBOL list {};
 
@@ -40,7 +40,7 @@ template <typename... Args>
 FATAL_HIDE_SYMBOL
 constexpr list<Args...> list_of(Args &&...) { return {}; }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

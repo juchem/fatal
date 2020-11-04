@@ -30,7 +30,7 @@ FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_SHADOW
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 // TODO: shrink_to_fit, pop_back, prevent growth (T4534263)
 template <typename T>
@@ -527,7 +527,7 @@ private:
   size_type size_ = 0;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

@@ -14,7 +14,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(accumulate, sanity check) {
   FATAL_EXPECT_SAME<
@@ -53,4 +53,4 @@ FATAL_TEST(accumulate, sanity check) {
   >();
 }
 
-} // namespace fatal {
+} // namespace ftl {

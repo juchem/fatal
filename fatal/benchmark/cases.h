@@ -12,7 +12,7 @@
 
 #include <fatal/benchmark/prevent_optimization.h>
 
-namespace fatal {
+namespace ftl {
 namespace benchmark {
 
 #define FATAL_BENCHMARK_CASES_MONOTONIC_OUTER_0_4(Fn) \
@@ -16342,6 +16342,6 @@ namespace benchmark {
   )
 
 } // namespace benchmark {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_benchmark_lib_cases_h

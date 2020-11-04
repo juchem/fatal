@@ -39,7 +39,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace enum_impl {
 
@@ -235,7 +235,7 @@ public:
    *  FATAL_RICH_ENUM_CLASS(my_enum, field0, field1, field2);
    *  using traits = enum_traits<my_enum>;
    *
-   *  // yields `fatal::sequence<char, 'f', 'i', 'e', 'l', 'd', '0'>`
+   *  // yields `ftl::sequence<char, 'f', 'i', 'e', 'l', 'd', '0'>`
    *  using result = traits::name_of<traits::member::field0::value::value>;
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
@@ -499,7 +499,7 @@ static constexpr char const *enum_to_string(
 
 /**
  * A statically allocated array containing the names of the enumeration
- * fields as `fatal::string_view`.
+ * fields as `ftl::string_view`.
  *
  * See `type/array.h` and `string/string_view.h` for more info.
  *
@@ -521,7 +521,7 @@ static constexpr char const *enum_to_string(
  */
 template <typename T>
 using enum_names_array = string_view_array<
-  fatal::transform<typename enum_traits<T>::fields, get_type::name>,
+  ftl::transform<typename enum_traits<T>::fields, get_type::name>,
   string_view
 >;
 
@@ -550,7 +550,7 @@ using enum_names_array = string_view_array<
  */
 template <typename T>
 using enum_values_array = as_array<
-  fatal::transform<typename enum_traits<T>::fields, get_type::value>
+  ftl::transform<typename enum_traits<T>::fields, get_type::value>
 >;
 
 /**
@@ -715,9 +715,9 @@ using enum_values_array = as_array<
  */
 #define FATAL_REGISTER_ENUM_TRAITS(Traits, ...) \
   FATAL_REGISTER_TYPE( \
-    ::fatal::detail::enum_impl::metadata_tag, \
+    ::ftl::detail::enum_impl::metadata_tag, \
     Traits::type, \
-    ::fatal::push<::fatal::list<Traits>>::back<__VA_ARGS__> \
+    ::ftl::push<::ftl::list<Traits>>::back<__VA_ARGS__> \
   )
 
 ////////////////////////////
@@ -765,7 +765,7 @@ using enum_values_array = as_array<
       FATAL_SIMPLE_MAP(FATAL_IMPL_EXPORT_RICH_ENUM_MEMBER, __VA_ARGS__) \
     }; \
     \
-    using fields = ::fatal::list< \
+    using fields = ::ftl::list< \
       FATAL_MAP(FATAL_IMPL_EXPORT_RICH_ENUM_FIELDS, ~, __VA_ARGS__) \
     >; \
     \
@@ -780,7 +780,7 @@ using enum_values_array = as_array<
   \
   FATAL_REGISTER_ENUM_TRAITS(ClassName)
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

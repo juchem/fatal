@@ -18,7 +18,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace varint_impl {
 
@@ -411,6 +411,6 @@ public:
   }
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_codec_varint_h

@@ -21,7 +21,7 @@
 #include <cstdlib>
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 
 ////////////////////
 // error policies //
@@ -169,7 +169,7 @@ struct expected {
 
 private:
   struct error_t {
-    template <typename... UArgs, typename = fatal::safe_overload<error_t, UArgs...>>
+    template <typename... UArgs, typename = ftl::safe_overload<error_t, UArgs...>>
     explicit error_t(UArgs &&...args):
       error_(std::forward<UArgs>(args)...)
     {}
@@ -199,7 +199,7 @@ public:
   /* implicit */
   template <
     typename... UArgs,
-    typename = fatal::safe_overload<expected, UArgs...>,
+    typename = ftl::safe_overload<expected, UArgs...>,
     typename = std::enable_if_t<
       sizeof...(UArgs) != 1
         || !(std::is_same_v<unexpected_t, UArgs> && ... && true)
@@ -519,6 +519,6 @@ template <
 >
 using checked_expected = expected<T, Error, throwing_expected_check_policy, ErrorPolicy>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_expected_h

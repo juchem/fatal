@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename> struct type1_t {};
 template <typename> struct type2_t {};
@@ -307,17 +307,17 @@ FATAL_TEST(type_map, search) {
 
   FATAL_EXPECT_SAME<
     ibdlsv_map::search<search_predicate<int>::apply, not_found_type>,
-    fatal::type_pair<int, bool>
+    ftl::type_pair<int, bool>
   >();
 
   FATAL_EXPECT_SAME<
     ibdlsv_map::search<search_predicate<double>::apply, not_found_type>,
-    fatal::type_pair<double, long>
+    ftl::type_pair<double, long>
   >();
 
   FATAL_EXPECT_SAME<
     ibdlsv_map::search<search_predicate<short>::apply, not_found_type>,
-    fatal::type_pair<short, void>
+    ftl::type_pair<short, void>
   >();
 
   FATAL_EXPECT_SAME<
@@ -1547,4 +1547,4 @@ FATAL_TEST(type_map, clustered_index) {
   >();
 }
 
-} // namespace fatal {
+} // namespace ftl {

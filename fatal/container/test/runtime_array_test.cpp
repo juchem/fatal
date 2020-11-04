@@ -15,7 +15,7 @@
 
 #include <string>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(runtime_array, ctor) {
   using refc = ref_counter<>;
@@ -290,4 +290,4 @@ FATAL_TEST(runtime_array, empty) {
   FATAL_EXPECT_TRUE(v8.empty());
 }
 
-} // namespace fatal {
+} // namespace ftl {

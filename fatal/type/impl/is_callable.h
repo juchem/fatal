@@ -13,7 +13,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 namespace i_icl {
 
 template <typename... Args>
@@ -45,6 +45,6 @@ public:
 };
 
 } // namespace i_icl {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_is_callable_h

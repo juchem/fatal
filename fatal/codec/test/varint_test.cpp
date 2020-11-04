@@ -21,7 +21,7 @@
 
 using count = std::integral_constant<std::uintmax_t, 1000000>;
 
-namespace fatal {
+namespace ftl {
 
 struct use {
   template <typename T> using enc = typename T::encode;
@@ -292,4 +292,4 @@ FATAL_TEST(encoder, decoder_u16) { chk<use::encr, use::decr, std::uint16_t>(); }
 FATAL_TEST(encoder, decoder_u32) { chk<use::encr, use::decr, std::uint32_t>(); }
 FATAL_TEST(encoder, decoder_u64) { chk<use::encr, use::decr, std::uint64_t>(); }
 
-} // namespace fatal {
+} // namespace ftl {

@@ -15,7 +15,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * A class that holds information obtained through reflection about a member
@@ -232,6 +232,6 @@ REFLECTED_MEMBER_FUNCTION_IMPL(cv, rvalue, const volatile &&);
 #undef REFLECTED_MEMBER_FUNCTION_IMPL
 
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_reflect_member_function_h

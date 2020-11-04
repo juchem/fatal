@@ -14,7 +14,7 @@
 template <int> struct foo {};
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
 # define INNER(Index) \
   prevent_optimization(at<lst, Index>())

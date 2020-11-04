@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace i_at {
 
 template <std::size_t, typename> struct FATAL_HIDE_SYMBOL a;
@@ -684,6 +684,6 @@ struct FATAL_HIDE_SYMBOL ti<Sequence<T, Values...>, index_sequence<Indexes...>> 
 };
 
 } // namespace i_at {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_slice_h

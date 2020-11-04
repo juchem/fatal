@@ -13,7 +13,7 @@
 
 #include <string>
 
-namespace fatal {
+namespace ftl {
 
 struct foonctor {
   void operator ()() {}
@@ -55,4 +55,4 @@ FATAL_TEST(traits, is_callable) {
   FATAL_EXPECT_TRUE((is_callable_v<foonction_is, int, std::string>));
 }
 
-} // namespace fatal {
+} // namespace ftl {

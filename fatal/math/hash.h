@@ -18,7 +18,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 namespace detail  {
 
 template <typename T, std::size_t = sizeof(T)>

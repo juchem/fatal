@@ -36,7 +36,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace rope_impl {
 
@@ -57,11 +57,11 @@ public:
   using id_constant = std::integral_constant<id_type, V>;
 
   template <typename T>
-  using id = fatal::pair_get<
-    fatal::list<
-      fatal::pair<std::string, id_constant<id_type::string>>,
-      fatal::pair<string_view, id_constant<id_type::reference>>,
-      fatal::pair<char, id_constant<id_type::character>>
+  using id = ftl::pair_get<
+    ftl::list<
+      ftl::pair<std::string, id_constant<id_type::string>>,
+      ftl::pair<string_view, id_constant<id_type::reference>>,
+      ftl::pair<char, id_constant<id_type::character>>
     >,
     T
   >;
@@ -1830,7 +1830,7 @@ std::ostream &operator <<(
   return out;
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

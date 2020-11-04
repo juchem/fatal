@@ -12,11 +12,11 @@
 
 #include <fatal/type/impl/reverse.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 using reverse = typename i_rev::r<T>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_reverse_h

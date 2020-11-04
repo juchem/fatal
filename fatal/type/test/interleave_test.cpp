@@ -12,7 +12,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(interleave, interleave) {
   // size 0
@@ -73,4 +73,4 @@ FATAL_TEST(surround, surround) {
   >();
 }
 
-} // namespace fatal {
+} // namespace ftl {

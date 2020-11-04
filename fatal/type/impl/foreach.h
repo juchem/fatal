@@ -14,7 +14,7 @@
 #include <fatal/type/list.h>
 #include <fatal/type/tag.h>
 
-namespace fatal {
+namespace ftl {
 namespace i_fe {
 
 // foreach
@@ -82,6 +82,6 @@ struct FATAL_HIDE_SYMBOL a<List<Args...>> {
 };
 
 } // namespace i_fe {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_foreach_h

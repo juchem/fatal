@@ -13,7 +13,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 template <int> struct t {};
 using t0 = t<0>; using t1 = t<1>; using t2 = t<2>; using t3 = t<3>; using t4 = t<4>;
@@ -155,4 +155,4 @@ FATAL_TEST(reverse, sequence) {
   >();
 }
 
-} // namespace fatal {
+} // namespace ftl {

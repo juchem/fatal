@@ -17,7 +17,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/is_complete.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Tells whether a type is complete or not.
@@ -49,7 +49,7 @@ using is_complete = decltype(
   impl_is_complete::sfinae(static_cast<T *>(nullptr))
 );
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

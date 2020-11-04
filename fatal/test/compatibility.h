@@ -14,7 +14,7 @@
 
 // for internal use only
 
-namespace fatal {
+namespace ftl {
 namespace test {
 
 #define TEST FATAL_TEST
@@ -63,6 +63,6 @@ namespace test {
 #define ASSERT_GE FATAL_ASSERT_GE
 
 } // namespace test {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_test_compatibility_h

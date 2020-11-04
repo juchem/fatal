@@ -24,7 +24,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace runtime_array_impl {
 
@@ -174,6 +174,6 @@ private:
   container_type container_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_runtime_array_h

@@ -15,7 +15,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 /**
  * A convenient macro that creates a transform which
@@ -204,7 +204,7 @@ namespace get_type {
 # undef FATAL_IMPL_GET_TYPE
 } // namespace get_type {
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

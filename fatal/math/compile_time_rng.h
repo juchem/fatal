@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace compile_time_rng_impl {
 
@@ -256,8 +256,8 @@ struct helper {
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
 #define FATAL_COMPILE_TIME_RNG \
-  ::fatal::detail::compile_time_rng_impl::helper<__LINE__>::bind
+  ::ftl::detail::compile_time_rng_impl::helper<__LINE__>::bind
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_math_compile_time_rng_h

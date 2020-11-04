@@ -25,7 +25,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 namespace i_t {
 
 // represents a node in the trie //
@@ -367,6 +367,6 @@ struct FATAL_HIDE_SYMBOL e<Mode, Filter, Variadic<>> {
 };
 
 } // namespace i_t {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_trie_h

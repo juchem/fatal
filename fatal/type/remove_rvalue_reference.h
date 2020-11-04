@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_remove_rvalue_reference_h
 #define FATAL_INCLUDE_fatal_type_remove_rvalue_reference_h
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Removes any r-value references from a given type.
@@ -48,6 +48,6 @@ struct remove_rvalue_reference<T &&> {
 template <typename T>
 using remove_rvalue_reference_t = typename remove_rvalue_reference<T>::type;
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_remove_rvalue_reference_h

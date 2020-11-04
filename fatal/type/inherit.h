@@ -12,13 +12,13 @@
 
 #include <fatal/portability.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename... Args>
 struct FATAL_HIDE_SYMBOL inherit:
   public Args...
 {};
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_inherit_h

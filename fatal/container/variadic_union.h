@@ -19,7 +19,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 
 template <typename...> struct variadic_union_impl;
@@ -440,6 +440,6 @@ struct variadic_union_impl<T0, T1, T2, T3, T4> {
 #undef FATAL_IMPL_VARIADIC_UNION_CTOR
 
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_variadic_union_h

@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename... Args>
 struct args {};
@@ -48,4 +48,4 @@ FATAL_TEST(maybe, ternary) {
   FATAL_EXPECT_SAME<args<int, bool, double>, actual::all<args>>();
 }
 
-} // namespace fatal {
+} // namespace ftl {

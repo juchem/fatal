@@ -9,7 +9,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 using seq = char_sequence<'a', 'b', 'c', 'd', 'e', 'f'>;
 
@@ -28,4 +28,4 @@ FATAL_TEST(type, value_type_of) {
   FATAL_EXPECT_SAME<char, value_type_of<seq>>();
 }
 
-} // namespace fatal {
+} // namespace ftl {

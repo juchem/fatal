@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 // test data
 template <unsigned>
@@ -1347,4 +1347,4 @@ FATAL_TEST(flag_set, clear) {
 # undef TEST_CLEAR
 }
 
-} // namespace fatal {
+} // namespace ftl {

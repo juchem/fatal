@@ -19,7 +19,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/is_template.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Checks whether a given type is an instantiation of at least one of a list of
@@ -81,6 +81,6 @@ template <template <typename...> typename Template, typename... T>
 FATAL_HIDE_SYMBOL
 constexpr bool is_template_all_v = is_template<Template>::template all<T...>::value;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_is_template_h

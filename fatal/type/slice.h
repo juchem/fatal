@@ -22,7 +22,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/slice.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, std::size_t Index>
 using at = typename i_at::a<Index, T>::type;
@@ -164,11 +164,11 @@ struct FATAL_HIDE_SYMBOL head {
 template <std::size_t Begin, std::size_t End>
 struct FATAL_HIDE_SYMBOL slice {
   template <typename T>
-  using apply = fatal::slice<T, Begin, End>;
+  using apply = ftl::slice<T, Begin, End>;
 };
 
 } // namespace bound {
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

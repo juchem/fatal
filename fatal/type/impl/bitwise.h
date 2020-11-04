@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace impl_bitwise {
 
 template <typename...> struct b_and;
@@ -73,6 +73,6 @@ struct b_xor<T> {
 };
 
 } // namespace impl_bitwise {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_bitwise_h

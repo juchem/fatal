@@ -25,7 +25,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace impl_rng {
 
 static std::size_t random_seed() {
@@ -153,7 +153,7 @@ private:
   rng_type rng_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

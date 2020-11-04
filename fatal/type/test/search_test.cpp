@@ -6,7 +6,7 @@
 #include <fatal/test/driver.h>
 #include <fatal/log/log.h>
 
-namespace fatal {
+namespace ftl {
 
 // TODO: add tests with visitors that take args... (1, 2 and 3 args should suffice)
 //       test for double moves on those args
@@ -233,4 +233,4 @@ FATAL_TEST(unsorted_find, fallback/visitor type compatibility) {
   FATAL_EXPECT_EQ(nullptr, unsorted_find<haystack>(60, nullptr, [=](auto) { return value; }));
 }
 
-} // namespace fatal {
+} // namespace ftl {

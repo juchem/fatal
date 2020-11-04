@@ -5,7 +5,7 @@
 #include <fatal/type/sequence.h>
 #include <fatal/type/transform.h>
 
-using namespace fatal;
+using namespace ftl;
 
 using count = size_constant<std::size_t(1) << 10>;
 using numbers = as_list<make_index_sequence<count::value>>;

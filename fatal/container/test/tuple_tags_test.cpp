@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 struct Foo {};
 struct Bar {};
@@ -118,4 +118,4 @@ FATAL_TEST(tuple_tags, tuple_tags_from) {
   >();
 }
 
-} // namespace fatal {
+} // namespace ftl {

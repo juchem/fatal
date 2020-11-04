@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace i_P {
 
 template <typename...> struct b;
@@ -118,6 +118,6 @@ struct p<Sequence<T, Values...>> {
 };
 
 } // namespace i_P {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_push_h

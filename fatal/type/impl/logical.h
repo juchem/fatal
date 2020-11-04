@@ -14,7 +14,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace impl_logical {
 
 template <typename...> struct FATAL_HIDE_SYMBOL l_xor;
@@ -58,6 +58,6 @@ struct FATAL_HIDE_SYMBOL l_xor<T> {
 };
 
 } // namespace impl_logical {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_logical_h

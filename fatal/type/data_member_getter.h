@@ -24,7 +24,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 /**
  * TODO: DOCUMENT
@@ -216,8 +216,8 @@ struct FATAL_HIDE_SYMBOL data_member_try_getter {
     \
     template <typename Owner> \
     struct FATAL_HIDE_SYMBOL reference { \
-      using ref_impl = ::fatal::add_reference_from_t< \
-        typename ::fatal::constify_from< \
+      using ref_impl = ::ftl::add_reference_from_t< \
+        typename ::ftl::constify_from< \
           type<Owner>, \
           typename ::std::remove_reference<Owner>::type \
         >::type, \
@@ -256,7 +256,7 @@ struct FATAL_HIDE_SYMBOL data_member_try_getter {
     } \
   }; \
   \
-  using Class = ::fatal::data_member_getter<Impl>
+  using Class = ::ftl::data_member_getter<Impl>
 
 ///////////////////
 // member_getter //
@@ -431,7 +431,7 @@ public:
   };
 };
 
-} // namespace fatal
+} // namespace ftl
 
 FATAL_DIAGNOSTIC_POP
 

@@ -16,7 +16,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 #define FATAL_IMPL_CALL(Fn) \
   do { \
@@ -1310,4 +1310,4 @@ FATAL_TEST(optional, operator_not_equals_value) {
   FATAL_IMPL_CALL(FATAL_IMPL_OPERATOR_NOT_EQUALS_VALUE);
 }
 
-} // namespace fatal {
+} // namespace ftl {

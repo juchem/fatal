@@ -13,7 +13,7 @@
 #include <fatal/type/size.h>
 #include <fatal/type/tag.h>
 
-namespace fatal {
+namespace ftl {
 namespace i_S {
 
 // TODO: OPTIMIZE COMPILE TIMES
@@ -213,6 +213,6 @@ struct FATAL_HIDE_SYMBOL f {
 };
 
 } // namespace i_S {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_search_h

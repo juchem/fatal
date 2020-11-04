@@ -30,7 +30,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace log {
 namespace detail {
 namespace log_impl {
@@ -228,24 +228,24 @@ log::detail::log_impl::logger<std::ostream, TInfo> log(source_info source) {
 } // namespace log {
 
 #define FATAL_LOG(Level) \
-  ::fatal::log::log<::fatal::log::detail::log_impl::level_##Level>( \
+  ::ftl::log::log<::ftl::log::detail::log_impl::level_##Level>( \
     FATAL_SOURCE_INFO() \
   )
 
 #define FATAL_VLOG(Level) \
-  ::fatal::log::log<::fatal::log::detail::log_impl::level_verbose<Level>>( \
+  ::ftl::log::log<::ftl::log::detail::log_impl::level_verbose<Level>>( \
     FATAL_SOURCE_INFO() \
   )
 
 #ifdef NDEBUG
-# define FATAL_DLOG(Level) ::fatal::log::null_logger()
-# define FATAL_DVLOG(Level) ::fatal::log::null_logger()
+# define FATAL_DLOG(Level) ::ftl::log::null_logger()
+# define FATAL_DVLOG(Level) ::ftl::log::null_logger()
 #else // NDEBUG
 # define FATAL_DLOG(Level) FATAL_LOG(Level)
 # define FATAL_DVLOG(Level) FATAL_VLOG(Level)
 #endif // NDEBUG
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

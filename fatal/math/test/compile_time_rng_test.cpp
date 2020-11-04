@@ -13,7 +13,7 @@
 
 #include <unordered_set>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(compile_time_rng, get) {
 # define TEST_IMPL(Set, N) \
@@ -261,4 +261,4 @@ FATAL_TEST(compile_time_rng, fatal_compile_time_rng) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

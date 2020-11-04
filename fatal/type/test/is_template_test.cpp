@@ -17,7 +17,7 @@
 #include <utility>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 template <std::size_t> struct T {};
 template <std::size_t> struct S {};
@@ -584,4 +584,4 @@ FATAL_TEST(traits, is_template_all_v) {
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {

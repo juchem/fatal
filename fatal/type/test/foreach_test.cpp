@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 struct example_visitor {
   template <typename Type, std::size_t Index>
@@ -105,4 +105,4 @@ FATAL_TEST(foreach_accumulate, product) {
   FATAL_EXPECT_EQ(600, foreach_accumulate<types>(product, 5));
 }
 
-} // namespace fatal {
+} // namespace ftl {

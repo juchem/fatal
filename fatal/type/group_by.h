@@ -20,7 +20,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/group_by.h>
 
-namespace fatal {
+namespace ftl {
 
 // O(n) on the size of the variadic template T
 // `Group` is guaranteed to be instantiated exactly once per group
@@ -44,7 +44,7 @@ template <
 >
 using filtered_group_by = typename i_g::F<T, Key, Filter, Pair, Group>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

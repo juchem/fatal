@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 #if __cplusplus > 201400
 # define TEST_IMPL(...) \
@@ -271,4 +271,4 @@ FATAL_TEST(tag, tag_second) {
 
 #undef TEST_IMPL
 
-} // namespace fatal {
+} // namespace ftl {

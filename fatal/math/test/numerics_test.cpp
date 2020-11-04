@@ -15,7 +15,7 @@
 #include <iterator>
 #include <random>
 
-namespace fatal {
+namespace ftl {
 
 ///////////////
 // data_bits //
@@ -786,7 +786,7 @@ FATAL_TEST(numerics, exact_floating_point) {
 
 #define SMALLEST_FOR_VALUE_TEST(N, Expected) \
   FATAL_VLOG(1) << "expected = " << #Expected << ", actual = " \
-    << ::fatal::type_str<smallest_unsigned_for_value<N>>(); \
+    << ::ftl::type_str<smallest_unsigned_for_value<N>>(); \
   FATAL_EXPECT_EQ( \
     data_bits<Expected>::value, data_bits<smallest_unsigned_for_value<N>>::value \
   )
@@ -1227,4 +1227,4 @@ FATAL_TEST(discrete_to_continuous, sanity_check) {
 
 #undef C_TEST_IMPL
 
-} // namespace fatal {
+} // namespace ftl {

@@ -14,7 +14,7 @@
 
 #include <sstream>
 
-namespace fatal::time {
+namespace ftl::time {
 
 FATAL_TEST(time, pretty_print) {
 # define TEST_IMPL(Expected, Value) \
@@ -45,4 +45,4 @@ FATAL_TEST(time, pretty_print) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal::time {
+} // namespace ftl::time {

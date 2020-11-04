@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 struct foo {
   void noncv();
@@ -238,4 +238,4 @@ FATAL_TEST(qualifier, add_cv_reference_from) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

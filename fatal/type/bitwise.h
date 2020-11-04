@@ -13,7 +13,7 @@
 #include <fatal/type/apply.h>
 #include <fatal/type/impl/bitwise.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Yields an std::integral_constant whose value is the bitwise AND of the value
@@ -190,6 +190,6 @@ using bitwise_xnor = complement<bitwise_xor<Args...>>;
 template <typename T>
 using bitwise_xnor_of = apply_to<T, bitwise_xnor>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_bitwise_h

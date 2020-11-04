@@ -17,7 +17,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 struct normalized_wrapper {
@@ -172,6 +172,6 @@ private:
   pointer wrapped_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_normalized_wrapper_h

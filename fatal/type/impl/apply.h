@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_apply_h
 #define FATAL_INCLUDE_fatal_type_impl_apply_h
 
-namespace fatal {
+namespace ftl {
 namespace i_ap {
 
 template <template <typename...> typename T, typename... Args>
@@ -278,6 +278,6 @@ struct FATAL_HIDE_SYMBOL app<T, U0, U1, U2, U3, U4, U5, V0, V1, V2, V3, V4, V5> 
 };
 
 } // namespace i_ap {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_apply_h

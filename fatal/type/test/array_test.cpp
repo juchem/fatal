@@ -19,7 +19,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 namespace seq {
 
 using foo = char_sequence<'f', 'o', 'o'>;
@@ -153,4 +153,4 @@ FATAL_TEST(array, string_view_array from list) {
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {

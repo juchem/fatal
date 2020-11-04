@@ -24,7 +24,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/container/impl/static_bit_set.h>
 
-namespace fatal {
+namespace ftl {
 
 struct flipped_bit_set {};
 
@@ -395,7 +395,7 @@ private:
   std::array<bucket_type, bucket_count> bucket_ = {};
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

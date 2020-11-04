@@ -18,7 +18,7 @@
 
 #include <cstring>
 
-namespace fatal {
+namespace ftl {
 
 struct dummy_static_member { static void test_fn(int); };
 struct dummy_member_function { void test_fn(int); };
@@ -1272,4 +1272,4 @@ FATAL_TEST(name, free_function) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

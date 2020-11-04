@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Provides mechanisms to parse the integral value of type `T`
@@ -192,6 +192,6 @@ public:
   using literal = std::integral_constant<value_type, parse_literal<Char, Digits...>()>;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_parser_h

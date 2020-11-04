@@ -19,7 +19,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/transform.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, typename... Transform>
 using transform = typename i_t::t<T, Transform...>::type;
@@ -32,7 +32,7 @@ template <
 >
 using transform_if = transform<T, i_t::c<Predicate, WhenTrue, WhenFalse>>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

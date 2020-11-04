@@ -12,7 +12,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(move_tracker, no move, no copy) {
   move_tracker subject;
@@ -144,4 +144,4 @@ FATAL_TEST(move_tracker, three moves) {
   FATAL_EXPECT_FALSE(third_move.double_moved());
 }
 
-} // namespace fatal {
+} // namespace ftl {

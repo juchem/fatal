@@ -13,7 +13,7 @@
 
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 template <typename Out, typename T>
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
@@ -27,6 +27,6 @@ Out &operator <<(Out &&out, std::vector<T> const &what) {
   return out;
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_test_ostream_h

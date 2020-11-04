@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Member function const/volatile qualifiers category.
@@ -326,6 +326,6 @@ struct add_cv_reference_from<T, TFrom &&> {
 template <typename T, typename TFrom>
 using add_cv_reference_from_t = typename add_cv_reference_from<T, TFrom>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_qualifier_h

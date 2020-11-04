@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_compare_h
 #define FATAL_INCLUDE_fatal_type_impl_compare_h
 
-namespace fatal {
+namespace ftl {
 namespace i_c {
 
 template <typename, typename, typename, int = 0> struct FATAL_HIDE_SYMBOL sc;
@@ -87,6 +87,6 @@ struct FATAL_HIDE_SYMBOL sc<Less, Variadic<T, L, LHS...>, Variadic<T, R, RHS...>
 {};
 
 } // namespace i_c {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_compare_h

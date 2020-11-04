@@ -22,7 +22,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/sequence.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, T... Values>
 using sequence = std::integer_sequence<T, Values...>;
@@ -62,7 +62,7 @@ using int_sequence = sequence<int, Values...>;
     String \
   )
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

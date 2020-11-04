@@ -15,14 +15,14 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 /////////////////
 // source_info //
 /////////////////
 
 #define FATAL_SOURCE_INFO() \
-  ::fatal::source_info(__FILE__, __LINE__)
+  ::ftl::source_info(__FILE__, __LINE__)
 
 struct FATAL_HIDE_SYMBOL source_info {
 
@@ -769,7 +769,7 @@ Out &operator <<(Out &out, source_info source) {
     FATAL_CAT(Prefix, FATAL_CAT(_, __LINE__))
 #endif // __COUNTER__
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

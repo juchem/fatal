@@ -21,7 +21,7 @@
 #include <ratio>
 #include <string_view>
 
-namespace fatal::time {
+namespace ftl::time {
 
 /**
  * TODO: DOCUMENT
@@ -73,6 +73,6 @@ std::string_view suffix_of(T const &) {
   return suffix_of<T>();
 }
 
-} // namespace fatal::time {
+} // namespace ftl::time {
 
 #endif // FATAL_INCLUDE_fatal_time_time_h

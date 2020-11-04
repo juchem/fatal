@@ -16,7 +16,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/interleave.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Inserts the element `D` between each pair of consecutive elements of the list.
@@ -34,6 +34,6 @@ using interleave = typename i_i::i<D, T>::type;
 template <typename D, typename T>
 using surround = typename i_i::s<D, T>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_interleave_h

@@ -24,7 +24,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 ///////////
 // tuple //
@@ -74,7 +74,7 @@ struct tuple {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  using map = fatal::list<Args...>;
+  using map = ftl::list<Args...>;
 
   /**
    * The `tuple_tags` type associated with this tuple.
@@ -278,7 +278,7 @@ struct tuple {
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <template <typename...> class Transform>
-  using apply = fatal::apply<Transform, Args...>;
+  using apply = ftl::apply<Transform, Args...>;
 
   /**
    * TODO: DOCUMENT AND TEST
@@ -288,7 +288,7 @@ struct tuple {
   template <typename... TPairs>
   using push_front = apply_to<
     push_front<typename tags::list, TPairs...>,
-    fatal::tuple
+    ftl::tuple
   >;
 
   /**
@@ -299,7 +299,7 @@ struct tuple {
   template <typename... TPairs>
   using push_back = apply_to<
     push_back<typename tags::list, TPairs...>,
-    fatal::tuple
+    ftl::tuple
   >;
 
   /**
@@ -398,13 +398,13 @@ class tuple_from {
   >
   class impl {
     template <typename T>
-    using pair = fatal::pair<
-      fatal::apply<TagTransform, T>,
-      fatal::apply<TypeTransform, T>
+    using pair = ftl::pair<
+      ftl::apply<TagTransform, T>,
+      ftl::apply<TypeTransform, T>
     >;
 
     template <typename T>
-    using map_entry_transform = fatal::pair<
+    using map_entry_transform = ftl::pair<
       TagTransform<first<T>>,
       TypeTransform<second<T>>
     >;
@@ -443,8 +443,8 @@ public:
    *    my_metadata<float, bool>,
    *    my_metadata<short, long>
    *  >::args<
-   *    fatal::get_member_type::tag,
-   *    fatal::get_member_type::type
+   *    ftl::get_member_type::tag,
+   *    ftl::get_member_type::type
    *  >;
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
@@ -480,8 +480,8 @@ public:
    *  //   pair<short, long>
    *  // >`
    *  using result = tuple_from<my_list>::list<
-   *    fatal::get_member_type::tag,
-   *    fatal::get_member_type::type
+   *    ftl::get_member_type::tag,
+   *    ftl::get_member_type::type
    *  >;
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
@@ -490,7 +490,7 @@ public:
     template <typename...> class TypeTransform = identity,
     template <typename...> class TagTransform = identity
   >
-  using list = fatal::apply<
+  using list = ftl::apply<
     impl<TagTransform, TypeTransform>::template list,
     Args...
   >;
@@ -531,7 +531,7 @@ public:
     template <typename...> class TypeTransform = identity,
     template <typename...> class TagTransform = identity
   >
-  using map = fatal::apply<
+  using map = ftl::apply<
     impl<TagTransform, TypeTransform>::template map,
     Args...
   >;
@@ -639,16 +639,16 @@ constexpr auto make_tuple(Args &&...args)
  */
 template <typename... Tags, typename... Args>
 constexpr auto make_tuple(std::tuple<Args...> &&tuple)
-  -> fatal::tuple<pair<Tags, Args>...>
+  -> ftl::tuple<pair<Tags, Args>...>
 {
-  return fatal::tuple<pair<Tags, Args>...>(std::move(tuple));
+  return ftl::tuple<pair<Tags, Args>...>(std::move(tuple));
 }
 
 template <typename... Tags, typename... Args>
 constexpr auto make_tuple(std::tuple<Args...> const &tuple)
-  -> fatal::tuple<pair<Tags, Args>...>
+  -> ftl::tuple<pair<Tags, Args>...>
 {
-  return fatal::tuple<pair<Tags, Args>...>(tuple);
+  return ftl::tuple<pair<Tags, Args>...>(tuple);
 }
 
 ////////////////////////////
@@ -672,6 +672,6 @@ struct builder<tuple<T...>, Tag, Type, Args...>:
 
 } // namespace tuple_impl {
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_tuple_h

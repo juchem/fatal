@@ -14,7 +14,7 @@
 #include <vector>
 #include <unordered_map>
 
-namespace fatal {
+namespace ftl {
 
 // TODO: properly implement tests
 
@@ -410,4 +410,4 @@ FATAL_TEST(circular_queue, regression_test_holder_long) {
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {

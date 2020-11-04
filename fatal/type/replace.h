@@ -12,11 +12,11 @@
 
 #include <fatal/type/impl/replace.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 using replace = impl_rp::in<T>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_replace_h

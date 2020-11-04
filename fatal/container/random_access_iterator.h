@@ -20,7 +20,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 
 template <typename T, bool>
@@ -211,7 +211,7 @@ private:
   size_type i_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

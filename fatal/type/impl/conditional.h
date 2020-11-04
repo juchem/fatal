@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_conditional_h
 #define FATAL_INCLUDE_fatal_type_impl_conditional_h
 
-namespace fatal {
+namespace ftl {
 namespace i_cnd {
 
 template <bool>
@@ -29,6 +29,6 @@ struct FATAL_HIDE_SYMBOL c<true> {
 };
 
 } // namespace i_cnd {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_conditional_h

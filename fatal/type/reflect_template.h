@@ -13,7 +13,7 @@
 #include <fatal/type/deprecated/type_list.h>
 #include <fatal/type/sequence.h>
 
-namespace fatal {
+namespace ftl {
 
 //////////////////////
 // reflect_template //
@@ -284,6 +284,6 @@ using reflect_values = typename reflect_template<T>::values;
 template <typename T>
 using reflect_types = typename reflect_template<T>::types;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_reflect_template_h

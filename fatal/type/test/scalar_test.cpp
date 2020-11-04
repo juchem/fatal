@@ -16,7 +16,7 @@
 
 #include <cstdint>
 
-namespace fatal {
+namespace ftl {
 
 using i10 = std::integral_constant<int, 10>;
 using d5_6 = std::ratio<56, 10>;
@@ -339,4 +339,4 @@ FATAL_TEST(bitwise_has_any, enum class) {
   FATAL_EXPECT_TRUE(bitwise_has_any(ECi::a, ECi::a, ECi::b, ECi::c));
 }
 
-} // namespace fatal {
+} // namespace ftl {

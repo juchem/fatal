@@ -20,7 +20,7 @@
 #include <utility>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 //////////////////////////////
 // BENCHMARK IMPLEMENTATION //
@@ -356,4 +356,4 @@ FATAL_S(s30_27, "000000000000000000000000000027");
 FATAL_S(s30_28, "000000000000000000000000000028");
 FATAL_S(s30_29, "000000000000000000000000000029");
 
-} // namespace fatal {
+} // namespace ftl {

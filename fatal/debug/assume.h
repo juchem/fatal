@@ -15,7 +15,7 @@
 #ifndef FATAL_INCLUDE_fatal_debug_assume_h
 #define FATAL_INCLUDE_fatal_debug_assume_h
 
-namespace fatal {
+namespace ftl {
 
 // TODO: allow assumption on types that don't have an `out << value` overload
 
@@ -24,7 +24,7 @@ namespace fatal {
 /////////////////////////
 
 #define FATAL_UNREACHABLE FATAL_NULLARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::constant<std::false_type>, "unreachable code reached" \
+  ::ftl::fn::constant<std::false_type>, "unreachable code reached" \
 )
 
 ///////////////////////
@@ -35,35 +35,35 @@ namespace fatal {
 #define FATAL_NOT_ZERO(Value) FATAL_NE(0, Value)
 
 #define FATAL_IS_FALSE(Value) FATAL_UNARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::negate, "is false", Value \
+  ::ftl::fn::negate, "is false", Value \
 )
 
 #define FATAL_IS_TRUE(Value) FATAL_UNARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::static_caster<bool>, "is true", Value \
+  ::ftl::fn::static_caster<bool>, "is true", Value \
 )
 
 #define FATAL_IS_POSITIVE(Value) FATAL_UNARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::is_positive, "is positive", Value \
+  ::ftl::fn::is_positive, "is positive", Value \
 )
 
 #define FATAL_IS_NEGATIVE(Value) FATAL_UNARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::is_negative, "is negative", Value \
+  ::ftl::fn::is_negative, "is negative", Value \
 )
 
 #define FATAL_NOT_NEGATIVE(Value) FATAL_UNARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::not_negative, "not negative", Value \
+  ::ftl::fn::not_negative, "not negative", Value \
 )
 
 #define FATAL_NOT_POSITIVE(Value) FATAL_UNARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::not_positive, "not positive", Value \
+  ::ftl::fn::not_positive, "not positive", Value \
 )
 
 #define FATAL_IS_NULL(Value) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::equal, "is null", nullptr, Value \
+  ::ftl::fn::equal, "is null", nullptr, Value \
 )
 
 #define FATAL_NOT_NULL(Value) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::not_equal, "not null", nullptr, Value \
+  ::ftl::fn::not_equal, "not null", nullptr, Value \
 )
 
 ////////////////////////
@@ -71,22 +71,22 @@ namespace fatal {
 ////////////////////////
 
 #define FATAL_EQ(LHS, RHS) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::equal, "equal to", LHS, RHS \
+  ::ftl::fn::equal, "equal to", LHS, RHS \
 )
 #define FATAL_NE(LHS, RHS) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::not_equal, "not equal to", LHS, RHS \
+  ::ftl::fn::not_equal, "not equal to", LHS, RHS \
 )
 #define FATAL_LT(LHS, RHS) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::less, "less than", LHS, RHS \
+  ::ftl::fn::less, "less than", LHS, RHS \
 )
 #define FATAL_LE(LHS, RHS) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::less_equal, "less than or equal to", LHS, RHS \
+  ::ftl::fn::less_equal, "less than or equal to", LHS, RHS \
 )
 #define FATAL_GT(LHS, RHS) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::greater, "greater than", LHS, RHS \
+  ::ftl::fn::greater, "greater than", LHS, RHS \
 )
 #define FATAL_GE(LHS, RHS) FATAL_BINARY_ASSUMPTION_IMPL( \
-  ::fatal::fn::greater_equal, "greater than or equal to", LHS, RHS \
+  ::ftl::fn::greater_equal, "greater than or equal to", LHS, RHS \
 )
 
 ////////////////////////////
@@ -98,35 +98,35 @@ namespace fatal {
 // TODO: ALLOW SHORT-CIRCUITING
 
 #define FATAL_ASSUME_SINGLE(Assumption) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_single(Assumption) \
+  ::ftl::detail::assume_impl::assume_single(Assumption) \
 )
 
 #define FATAL_ASSUME_ONE(...) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_one(__VA_ARGS__) \
+  ::ftl::detail::assume_impl::assume_one(__VA_ARGS__) \
 )
 
 #define FATAL_ASSUME_ANY(...) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_any(__VA_ARGS__) \
+  ::ftl::detail::assume_impl::assume_any(__VA_ARGS__) \
 )
 
 #define FATAL_ASSUME_ALL(...) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_all(__VA_ARGS__) \
+  ::ftl::detail::assume_impl::assume_all(__VA_ARGS__) \
 )
 
 #define FATAL_ASSUME_NONE(...) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_none(__VA_ARGS__) \
+  ::ftl::detail::assume_impl::assume_none(__VA_ARGS__) \
 )
 
 #define FATAL_ASSUME_ALL_OR_NONE(...) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_all_or_none(__VA_ARGS__) \
+  ::ftl::detail::assume_impl::assume_all_or_none(__VA_ARGS__) \
 )
 
 #define FATAL_ASSUME_IF(...) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_if(__VA_ARGS__) \
+  ::ftl::detail::assume_impl::assume_if(__VA_ARGS__) \
 )
 
 #define FATAL_ASSUME_IF_ELSE(...) FATAL_DEBUG_STATEMENT( \
-  ::fatal::detail::assume_impl::assume_if_else(__VA_ARGS__) \
+  ::ftl::detail::assume_impl::assume_if_else(__VA_ARGS__) \
 )
 
 ////////////////////////////////////
@@ -179,31 +179,31 @@ namespace fatal {
 #ifdef NDEBUG
 
 # define FATAL_NULLARY_ASSUMPTION_IMPL(Assumption, Message) \
-  ::fatal::fn::constant<std::true_type>
+  ::ftl::fn::constant<std::true_type>
 
 # define FATAL_UNARY_ASSUMPTION_IMPL(Assumption, Message, Value) \
-  ::fatal::fn::constant<std::true_type>
+  ::ftl::fn::constant<std::true_type>
 
 # define FATAL_BINARY_ASSUMPTION_IMPL(Assumption, Message, LHS, RHS) \
-  ::fatal::fn::constant<std::true_type>
+  ::ftl::fn::constant<std::true_type>
 
 // debug build
 #else // NDEBUG
 
 // TODO: USE source_info HERE
 #define FATAL_NULLARY_ASSUMPTION_IMPL(Assumption, Message) \
-  ::fatal::detail::assume_impl::create_nullary_assumption<Assumption>( \
+  ::ftl::detail::assume_impl::create_nullary_assumption<Assumption>( \
     __FILE__, __LINE__, Message \
   )
 
 #define FATAL_UNARY_ASSUMPTION_IMPL(Assumption, Message, Value) \
-  ::fatal::detail::assume_impl::create_unary_assumption<Assumption>( \
+  ::ftl::detail::assume_impl::create_unary_assumption<Assumption>( \
     Value,  FATAL_TO_STR(Value), \
     __FILE__, __LINE__, Message \
   )
 
 #define FATAL_BINARY_ASSUMPTION_IMPL(Assumption, Message, LHS, RHS) \
-  ::fatal::detail::assume_impl::create_binary_assumption<Assumption>( \
+  ::ftl::detail::assume_impl::create_binary_assumption<Assumption>( \
     LHS,  RHS, FATAL_TO_STR(LHS), FATAL_TO_STR(RHS), \
     __FILE__, __LINE__, Message \
   )
@@ -645,6 +645,6 @@ void assume_if_else(
 
 #endif // NDEBUG
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_debug_assume_h

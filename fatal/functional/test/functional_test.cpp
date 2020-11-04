@@ -21,7 +21,7 @@
 #include <cstdint>
 #include <cstring>
 
-namespace fatal {
+namespace ftl {
 namespace fn {
 
 FATAL_TEST(functional, no_op) {
@@ -106,7 +106,7 @@ FATAL_TEST(functional, static_caster) {
 FATAL_TEST(functional, reinterpret_caster) {
   reinterpret_caster<char const *> f;
 
-  char const str[8] = "fatal::";
+  char const str[8] = "ftl::";
   FATAL_EXPECT_EQ(sizeof(str), std::strlen(str) + 1); // sanity
 
   std::int64_t x;
@@ -1324,4 +1324,4 @@ FATAL_TEST(functional, tuple_comparer) {
 }
 
 } // namespace fn {
-} // namespace fatal {
+} // namespace ftl {

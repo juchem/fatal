@@ -23,7 +23,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace variant_traits_impl {
 struct metadata_tag {};
@@ -42,9 +42,9 @@ struct metadata_tag {};
  */
 #define FATAL_REGISTER_VARIANT_TRAITS(Traits, ...) \
   FATAL_REGISTER_TYPE( \
-    ::fatal::detail::variant_traits_impl::metadata_tag, \
+    ::ftl::detail::variant_traits_impl::metadata_tag, \
     Traits::type, \
-    ::fatal::curry<::fatal::applier<::fatal::list>, Traits>::apply< \
+    ::ftl::curry<::ftl::applier<::ftl::list>, Traits>::apply< \
       __VA_ARGS__ \
     > \
   )
@@ -217,6 +217,6 @@ struct variant_member_descriptor {
   }
 };
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_variant_traits_h

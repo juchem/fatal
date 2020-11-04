@@ -20,7 +20,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace i_s {
 
 // partition recursion
@@ -734,6 +734,6 @@ template <typename T, typename Less, typename By>
 struct FATAL_HIDE_SYMBOL Q<T, Less, By>: q<T, C<Less, By>> {};
 
 } // namespace i_s {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_sort_h

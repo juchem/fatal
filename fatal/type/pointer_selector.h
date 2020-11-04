@@ -14,7 +14,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Classes of pointers supported by `pointer_selector`,
@@ -345,6 +345,6 @@ struct shared {
 };
 
 } // namespace pointer_class {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_pointer_selector_h

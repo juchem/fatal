@@ -14,7 +14,7 @@
 #include <utility>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 template <typename Tokenizer, typename T>
 void tokenizer_test(T &&data, std::vector<char const *> const &expected) {
@@ -95,4 +95,4 @@ FATAL_TEST(tokenizer, csv) {
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {

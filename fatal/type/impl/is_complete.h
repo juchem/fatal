@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace impl_is_complete {
 
 template <typename T, std::size_t = sizeof(T)>
@@ -24,6 +24,6 @@ FATAL_HIDE_SYMBOL
 static std::false_type sfinae(...);
 
 } // namespace impl_is_complete {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_is_complete_h

@@ -12,7 +12,7 @@
 
 #include <fatal/type/impl/arithmetic.h>
 
-namespace fatal {
+namespace ftl {
 
 struct add {
   template <typename... Args>
@@ -39,6 +39,6 @@ struct modulo {
   using apply = typename impl_arithmetic::mod<Args...>::type;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_arithmetic_h

@@ -17,7 +17,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/apply.h>
 
-namespace fatal {
+namespace ftl {
 
 template <template <typename...> typename To, typename... Args>
 using apply_args = typename i_ap::a<To, Args...>::type;
@@ -55,7 +55,7 @@ struct FATAL_HIDE_SYMBOL curry_back {
   >::type;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

@@ -40,7 +40,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace test {
 
 // TODO: organize the order of components
@@ -59,15 +59,15 @@ namespace test {
     FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
     void operator ()(); \
     \
-    ::fatal::test::results Results; \
+    ::ftl::test::results Results; \
   }; \
   \
   static auto const RegistryPlaceholder \
-    = ::fatal::test::detail::test_impl::registry::get().add<Class>(); \
+    = ::ftl::test::detail::test_impl::registry::get().add<Class>(); \
   \
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
   std::size_t operator <<( \
-    ::fatal::test::detail::test_impl::registry_index_tag, \
+    ::ftl::test::detail::test_impl::registry_index_tag, \
     Class * \
   ) { \
     return RegistryPlaceholder; \
@@ -75,7 +75,7 @@ namespace test {
   \
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
   char const *operator <<( \
-    ::fatal::test::detail::test_impl::group_tag, \
+    ::ftl::test::detail::test_impl::group_tag, \
     Class * \
   ) { \
     return Case; \
@@ -83,15 +83,15 @@ namespace test {
   \
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
   char const *operator <<( \
-    ::fatal::test::detail::test_impl::name_tag, \
+    ::ftl::test::detail::test_impl::name_tag, \
     Class * \
   ) { \
     return Name; \
   } \
   \
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
-  ::fatal::source_info const &operator <<( \
-    ::fatal::test::detail::test_impl::source_tag, \
+  ::ftl::source_info const &operator <<( \
+    ::ftl::test::detail::test_impl::source_tag, \
     Class * \
   ) { \
     static auto source = FATAL_SOURCE_INFO(); \
@@ -99,8 +99,8 @@ namespace test {
   } \
   \
   FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL \
-  ::fatal::test::results &operator <<( \
-    ::fatal::test::detail::test_impl::result_tag, Class &subject \
+  ::ftl::test::results &operator <<( \
+    ::ftl::test::detail::test_impl::result_tag, Class &subject \
   ) { \
     return subject.Results; \
   } \
@@ -155,10 +155,10 @@ namespace test {
   FATAL_WARN_EQ(LHS, __VA_ARGS__)
 
 #define FATAL_WARN_TEMPLATE_COMPILES(...) \
-  FATAL_WARN_TRUE((::fatal::check_compilability<__VA_ARGS__>::value))
+  FATAL_WARN_TRUE((::ftl::check_compilability<__VA_ARGS__>::value))
 
 #define FATAL_WARN_TEMPLATE_DOESNT_COMPILE(...) \
-  FATAL_WARN_FALSE((::fatal::check_compilability<__VA_ARGS__>::value))
+  FATAL_WARN_FALSE((::ftl::check_compilability<__VA_ARGS__>::value))
 
 
 #define FATAL_EXPECT_UNREACHABLE() \
@@ -210,10 +210,10 @@ namespace test {
   FATAL_EXPECT_EQ(LHS, __VA_ARGS__)
 
 #define FATAL_EXPECT_TEMPLATE_COMPILES(...) \
-  FATAL_EXPECT_TRUE((::fatal::check_compilability<__VA_ARGS__>::value))
+  FATAL_EXPECT_TRUE((::ftl::check_compilability<__VA_ARGS__>::value))
 
 #define FATAL_EXPECT_TEMPLATE_DOESNT_COMPILE(...) \
-  FATAL_EXPECT_FALSE((::fatal::check_compilability<__VA_ARGS__>::value))
+  FATAL_EXPECT_FALSE((::ftl::check_compilability<__VA_ARGS__>::value))
 
 
 #define FATAL_ASSERT_UNREACHABLE() \
@@ -264,11 +264,11 @@ namespace test {
 
 // TODO: FIX IT SO IT DISPLAYS THE PROPER MESSAGE OTHER THAN (is not true)
 #define FATAL_ASSERT_TEMPLATE_COMPILES(...) \
-  FATAL_ASSERT_TRUE((::fatal::check_compilability<__VA_ARGS__>::value))
+  FATAL_ASSERT_TRUE((::ftl::check_compilability<__VA_ARGS__>::value))
 
 // TODO: FIX IT SO IT DISPLAYS THE PROPER MESSAGE OTHER THAN (is not true)
 #define FATAL_ASSERT_TEMPLATE_DOESNT_COMPILE(...) \
-  FATAL_ASSERT_FALSE((::fatal::check_compilability<__VA_ARGS__>::value))
+  FATAL_ASSERT_FALSE((::ftl::check_compilability<__VA_ARGS__>::value))
 
 using clock = std::chrono::system_clock;
 using duration_t = clock::duration;
@@ -463,10 +463,10 @@ struct FATAL_HIDE_SYMBOL abort_test_run_exception {};
   ) << [&]()
 
 #define FATAL_IMPL_TEST_WRAP_CHECK(Category, Predicate, ...) \
-  ::fatal::test::detail::test_impl::make_check_wrapper< \
-    ::fatal::test::detail::test_impl::categories::Category \
+  ::ftl::test::detail::test_impl::make_check_wrapper< \
+    ::ftl::test::detail::test_impl::categories::Category \
   >( \
-    ::fatal::test::detail::test_impl::predicates::Predicate, \
+    ::ftl::test::detail::test_impl::predicates::Predicate, \
     FATAL_SOURCE_INFO(), \
     __VA_ARGS__ \
   )
@@ -1603,7 +1603,7 @@ int run_one(TOut &out, std::string const &full_name) {
 }
 
 } // namespace test {
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

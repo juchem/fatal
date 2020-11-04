@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 struct foo { using xyz = int; };
 struct bar { typedef int xyz; };
@@ -53,4 +53,4 @@ FATAL_TEST(has_type, has_type) {
   FATAL_EXPECT_SAME<std::false_type, has_type::id::apply<iqux>>();
 }
 
-} // namespace fatal {
+} // namespace ftl {

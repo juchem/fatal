@@ -13,7 +13,7 @@
 #include <fatal/type/inherit.h>
 #include <fatal/type/pair.h>
 
-namespace fatal {
+namespace ftl {
 namespace impl_fnd {
 
 // find sfinae //
@@ -47,6 +47,6 @@ struct f<List<Args...>> {
 };
 
 } // namespace impl_fnd {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_find_h

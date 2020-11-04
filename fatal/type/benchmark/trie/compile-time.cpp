@@ -5,7 +5,7 @@
 #include <string>
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
   for (std::string needle; std::cin >> needle; ) {
     std::cout << needle << ": " << std::boolalpha

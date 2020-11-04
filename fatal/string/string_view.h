@@ -28,7 +28,7 @@ FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 FATAL_DIAGNOSTIC_IGNORE_SHADOW
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 
 template <typename U>
@@ -60,8 +60,8 @@ struct string_view {
 
   constexpr string_view(): begin_(nullptr), end_(nullptr) {}
 
-  constexpr string_view(fatal::string_view const &) = default;
-  constexpr string_view(fatal::string_view &&) = default;
+  constexpr string_view(ftl::string_view const &) = default;
+  constexpr string_view(ftl::string_view &&) = default;
 
   constexpr string_view(const_iterator begin, const_iterator end):
     begin_(begin),
@@ -127,7 +127,7 @@ struct string_view {
     assert(begin_ <= end_);
   }
 
-  constexpr bool starts_with(fatal::string_view start) const {
+  constexpr bool starts_with(ftl::string_view start) const {
     return start.size() <= size()
       && head(start.size()) == start;
   }
@@ -177,7 +177,7 @@ struct string_view {
     return std::find(begin_ + offset, end_, needle);
   }
 
-  size_type naive_search(fatal::string_view needle) const {
+  size_type naive_search(ftl::string_view needle) const {
     // TODO: use optimized find char then follow up with std::equal for the remaining characters
     auto const haystack_size = size();
     auto const needle_size = needle.size();
@@ -522,8 +522,8 @@ struct string_view {
     return begin_ == end_;
   }
 
-  string_view &operator =(fatal::string_view const &) = default;
-  string_view &operator =(fatal::string_view &&) = default;
+  string_view &operator =(ftl::string_view const &) = default;
+  string_view &operator =(ftl::string_view &&) = default;
 
   constexpr const_iterator cbegin() const { return begin_; }
   constexpr const_iterator begin() const { return begin_; }
@@ -701,7 +701,7 @@ namespace udl {
 namespace string {
 
 template <typename T, T... Values>
-constexpr fatal::string_view operator ""_view() {
+constexpr ftl::string_view operator ""_view() {
   return z_view<std::integer_sequence<T, Values...>>();;
 }
 
@@ -772,7 +772,7 @@ bool operator >=(string_view lhs, T const &rhs) { return !(lhs < rhs); }
 template <typename T, typename = detail::safe_overload<string_view, T>>
 bool operator >=(T const &lhs, string_view rhs) { return !(rhs > lhs); }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

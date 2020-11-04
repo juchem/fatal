@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 struct tag1 {};
 struct tag2 {};
@@ -43,7 +43,7 @@ struct mO4 {};
 
 struct nf {};
 
-} // namespace fatal {
+} // namespace ftl {
 
 namespace other {
 
@@ -59,15 +59,15 @@ struct m1 {};
 struct m2 {};
 
 FATAL_REGISTER_TYPE(other::tag0, other::key0, other::m0);
-FATAL_REGISTER_TYPE(other::tag0, other::key1, fatal::mO0);
+FATAL_REGISTER_TYPE(other::tag0, other::key1, ftl::mO0);
 
-FATAL_REGISTER_TYPE(other::tag0, fatal::keyO0, other::m1);
-FATAL_REGISTER_TYPE(other::tag0, fatal::keyO2, fatal::mO1);
-FATAL_REGISTER_TYPE(fatal::tagO0, other::key2, fatal::mO3);
+FATAL_REGISTER_TYPE(other::tag0, ftl::keyO0, other::m1);
+FATAL_REGISTER_TYPE(other::tag0, ftl::keyO2, ftl::mO1);
+FATAL_REGISTER_TYPE(ftl::tagO0, other::key2, ftl::mO3);
 
 } // namespace other {
 
-namespace fatal {
+namespace ftl {
 
 FATAL_REGISTER_TYPE(tag1, key1, m1);
 FATAL_REGISTER_TYPE(tag1, key2, m2);
@@ -137,4 +137,4 @@ FATAL_TEST(registry, registry_lookup) {
   FATAL_EXPECT_SAME<mO4,  registry_lookup<tagO0, other::key3>>();
 }
 
-} // namespace fatal {
+} // namespace ftl {

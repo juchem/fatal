@@ -19,7 +19,7 @@
 #include <tuple>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace tuple_tags_impl {
 
@@ -46,7 +46,7 @@ struct tuple_tags {
    *
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
-  using list = fatal::list<Tags...>;
+  using list = ftl::list<Tags...>;
 
   /**
    *  TODO: DOCUMENT AND TEST
@@ -127,7 +127,7 @@ struct tuple_tags {
    * @author: Marcelo Juchem <marcelo@fb.com>
    */
   template <typename Tuple>
-  using map = fatal::list<
+  using map = ftl::list<
     pair<Tags, type_of<Tags, Tuple>>...
   >;
 
@@ -200,7 +200,7 @@ struct tuple_tags {
    */
   template <typename Tuple, typename V, typename... VArgs>
   static constexpr bool foreach(Tuple &&tuple, V &&visitor, VArgs &&...args) {
-    return fatal::foreach<list>(
+    return ftl::foreach<list>(
       detail::tuple_tags_impl::foreach_visitor(),
       std::forward<Tuple>(tuple),
       std::forward<V>(visitor),
@@ -235,6 +235,6 @@ using tuple_tags_from = typename reflect_template<T>::types
   ::template transform<TagTransform>
   ::template apply<tuple_tags>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_tuple_tags_h

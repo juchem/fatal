@@ -12,7 +12,7 @@
 
 #include <fatal/type/impl/void.h>
 
-namespace fatal {
+namespace ftl {
 
 ////////////
 // void_t //
@@ -35,6 +35,6 @@ namespace fatal {
 template <typename... Ts>
 using void_t = typename detail::void_impl::void_t_<Ts...>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_void_h

@@ -32,7 +32,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace benchmark {
 
 /**
@@ -53,14 +53,14 @@ namespace benchmark {
 
 #define FATAL_IMPL_BENCHMARK(Class, Group, Name, UserLoop, Iterations) \
   class FATAL_HIDE_SYMBOL Class { \
-    using timer = ::fatal::benchmark::detail::registry::timer; \
+    using timer = ::ftl::benchmark::detail::registry::timer; \
     \
-    ::fatal::benchmark::controller<timer> benchmark; \
+    ::ftl::benchmark::controller<timer> benchmark; \
     \
   public: \
     Class(timer &result): benchmark(result) {} \
     \
-    void operator ()(::fatal::benchmark::iterations Iterations) \
+    void operator ()(::ftl::benchmark::iterations Iterations) \
     FATAL_CONDITIONAL(UserLoop)(;)( \
       { \
         while (Iterations--) { \
@@ -75,19 +75,19 @@ namespace benchmark {
   namespace { \
   static auto const FATAL_UID( \
     FATAL_CAT(Class, FATAL_CAT(_, benchmark_registry)) \
-  ) = ::fatal::benchmark::detail::registry::get().add<Class>(); \
+  ) = ::ftl::benchmark::detail::registry::get().add<Class>(); \
   } \
   \
-  char const *operator <<(::fatal::benchmark::detail::group_tag, Class *) { \
+  char const *operator <<(::ftl::benchmark::detail::group_tag, Class *) { \
     return FATAL_TO_STR(Group); \
   } \
   \
-  char const *operator <<(::fatal::benchmark::detail::name_tag, Class *) { \
+  char const *operator <<(::ftl::benchmark::detail::name_tag, Class *) { \
     return FATAL_TO_STR(Name); \
   } \
   \
   void Class::operator ()(FATAL_CONDITIONAL(UserLoop)( \
-    ::fatal::benchmark::iterations Iterations \
+    ::ftl::benchmark::iterations Iterations \
   )())
 
 /**
@@ -423,7 +423,7 @@ results run(TOut &out) {
 }
 
 } // namespace benchmark {
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

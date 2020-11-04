@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 struct foo {};
 
@@ -177,4 +177,4 @@ FATAL_TEST(reflect_template_typed_value_list, is_same_tvl) {
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {

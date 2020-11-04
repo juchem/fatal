@@ -13,7 +13,7 @@
 #include <fatal/type/apply.h>
 #include <fatal/type/impl/reverse.h>
 
-namespace fatal {
+namespace ftl {
 namespace i_rev {
 
 template <typename> struct r;
@@ -313,6 +313,6 @@ struct S<
 };
 
 } // namespace i_rev {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_reverse_h

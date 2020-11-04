@@ -23,7 +23,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/trie.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Visitor signature:
@@ -129,7 +129,7 @@ static bool trie_longest_match(Begin &&begin, End &&end) {
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

@@ -17,7 +17,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 
 // TODO: DOCUMENT
 template <typename T>
@@ -236,6 +236,6 @@ private:
   bool empty_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_optional_h

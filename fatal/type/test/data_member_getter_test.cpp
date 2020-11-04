@@ -19,7 +19,7 @@
 
 // TODO: ADD TESTS FOR try_get AND try_getter
 
-namespace fatal {
+namespace ftl {
 
 //////////////////////////////
 // FATAL_DATA_MEMBER_GETTER //
@@ -2143,4 +2143,4 @@ FATAL_TEST(chained_data_member_getter, getter) {
 # undef TEST_PREAMBLE_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

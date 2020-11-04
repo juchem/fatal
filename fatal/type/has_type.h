@@ -14,7 +14,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * This macro creates a class named `Class` that can check whether some
@@ -177,6 +177,6 @@ namespace has_type {
 # undef FATAL_IMPL_HAS_TYPE
 };
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_has_type_h

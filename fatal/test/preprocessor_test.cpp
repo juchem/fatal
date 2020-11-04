@@ -14,7 +14,7 @@
 #include <array>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, typename... Args>
 std::vector<typename std::decay<T>::type> to_vector(T &&value, Args &&...args) {
@@ -716,4 +716,4 @@ FATAL_TEST(preprocessor, fatal_uid) {
   FATAL_EXPECT_EQ(0, x);
 }
 
-} // namespace fatal {
+} // namespace ftl {

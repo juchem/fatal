@@ -12,7 +12,7 @@
 
 #include <fatal/type/constify.h>
 
-namespace fatal {
+namespace ftl {
 
 ///////////////////
 // constify_from //
@@ -52,6 +52,6 @@ struct constify_from<T, TFrom const> {
   using type = typename constify<T>::type;
 };
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_constify_from_h

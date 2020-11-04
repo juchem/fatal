@@ -17,7 +17,7 @@ struct flt {
 };
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
 # define OUTER(...) \
   do { \

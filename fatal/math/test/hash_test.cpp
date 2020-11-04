@@ -15,7 +15,7 @@
 
 #include <cstring>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(bytes_hasher, sanity_check) {
   auto const hello = "hello";
@@ -38,4 +38,4 @@ FATAL_TEST(bytes_hasher, sanity_check_2) {
   FATAL_EXPECT_EQ(r, u);
 }
 
-} // namespace fatal {
+} // namespace ftl {

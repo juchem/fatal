@@ -20,7 +20,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/get.h>
 
-namespace fatal {
+namespace ftl {
 
 template <
   typename T,
@@ -36,7 +36,7 @@ using pair_get = get<T, Key, get_first, get_second>;
 template <typename T, typename Key>
 using reverse_pair_get = get<T, Key, get_second, get_first>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

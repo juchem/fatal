@@ -14,7 +14,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 #define FATAL_IMPL_OCTAL_PARSE_TEST_CALLS(Fn) \
   do { \
@@ -162,4 +162,4 @@ FATAL_TEST(parser, literal) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

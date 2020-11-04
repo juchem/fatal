@@ -16,7 +16,7 @@
 #include <ratio>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 using value_type = long double;
 
@@ -303,4 +303,4 @@ FATAL_TEST(statistical_moments, state) {
   }
 }
 
-} // namespace fatal {
+} // namespace ftl {

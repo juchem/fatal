@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_test_parse_sequence_input_h
 #define FATAL_INCLUDE_fatal_type_test_parse_sequence_input_h
 
-namespace fatal {
+namespace ftl {
 
 // TODO: ADD EDGE CASES
 #define FATAL_IMPL_PARSE_SEQUENCE_TEST_CALLS(Fn) \
@@ -24,6 +24,6 @@ namespace fatal {
   Fn(std::size_t, 42, wchar_t, L'4', L'2'); \
   Fn(int, -56, wchar_t, L'-', L'5', L'6'); \
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_test_parse_sequence_input_h

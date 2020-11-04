@@ -19,7 +19,7 @@
 ////////////
 
 int main() {
-  fatal::benchmark::run(std::cout);
+  ftl::benchmark::run(std::cout);
 
   return 0;
 }

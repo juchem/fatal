@@ -35,7 +35,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/math/impl/numerics.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Returns the amount of bits that can be represented using the
@@ -796,7 +796,7 @@ using mersenne_number_exponent = std::integral_constant<
  *
  * @author: Marcelo Juchem <marcelo@fb.com>
  */
-using mersenne_primes = fatal::list<
+using mersenne_primes = ftl::list<
   mersenne_number<2>, // 3
   mersenne_number<3>, // 7
   mersenne_number<5>, // 31
@@ -898,7 +898,7 @@ private:
   continuous_type const adjustment_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

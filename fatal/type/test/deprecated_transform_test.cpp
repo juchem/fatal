@@ -22,7 +22,7 @@
 #include <utility>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 struct X0 {};
 struct X1 {};
@@ -2694,4 +2694,4 @@ FATAL_TEST(type_get, second_comparer) {
   ));
 }
 
-} // namespace fatal {
+} // namespace ftl {

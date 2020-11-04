@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 void foo();
 int bar(long);
@@ -59,4 +59,4 @@ FATAL_TEST(reflect_function, static_functions) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

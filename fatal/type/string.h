@@ -16,7 +16,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace udl {
 namespace string {
 
@@ -27,7 +27,7 @@ constexpr std::integer_sequence<T, Values...> operator ""_str() {
 
 } // namespace string {
 } // namespace udl {
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

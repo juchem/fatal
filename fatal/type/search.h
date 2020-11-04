@@ -27,7 +27,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/search.h>
 
-namespace fatal {
+namespace ftl {
 
 // TODO: ADD EXAMPLES TO THE DOCUMENTATION
 
@@ -346,7 +346,7 @@ static constexpr decltype(auto) index_find(
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

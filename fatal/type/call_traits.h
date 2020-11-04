@@ -21,7 +21,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace call_traits_impl {
 
@@ -204,8 +204,8 @@ public:
       template < \
         typename U, \
         typename = decltype( \
-          ::fatal::detail::call_traits_impl::arg<U>().__VA_ARGS__( \
-            ::fatal::detail::call_traits_impl::arg<UArgs>()... \
+          ::ftl::detail::call_traits_impl::arg<U>().__VA_ARGS__( \
+            ::ftl::detail::call_traits_impl::arg<UArgs>()... \
           ) \
         ) \
       > \
@@ -223,7 +223,7 @@ public:
         typename U, \
         typename = decltype( \
           U::__VA_ARGS__( \
-            ::fatal::detail::call_traits_impl::arg<UArgs>()... \
+            ::ftl::detail::call_traits_impl::arg<UArgs>()... \
           ) \
         ) \
       > \
@@ -877,7 +877,7 @@ struct FATAL_HIDE_SYMBOL call_if<false> {
 
 } // namespace call_traits_impl {
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

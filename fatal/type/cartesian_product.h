@@ -12,7 +12,7 @@
 
 #include <fatal/type/impl/cartesian_product.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Computes the cartesian product between two lists.
@@ -50,10 +50,10 @@ template <
 >
 struct cartesian_product {
   template <typename LHS, typename RHS>
-  using apply = fatal::cartesian_product<Outer, Inner, LHS, RHS>;
+  using apply = ftl::cartesian_product<Outer, Inner, LHS, RHS>;
 };
 
 } // namespace bound {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_cartesian_product_h

@@ -14,7 +14,7 @@
 
 #include <fatal/type/impl/compilability.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Evaluates to either `std::true_type` or `std::false_type` telling whether
@@ -34,6 +34,6 @@ using check_compilability = decltype(
   )
 );
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_compilability_h

@@ -20,7 +20,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 char least_significant_hex_digit(std::uint8_t c) {
@@ -127,7 +127,7 @@ std::string string_as_literal(std::string const &s) {
   return data_as_literal<Style>(s);
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

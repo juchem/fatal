@@ -13,7 +13,7 @@
 #include <fatal/type/inherit.h>
 #include <fatal/type/pair.h>
 
-namespace fatal {
+namespace ftl {
 namespace impl_gt {
 
 template <typename Key, typename Value>
@@ -31,6 +31,6 @@ struct FATAL_HIDE_SYMBOL g<List<Args...>> {
 };
 
 } // namespace impl_gt {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_get_h

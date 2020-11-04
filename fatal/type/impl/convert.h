@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_convert_h
 #define FATAL_INCLUDE_fatal_type_impl_convert_h
 
-namespace fatal {
+namespace ftl {
 namespace impl_cv {
 
 // as_sequence //
@@ -107,6 +107,6 @@ struct FATAL_HIDE_SYMBOL t<To, Variadics<T, Values...>> {
 };
 
 } // namespace impl_cv {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_convert_h

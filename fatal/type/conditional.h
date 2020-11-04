@@ -14,7 +14,7 @@
 
 #include <fatal/type/impl/conditional.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Equivalent to `std::conditional_t`.
@@ -25,6 +25,6 @@ namespace fatal {
 template <bool C, typename T, typename F>
 using conditional = typename i_cnd::c<C>::template apply<T, F>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_conditional_h

@@ -23,7 +23,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/array.h>
 
-namespace fatal {
+namespace ftl {
 
 template <
   typename Array,
@@ -80,7 +80,7 @@ using string_view_array_filtered = i_a::SF<
 template <typename Array, typename StringView>
 using string_view_array = i_a::S<Array, StringView>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

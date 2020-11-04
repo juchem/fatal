@@ -14,7 +14,7 @@
 #include <cassert>
 #include <cstdint>
 
-namespace fatal {
+namespace ftl {
 
 class ascii7_character_set {
   using set_type = smallest_unsigned_integral<128>;
@@ -35,6 +35,6 @@ private:
   set_type set_ = 0;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_string_ascii7_character_set_h

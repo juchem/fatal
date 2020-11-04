@@ -23,7 +23,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string type_str(std::string &out, std::type_info const &type) {
@@ -93,7 +93,7 @@ std::string type_str_for(T &&) {
   return type_str<T>();
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

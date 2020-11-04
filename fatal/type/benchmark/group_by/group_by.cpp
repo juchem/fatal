@@ -20,7 +20,7 @@ struct key {
 };
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
 # define INNER(Inner) \
   prevent_optimization(group_by<input, key<Inner>>())

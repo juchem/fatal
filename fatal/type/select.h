@@ -18,7 +18,7 @@
 
 #include <fatal/type/impl/select.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename LHS, typename RHS, typename Less = less>
 using min = impl_sl::min<LHS, RHS, Less>;
@@ -38,6 +38,6 @@ using lmin = typename impl_sl::ln<Less, T, Filter...>::type;
 template <typename Less, typename T, template <typename...> class... Filter>
 using lmax = typename impl_sl::lx<Less, T, Filter...>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_select_h

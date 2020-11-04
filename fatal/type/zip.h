@@ -14,7 +14,7 @@
 
 #include <fatal/type/impl/zip.h>
 
-namespace fatal {
+namespace ftl {
 
 template <
   template <typename...> class Outer,
@@ -23,6 +23,6 @@ template <
 >
 using zip = typename impl_zp::zp<Outer, Inner, L...>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_zip_h

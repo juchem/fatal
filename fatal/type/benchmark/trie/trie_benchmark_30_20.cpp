@@ -11,7 +11,7 @@
 
 #include <fatal/benchmark/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 CREATE_BENCHMARK(n30_len20,
   s20_00, s20_01, s20_02, s20_03, s20_04,
@@ -22,4 +22,4 @@ CREATE_BENCHMARK(n30_len20,
   s20_25, s20_26, s20_27, s20_28, s20_29
 );
 
-} // namespace fatal {
+} // namespace ftl {

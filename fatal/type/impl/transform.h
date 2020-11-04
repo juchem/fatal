@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_transform_h
 #define FATAL_INCLUDE_fatal_type_impl_transform_h
 
-namespace fatal {
+namespace ftl {
 namespace i_t {
 
 // transform //
@@ -110,6 +110,6 @@ struct FATAL_HIDE_SYMBOL c {
 };
 
 } // namespace i_t {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_transform_h

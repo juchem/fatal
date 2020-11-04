@@ -29,7 +29,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 
 static std::uintmax_t allocated = 0;
 static std::uintmax_t freed = 0;
@@ -2642,4 +2642,4 @@ FATAL_TEST(variant, memory_leak) {
   FATAL_EXPECT_EQ(allocated, freed);
 }
 
-} // namespace fatal {
+} // namespace ftl {

@@ -11,11 +11,11 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(constant, example) {
   using get_constant_double = get_constant<double>;
   FATAL_EXPECT_SAME<double, get_constant_double::apply<int>>();
 }
 
-} // namespace fatal {
+} // namespace ftl {

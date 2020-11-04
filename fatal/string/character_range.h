@@ -11,7 +11,7 @@
 
 #include <cassert>
 
-namespace fatal {
+namespace ftl {
 
 template <typename Char = char>
 struct character_range {
@@ -33,6 +33,6 @@ private:
   char_type const max_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_string_character_range_h

@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 ///////////////////
 // unitary_union //
@@ -82,6 +82,6 @@ struct unitary_union_impl<T, true, true> {
 template <typename T, bool AutoDestroy>
 using unitary_union = typename detail::unitary_union_impl<T, AutoDestroy>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_unitary_union_h

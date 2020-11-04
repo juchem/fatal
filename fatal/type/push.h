@@ -17,7 +17,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/push.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 using push = typename i_P::p<T>;
@@ -34,7 +34,7 @@ using push_back_if = typename i_P::B<Condition, T, Args...>::type;
 template <bool Condition, typename T, typename... Args>
 using push_front_if = typename i_P::F<Condition, T, Args...>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

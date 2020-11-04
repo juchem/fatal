@@ -13,7 +13,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_group_by_h
 #define FATAL_INCLUDE_fatal_type_impl_group_by_h
 
-namespace fatal {
+namespace ftl {
 namespace i_g {
 
 // TODO: SKIP 2 AT A TIME
@@ -294,6 +294,6 @@ struct FATAL_HIDE_SYMBOL F<List<>, Key, Filter, Pair, Grouping> {
 };
 
 } // namespace i_g {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_group_by_h

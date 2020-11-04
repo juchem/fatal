@@ -22,13 +22,13 @@
 
 #include <fatal/time/impl/print.h>
 
-namespace fatal::time {
+namespace ftl::time {
 
 template <typename Out, typename R, typename P>
 FATAL_HIDE_SYMBOL
 Out &&pretty_print(Out &&out, std::chrono::duration<R, P> time) {
   if (!time.count()) {
-    out << '0' << fatal::z_data<fatal::time::suffix_t<P>>();
+    out << '0' << ftl::z_data<ftl::time::suffix_t<P>>();
   } else {
     using ratios = reject<
       typename impl_tm::pretty_print_ratios, curry<applier<std::ratio_greater>, P>
@@ -42,6 +42,6 @@ Out &&pretty_print(Out &&out, std::chrono::duration<R, P> time) {
   return std::forward<Out>(out);
 }
 
-} // namespace fatal::time {
+} // namespace ftl::time {
 
 #endif // FATAL_INCLUDE_fatal_time_print_h

@@ -9,7 +9,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_is_template
 #define FATAL_INCLUDE_fatal_type_impl_is_template
 
-namespace fatal {
+namespace ftl {
 namespace i_it {
 
 template <template <typename...> typename, typename> struct FATAL_HIDE_SYMBOL ist;
@@ -19,6 +19,6 @@ struct FATAL_HIDE_SYMBOL ist<T, T<Args...>> {};
 
 
 } // namespace i_it {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_is_template

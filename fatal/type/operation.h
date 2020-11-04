@@ -20,7 +20,7 @@
 // IMPLEMENTATION FORWARD DECLARATION //
 ////////////////////////////////////////
 
-namespace fatal {
+namespace ftl {
 namespace detail {
 namespace operation_impl {
 
@@ -41,10 +41,10 @@ template <template <typename...> class, typename...> struct depth;
 template <template <typename...> class T, typename U>
 struct expand {
   template <typename... UArgs>
-  using front = fatal::apply<T, U, UArgs...>;
+  using front = ftl::apply<T, U, UArgs...>;
 
   template <typename... UArgs>
-  using back = fatal::apply<T, UArgs..., U>;
+  using back = ftl::apply<T, UArgs..., U>;
 };
 
 template <
@@ -54,10 +54,10 @@ template <
 >
 struct expand<T, U<Args...>> {
   template <typename... UArgs>
-  using front = fatal::apply<T, Args..., UArgs...>;
+  using front = ftl::apply<T, Args..., UArgs...>;
 
   template <typename... UArgs>
-  using back = fatal::apply<T, UArgs..., Args...>;
+  using back = ftl::apply<T, UArgs..., Args...>;
 };
 
 //////////////////////////
@@ -87,7 +87,7 @@ namespace operation_impl {
 template <typename... Args>
 struct list {
   template <template <typename...> class T>
-  using apply = fatal::apply<T, Args...>;
+  using apply = ftl::apply<T, Args...>;
 
   template <typename... Suffix>
   using push_back = list<Args..., Suffix...>;
@@ -119,7 +119,7 @@ struct depth<Which, Terminal> {
     typename... Prefix
   >
   using apply = typename Results::template push_back<
-    fatal::apply<Row, Prefix..., Terminal>
+    ftl::apply<Row, Prefix..., Terminal>
   >;
 };
 
@@ -150,6 +150,6 @@ struct breadth<list<Prefix...>> {
 } // namespace expand_recursive_map {
 } // namespace operation_impl {
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_operation_h

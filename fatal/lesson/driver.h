@@ -25,7 +25,7 @@
 #include <vector>
 
 int main() {
-  fatal::lesson::registry::run();
+  ftl::lesson::registry::run();
   return 0;
 }
 

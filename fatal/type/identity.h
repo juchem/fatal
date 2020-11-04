@@ -15,7 +15,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Helper alias similar to std::decay_t, that resolves to the type
@@ -42,7 +42,7 @@ struct FATAL_HIDE_SYMBOL get_identity {
   using apply = T;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

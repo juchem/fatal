@@ -13,18 +13,18 @@
 // production build
 #ifdef NDEBUG
 
-namespace fatal {
+namespace ftl {
 
 using debug_mode = std::false_type;
 
 # define FATAL_DEBUG_ONLY(...)
-# define FATAL_DEBUG_STATEMENT(...) ::fatal::fn::no_op()
+# define FATAL_DEBUG_STATEMENT(...) ::ftl::fn::no_op()
 # define FATAL_DEBUG_BLOCK for (;false;)
 # define FATAL_DEBUG_MEMBER_BLOCK for (;false;)
 
 # define FATAL_TODO(Message) for (;false;)
 
-} // namespace fatal {
+} // namespace ftl {
 
 // debug build
 #else // NDEBUG
@@ -33,14 +33,14 @@ using debug_mode = std::false_type;
 
 # include <cstdlib>
 
-namespace fatal {
+namespace ftl {
 
 using debug_mode = std::true_type;
 
 # define FATAL_DEBUG_ONLY(...) __VA_ARGS__
 # define FATAL_DEBUG_STATEMENT(...) __VA_ARGS__
-# define FATAL_DEBUG_BLOCK ::fatal::detail::debug_impl::debug_block() + [&]()
-# define FATAL_DEBUG_MEMBER_BLOCK ::fatal::detail::debug_impl::debug_block() \
+# define FATAL_DEBUG_BLOCK ::ftl::detail::debug_impl::debug_block() + [&]()
+# define FATAL_DEBUG_MEMBER_BLOCK ::ftl::detail::debug_impl::debug_block() \
   + [this, &]()
 
 # define FATAL_TODO(Message) \
@@ -62,7 +62,7 @@ struct debug_block {
 
 } // namespace debug_impl {
 } // namespace detail {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // NDEBUG
 #endif // FATAL_INCLUDE_fatal_debug_debug_h

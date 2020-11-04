@@ -30,7 +30,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 void append(std::string &out, bool from) {
@@ -234,7 +234,7 @@ std::string &to_string(std::string &s) { return s; }
 FATAL_ALWAYS_INLINE FATAL_HIDE_SYMBOL
 std::string &&to_string(std::string &&s) { return std::move(s); }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

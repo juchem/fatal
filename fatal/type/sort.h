@@ -23,7 +23,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/sort.h>
 
-namespace fatal {
+namespace ftl {
 
 // `Pair` is guaranteed to be instantiated at most once
 template <typename T, typename Filter, template <typename...> typename Pair = pair>
@@ -51,7 +51,7 @@ using sequence_sort_by = sequence_sort<T, less, By...>;
 template  <typename LHS, typename RHS>
 using merge = typename i_s::M<LHS, RHS>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

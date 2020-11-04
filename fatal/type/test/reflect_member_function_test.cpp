@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 struct foo {
   void noncv();
@@ -118,4 +118,4 @@ FATAL_TEST(reflect_member_function, reflect_member_function) {
 
 #undef CHECK_REFLECT
 
-} // namespace fatal {
+} // namespace ftl {

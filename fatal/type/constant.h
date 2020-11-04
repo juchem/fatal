@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * A metafunction which, when partially applied to one type `C`, always

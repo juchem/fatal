@@ -23,7 +23,7 @@ struct X {};
 struct Y {};
 struct Z {};
 
-namespace fatal {
+namespace ftl {
 
 #define CHECK_IMPL(Fn, ...) \
   do { \
@@ -76,7 +76,7 @@ FATAL_TEST(tuple, type) {
 template <typename Types, typename TActual>
 struct check_type_of_visitor {
   template <typename Tag, std::size_t Index>
-  void operator ()(fatal::indexed<Tag, Index>) const {
+  void operator ()(ftl::indexed<Tag, Index>) const {
     FATAL_EXPECT_SAME<
       at<Types, Index>,
       typename TActual::template type_of<Tag>
@@ -195,7 +195,7 @@ void check_get_const(TData &&...data) {
   static_assert(sizeof...(Tags) == sizeof...(TData), "size mismatch");
 
   auto const tuple = std::make_tuple(data...);
-  fatal::tuple<
+  ftl::tuple<
     pair<Tags, typename std::decay<TData>::type>...
   > const actual(std::forward<TData>(data)...);
 
@@ -211,7 +211,7 @@ void check_get(TData &&...data) {
   static_assert(sizeof...(Tags) == sizeof...(TData), "size mismatch");
 
   auto const tuple = std::make_tuple(data...);
-  fatal::tuple<pair<Tags, typename std::decay<TData>::type>...> actual(
+  ftl::tuple<pair<Tags, typename std::decay<TData>::type>...> actual(
     std::forward<TData>(data)...
   );
 
@@ -227,7 +227,7 @@ void check_tuple_const(TData &&...data) {
   static_assert(sizeof...(Tags) == sizeof...(TData), "size mismatch");
 
   auto const tuple = std::make_tuple(data...);
-  fatal::tuple<
+  ftl::tuple<
     pair<Tags, typename std::decay<TData>::type>...
   > const actual(std::forward<TData>(data)...);
 
@@ -243,7 +243,7 @@ void check_tuple(TData &&...data) {
   static_assert(sizeof...(Tags) == sizeof...(TData), "size mismatch");
 
   auto const tuple = std::make_tuple(data...);
-  fatal::tuple<pair<Tags, typename std::decay<TData>::type>...> actual(
+  ftl::tuple<pair<Tags, typename std::decay<TData>::type>...> actual(
     std::forward<TData>(data)...
   );
 
@@ -281,7 +281,7 @@ void check_make_tuple(TData &&...data) {
   auto const actual = make_tuple<Tags...>(std::forward<TData>(data)...);
 
   FATAL_EXPECT_SAME<
-    fatal::tuple<pair<Tags, typename std::decay<TData>::type>...>,
+    ftl::tuple<pair<Tags, typename std::decay<TData>::type>...>,
     typename std::decay<decltype(actual)>::type
   >();
 
@@ -299,7 +299,7 @@ void check_make_tuple_tuple(TData &&...data) {
   auto const actual = make_tuple<Tags...>(tuple);
 
   FATAL_EXPECT_SAME<
-    fatal::tuple<pair<Tags, typename std::decay<TData>::type>...>,
+    ftl::tuple<pair<Tags, typename std::decay<TData>::type>...>,
     typename std::decay<decltype(actual)>::type
   >();
 
@@ -375,4 +375,4 @@ FATAL_TEST(tuple_from, map) {
   >();
 }
 
-} // namespace fatal {
+} // namespace ftl {

@@ -14,7 +14,7 @@
 
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 template <typename...> struct debugged;
 
@@ -48,7 +48,7 @@ template <typename...> struct debugged;
  *  };
  *
  *  void bar() {
- *    // will print `fatal::debugged<the_unknown_type>` to the compiler output
+ *    // will print `ftl::debugged<the_unknown_type>` to the compiler output
  *    foo<the_unknown_type>::do_something();
  *  }
  *
@@ -60,13 +60,13 @@ template <typename...> struct debugged;
  *  }
  *
  *  void bar() {
- *    // will print `fatal::debugged<A, B, C>` to the compiler output
+ *    // will print `ftl::debugged<A, B, C>` to the compiler output
  *    foo<A, B, C>();
  *  }
  *
  * @author: Marcelo Juchem <juchem at gmail dot com>
  */
-#define FATAL_DEBUG_TYPE(...) decltype(::fatal::debugged<__VA_ARGS__>())
+#define FATAL_DEBUG_TYPE(...) decltype(::ftl::debugged<__VA_ARGS__>())
 
 /**
  * Helper to use `FATAL_DEBUG_TYPE` with an expression, rather than a type.
@@ -136,15 +136,15 @@ constexpr T &&debug_type_of(T &&value) {
  *    // won't print anything since the condition is not met
  *    foo<K>();
  *
- *    // will print `fatal::debugged<X, Z>` to the compiler output
+ *    // will print `ftl::debugged<X, Z>` to the compiler output
  *    foo<X, Z>();
  *  }
  *
  * @author: Marcelo Juchem <juchem at gmail dot com>
  */
 #define FATAL_DEBUG_TYPE_IF(Condition, ...) \
-  ::fatal::debug_type_if_t<Condition, __VA_ARGS__>
+  ::ftl::debug_type_if_t<Condition, __VA_ARGS__>
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_debug_h

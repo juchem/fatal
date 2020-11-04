@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(traits, same_reference_as) {
 # define TEST_IMPL(From, T, ...) \
@@ -77,4 +77,4 @@ FATAL_TEST(traits, same_reference_as) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

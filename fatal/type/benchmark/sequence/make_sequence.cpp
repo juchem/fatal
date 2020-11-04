@@ -13,7 +13,7 @@
 #include <cstdint>
 
 int main() {
-  using namespace fatal;
+  using namespace ftl;
 
 # define OUTER(Size) \
   prevent_optimization(make_sequence<int, Size>())

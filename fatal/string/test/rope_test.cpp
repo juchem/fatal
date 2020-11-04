@@ -17,7 +17,7 @@
 #include <string>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 #define TEST_IMPL_SINGLE_STRING(Fn) \
   Fn(""); \
@@ -1939,4 +1939,4 @@ FATAL_TEST(std, ostream) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

@@ -15,7 +15,7 @@
 #include <memory>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 ///////////////////
 // uninitialized //
@@ -81,6 +81,6 @@ private:
   union_type data_;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_uninitialized_h

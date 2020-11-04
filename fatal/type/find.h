@@ -19,7 +19,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/find.h>
 
-namespace fatal {
+namespace ftl {
 
 template <
   typename T,
@@ -43,7 +43,7 @@ using contains = find<
   T, Key, std::false_type, KeyFilter, get_constant<std::true_type>
 >;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

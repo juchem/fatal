@@ -19,7 +19,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/longest_common_prefix.h>
 
-namespace fatal {
+namespace ftl {
 
 template <
   template <typename, std::size_t> typename Key,
@@ -31,7 +31,7 @@ using longest_common_prefix = typename i_lcp::s<
   true, Key, Begin, End, Args...
 >::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

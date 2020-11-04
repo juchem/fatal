@@ -17,7 +17,7 @@
 
 #include <fatal/portability.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Online calculation of statistical moments:
@@ -336,6 +336,6 @@ private:
   value_type moment_4_ = 0;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_math_statistical_moments_h

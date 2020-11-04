@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 struct any_matcher {
   bool operator ()(char) const { return true; }
@@ -229,4 +229,4 @@ FATAL_TEST(string_view, skip) {
 
 #undef TEST_IMPL
 
-} // namespace fatal {
+} // namespace ftl {

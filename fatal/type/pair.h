@@ -15,7 +15,7 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace fatal {
+namespace ftl {
 
 template <typename, typename>
 struct FATAL_HIDE_SYMBOL pair {};
@@ -29,7 +29,7 @@ struct FATAL_HIDE_SYMBOL FATAL_HIDE_SYMBOL to_pair {
   >;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

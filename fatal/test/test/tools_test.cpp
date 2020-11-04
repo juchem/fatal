@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 #define TEST_IMPL(Expected, Actual) \
   do { \
@@ -91,4 +91,4 @@ FATAL_TEST(string_as_literal, compact) {
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {

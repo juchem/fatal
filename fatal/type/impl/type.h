@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace impl_t {
 
 template <typename T, typename = typename T::type>
@@ -59,6 +59,6 @@ struct FATAL_HIDE_SYMBOL vto<Variadics<T, Values...>, false> {
 };
 
 } // namespace impl_t {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_type_h

@@ -12,8 +12,8 @@
 
 #include <fatal/container/legacy_variant.h>
 
-namespace fatal {
+namespace ftl {
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_variant_h

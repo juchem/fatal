@@ -22,7 +22,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/foreach.h>
 
-namespace fatal {
+namespace ftl {
 
 // TODO: ADD EXAMPLES TO THE DOCUMENTATION
 
@@ -93,7 +93,7 @@ static constexpr auto foreach_accumulate(Visitor &&visitor, Seed &&seed, Args &&
   );
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

@@ -13,7 +13,7 @@
 #include <fatal/type/cat.h>
 #include <fatal/type/slice.h>
 
-namespace fatal {
+namespace ftl {
 namespace impl_rp {
 
 template <typename> struct in;
@@ -47,6 +47,6 @@ struct in<Sequence<T, Values...>> {
 };
 
 } // namespace impl_rp {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_replace_h

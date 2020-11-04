@@ -14,7 +14,7 @@
 
 #include <fatal/type/impl/unique.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 using adjacent_unique = typename i_uq::au<T>::type;
@@ -34,6 +34,6 @@ using is_adjacent_unique_by = std::is_same<T, adjacent_unique_by<T, Comparer>>;
 template <typename T, typename Comparer>
 constexpr bool is_adjacent_unique_by_v = std::is_same_v<T, adjacent_unique_by<T, Comparer>>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_unique_h

@@ -21,7 +21,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_S(h, "h");
 FATAL_S(ha, "ha");
@@ -325,4 +325,4 @@ FATAL_TEST(trie_exact_match, find) {
   TEST_TRIE_FIND(false, lst::notfound, fld_tree);
 }
 
-} // namespace fatal {
+} // namespace ftl {

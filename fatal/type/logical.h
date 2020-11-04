@@ -20,7 +20,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/logical.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * A metafunction that always evaluates to `std::true_type` regardless of the
@@ -271,7 +271,7 @@ using logical_xnor = negate<logical_xor<Args...>>;
 template <typename T>
 using logical_xnor_of = apply_to<T, logical_xnor>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

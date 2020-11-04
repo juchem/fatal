@@ -17,7 +17,7 @@
 #include <chrono>
 #include <ratio>
 
-namespace fatal {
+namespace ftl {
 namespace impl_tm {
 
 template <typename...> struct FATAL_HIDE_SYMBOL pretty;
@@ -62,6 +62,6 @@ using pretty_print_ratios = list<
 >;
 
 } // namespace impl_tm {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_time_impl_print_h

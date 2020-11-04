@@ -25,7 +25,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/convert.h>
 
-namespace fatal {
+namespace ftl {
 
 template <
   typename From,
@@ -54,11 +54,11 @@ struct FATAL_HIDE_SYMBOL as_sequence {
 template <template <typename...> typename List>
 struct FATAL_HIDE_SYMBOL as_list {
   template <typename T>
-  using apply = fatal::as_list<T, List>;
+  using apply = ftl::as_list<T, List>;
 };
 
 } // namespace bound {
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

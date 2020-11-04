@@ -10,7 +10,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(static_bit_set, ctor 0) {
   static_bit_set<0> const s;
@@ -1082,4 +1082,4 @@ FATAL_TEST(static_bit_set, operator != flipped) {
   FATAL_EXPECT_FALSE(s != static_bit_set<1000>(flipped_bit_set{}));
 }
 
-} // namespace fatal {
+} // namespace ftl {

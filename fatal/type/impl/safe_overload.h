@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_safe_overload_h
 #define FATAL_INCLUDE_fatal_type_impl_safe_overload_h
 
-namespace fatal {
+namespace ftl {
 namespace i_sfo {
 
 template <typename, typename...>
@@ -30,6 +30,6 @@ struct S<Class, T> {
 };
 
 } // namespace i_sfo {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_safe_overload_h

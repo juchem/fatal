@@ -19,7 +19,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/compare.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Helper class similar to std::integral_constant for comparing two types
@@ -259,7 +259,7 @@ struct FATAL_HIDE_SYMBOL value_reverse_comparer:
   }
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 

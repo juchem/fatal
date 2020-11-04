@@ -21,7 +21,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 struct abc { int x; int y; int z; };
 
@@ -60,7 +60,7 @@ void check_abc_array() {
 
 template <typename x, typename y, typename z>
 void check_abc() {
-  using expected = fatal::zip<list, list, x, y, z>;
+  using expected = ftl::zip<list, list, x, y, z>;
   check_abc_array<expected>();
   check_abc_array<expected, abc>();
 }
@@ -126,4 +126,4 @@ FATAL_TEST(as_array_from, sequence list) {
   >::check();
 }
 
-} // namespace fatal {
+} // namespace ftl {

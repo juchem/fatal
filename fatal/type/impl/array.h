@@ -15,7 +15,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace i_a {
 
 // constexpr statically allocated array //
@@ -306,7 +306,7 @@ struct FATAL_HIDE_SYMBOL s {
 
   FATAL_HIDE_SYMBOL
   static constexpr T const data[sizeof...(Args)] = {
-    T(z<Args, typename T::value_type>::data, fatal::size<Args>::value)...
+    T(z<Args, typename T::value_type>::data, ftl::size<Args>::value)...
   };
 };
 
@@ -346,7 +346,7 @@ public:
           at<typename OuterFilter::template apply<Array>, Indexes>
         >
       >::data,
-      fatal::size<
+      ftl::size<
         typename InnerFilter::template apply<
           at<typename OuterFilter::template apply<Array>, Indexes>
         >
@@ -445,6 +445,6 @@ T const n<T, Factory, Args...>::data[sizeof...(Args)] = {
 };
 
 } // namespace i_a {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_array_h

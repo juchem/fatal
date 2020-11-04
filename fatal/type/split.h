@@ -13,11 +13,11 @@
 #include <fatal/type/pair.h>
 #include <fatal/type/slice.h>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T, std::size_t Offset>
 using split = pair<head<T, Offset>, tail<T, Offset>>;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_split_h

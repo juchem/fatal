@@ -14,7 +14,7 @@
 
 #include <fatal/type/impl/safe_overload.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Type traits to prevent the universal constructor from overloading
@@ -93,6 +93,6 @@ using safe_overload = typename std::enable_if<
   is_safe_overload<Class, Args...>::value
 >::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_safe_overload_h

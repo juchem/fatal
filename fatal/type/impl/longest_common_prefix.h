@@ -14,7 +14,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace i_lcp {
 
 // longest common prefix size //
@@ -80,6 +80,6 @@ struct FATAL_HIDE_SYMBOL s<true, Key, Offset, End, T, Args...>:
 {};
 
 } // namespace i_lcp {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_longest_common_prefix_h

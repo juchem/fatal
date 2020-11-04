@@ -23,7 +23,7 @@
 
 #include <cstring>
 
-namespace fatal {
+namespace ftl {
 namespace lesson {
 
 // for internal use only
@@ -80,13 +80,13 @@ namespace lesson {
 #define CODE(...) \
   ::std::cout << ">> " << FATAL_SOURCE_INFO() << " ------" \
     << ::std::endl \
-    << ::fatal::lesson::detail::format(FATAL_TO_STR(__VA_ARGS__)) \
+    << ::ftl::lesson::detail::format(FATAL_TO_STR(__VA_ARGS__)) \
     << ::std::endl; \
   \
   __VA_ARGS__ \
   \
   ::std::cout << "<< --------" \
-    << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) \
+    << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) \
     << ::std::endl \
     << ::std::endl;
 
@@ -100,13 +100,13 @@ namespace lesson {
     << ::std::endl \
     << "print(" << FATAL_TO_STR(__VA_ARGS__) << ");" \
     << ::std::endl \
-    << "-- output -" << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) \
+    << "-- output -" << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) \
     << ::std::endl; \
   \
-  ::fatal::lesson::print(__VA_ARGS__); \
+  ::ftl::lesson::print(__VA_ARGS__); \
   \
   ::std::cout << "<< --------" \
-    << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) \
+    << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) \
     << ::std::endl \
     << ::std::endl;
 
@@ -118,9 +118,9 @@ namespace lesson {
 #define TYPE(...) \
   ::std::cout << ">> " << FATAL_SOURCE_INFO() << " ------" \
     << ::std::endl \
-    << FATAL_TO_STR(__VA_ARGS__) << " = " << ::fatal::type_str<__VA_ARGS__>() \
+    << FATAL_TO_STR(__VA_ARGS__) << " = " << ::ftl::type_str<__VA_ARGS__>() \
     << ::std::endl \
-    << "<< --------" << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) \
+    << "<< --------" << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) \
     << ::std::endl \
     << ::std::endl;
 
@@ -134,7 +134,7 @@ namespace lesson {
     << ::std::endl \
     << FATAL_TO_STR(__VA_ARGS__) << " = " << ::std::boolalpha << (__VA_ARGS__) \
     << std::endl \
-    << "<< --------" << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) \
+    << "<< --------" << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) \
     << ::std::endl \
     << ::std::endl;
 
@@ -146,12 +146,12 @@ namespace lesson {
 #define CONSTANT(...) \
   ::std::cout << ">> " << FATAL_SOURCE_INFO() << " ------" \
     << ::std::endl \
-    << FATAL_TO_STR(__VA_ARGS__) << " = " << ::fatal::type_str<__VA_ARGS__>() \
+    << FATAL_TO_STR(__VA_ARGS__) << " = " << ::ftl::type_str<__VA_ARGS__>() \
     << ::std::endl \
     << FATAL_TO_STR(__VA_ARGS__) << "::value = " << ::std::boolalpha \
       << (__VA_ARGS__::value) \
     << ::std::endl \
-    << "<< --------" << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) \
+    << "<< --------" << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) \
     << ::std::endl \
     << ::std::endl;
 
@@ -163,12 +163,12 @@ namespace lesson {
 #define MEMBER_TYPE(Member, ...) \
   ::std::cout << ">> " << FATAL_SOURCE_INFO() << " ------" \
     << ::std::endl \
-    << FATAL_TO_STR(__VA_ARGS__) << " = " << ::fatal::type_str<__VA_ARGS__>() \
+    << FATAL_TO_STR(__VA_ARGS__) << " = " << ::ftl::type_str<__VA_ARGS__>() \
     << ::std::endl \
     << FATAL_TO_STR(__VA_ARGS__) "::" FATAL_TO_STR(Member) " = " \
-      << ::fatal::type_str<__VA_ARGS__::Member>() \
+      << ::ftl::type_str<__VA_ARGS__::Member>() \
     << ::std::endl \
-    << "<< --------" << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) \
+    << "<< --------" << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) \
     << ::std::endl \
     << ::std::endl;
 
@@ -182,10 +182,10 @@ namespace lesson {
     << ::std::endl \
     << FATAL_TO_STR(__VA_ARGS__) << ::std::endl \
     << "-- won't compile -" \
-    << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) << ::std::endl \
+    << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) << ::std::endl \
     << Description << std::endl \
     << "<< ---------------" \
-    << ::fatal::lesson::detail::padding(FATAL_SOURCE_INFO()) << ::std::endl \
+    << ::ftl::lesson::detail::padding(FATAL_SOURCE_INFO()) << ::std::endl \
     << ::std::endl;
 
 /**
@@ -350,7 +350,7 @@ Out &operator <<(Out &out, padding pad) {
     char const *declarations; \
   }; \
   \
-  static Class const Entry(::fatal::lesson::registry::add<Class>()); \
+  static Class const Entry(::ftl::lesson::registry::add<Class>()); \
   \
   Class const &Class::entry() { return Entry; } \
   \
@@ -358,6 +358,6 @@ Out &operator <<(Out &out, padding pad) {
 
 } // namespace detail {
 } // namespace lesson {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_lesson_lesson_h

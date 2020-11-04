@@ -11,7 +11,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 #define TEST_IMPL(T, ...) \
   FATAL_EXPECT_SAME<T<__VA_ARGS__>, apply<T, __VA_ARGS__>>()
@@ -94,4 +94,4 @@ FATAL_TEST(apply, t_u_v_w_z) {
   TEST_IMPL(t_u_v_w_z_args, int, bool, double, float, long);
 }
 
-} // namespace fatal {
+} // namespace ftl {

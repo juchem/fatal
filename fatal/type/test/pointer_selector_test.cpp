@@ -13,7 +13,7 @@
 
 #include <memory>
 
-namespace fatal {
+namespace ftl {
 
 struct test_deleter {
   template <typename T>
@@ -299,4 +299,4 @@ FATAL_TEST(make_ptr, sanity_check) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

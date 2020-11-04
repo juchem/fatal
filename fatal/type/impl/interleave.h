@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace fatal::i_i {
+namespace ftl::i_i {
 
 ////////////////
 // interleave //
@@ -123,6 +123,6 @@ struct FATAL_HIDE_SYMBOL s<D, L<F, T...>>:
   >
 {};
 
-} // namespace fatal::i_i {
+} // namespace ftl::i_i {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_interleave_h

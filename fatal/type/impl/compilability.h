@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace i_cpl {
 
 template <template <typename...> class T, std::size_t Arity>
@@ -66,6 +66,6 @@ struct checker<T, 3> {
 };
 
 } // namespace i_cpl {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_compilability_h

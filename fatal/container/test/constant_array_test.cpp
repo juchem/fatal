@@ -17,7 +17,7 @@
 #include <array>
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T>
 struct input {
@@ -83,4 +83,4 @@ FATAL_TEST(as_array, sequence) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

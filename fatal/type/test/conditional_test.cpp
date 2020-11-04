@@ -11,11 +11,11 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(conditional, examples) {
   FATAL_EXPECT_SAME<conditional<false, int, char>, char>();
   FATAL_EXPECT_SAME<conditional<true, int, char>, int>();
 }
 
-} // namespace fatal {
+} // namespace ftl {

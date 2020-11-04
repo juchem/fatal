@@ -41,32 +41,32 @@ int main(int const argc, char const *const *const argv) {
   }
 
   using Opts = std::map<std::string, std::string>;
-  auto const opts = fatal::test_impl::args::parse_args<Opts>(argc, argv);
+  auto const opts = ftl::test_impl::args::parse_args<Opts>(argc, argv);
 
   if (opts.empty()) {
-    return fatal::test::run_all<fatal::test::default_printer>(std::cerr);
+    return ftl::test::run_all<ftl::test::default_printer>(std::cerr);
   }
 
   if (opts.find(arg_gtest) != opts.end()) {
-    return fatal::test::run_all<fatal::test::gtest_printer>(std::cout);
+    return ftl::test::run_all<ftl::test::gtest_printer>(std::cout);
   }
 
   if (opts.find(arg_list) != opts.end()) {
-    return fatal::test::list<fatal::test::default_printer>(std::cout);
+    return ftl::test::list<ftl::test::default_printer>(std::cout);
   }
 
   if (opts.find(arg_gtest_list) != opts.end()) {
-    return fatal::test::list<fatal::test::gtest_printer>(std::cout);
+    return ftl::test::list<ftl::test::gtest_printer>(std::cout);
   }
 
   if (auto const iter_filter = opts.find(arg_filter); iter_filter != opts.end()) {
-    return fatal::test::run_one<fatal::test::default_printer>(
+    return ftl::test::run_one<ftl::test::default_printer>(
       std::cerr, iter_filter->second
     );
   }
 
   if (auto const iter_gtest_filter = opts.find(arg_gtest_filter); iter_gtest_filter != opts.end()) {
-    return fatal::test::run_one<fatal::test::gtest_printer>(
+    return ftl::test::run_one<ftl::test::gtest_printer>(
       std::cout, iter_gtest_filter->second
     );
   }

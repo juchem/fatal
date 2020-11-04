@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Given types `T` and `U`:
@@ -63,6 +63,6 @@ struct same_reference_as<T, TFrom &&> {
   >::type;
 };
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_same_reference_as_h

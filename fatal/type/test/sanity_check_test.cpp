@@ -43,7 +43,7 @@
 
 #include <cstdint>
 
-namespace fatal {
+namespace ftl {
 
 // helpers /////////////////////////////////////////////////////////////////////
 
@@ -1448,5 +1448,5 @@ void run_sanity_check() {
 }
 
 FATAL_TEST(type, sanity check) {
-  fatal::run_sanity_check();
+  ftl::run_sanity_check();
 }

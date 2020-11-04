@@ -12,7 +12,7 @@
 
 #include <fatal/type/list.h>
 
-namespace fatal {
+namespace ftl {
 namespace i_fl {
 
 // TODO: Implement a version for  sequences
@@ -53,6 +53,6 @@ struct FATAL_HIDE_SYMBOL F<Seed, Fn, V<Args...>> {
 };
 
 } // namespace i_fl {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_fold_h

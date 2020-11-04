@@ -17,7 +17,7 @@
 
 #include <cstring>
 
-namespace fatal {
+namespace ftl {
 
 struct names {
   FATAL_S(state0, "state0");
@@ -141,19 +141,19 @@ FATAL_TEST(enums, declare_enum) {
 
 FATAL_TEST(enums, names) {
   FATAL_EXPECT_SAME<
-    fatal::list<names::state0, names::state1, names::state2, names::state3>,
+    ftl::list<names::state0, names::state1, names::state2, names::state3>,
     transform<enum_traits<test_enum>::fields, get_type::name>
   >();
 
   FATAL_EXPECT_SAME<
-    fatal::list<names::field, names::field10, names::field2>,
+    ftl::list<names::field, names::field10, names::field2>,
     transform<enum_traits<custom_enum>::fields, get_type::name>
   >();
 }
 
 FATAL_TEST(enums, values) {
   FATAL_EXPECT_SAME<
-    fatal::value_list<
+    ftl::value_list<
       test_enum,
       test_enum::state0, test_enum::state1, test_enum::state2, test_enum::state3
     >,
@@ -161,7 +161,7 @@ FATAL_TEST(enums, values) {
   >();
 
   FATAL_EXPECT_SAME<
-    fatal::value_list<
+    ftl::value_list<
       custom_enum,
       custom_enum::field, custom_enum::field10, custom_enum::field2
     >,
@@ -635,4 +635,4 @@ FATAL_TEST(enums, parse) {
   }
 }
 
-} // namespace fatal {
+} // namespace ftl {

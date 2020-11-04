@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_size_h
 #define FATAL_INCLUDE_fatal_type_impl_size_h
 
-namespace fatal {
+namespace ftl {
 namespace i_sz {
 
 // size //
@@ -27,6 +27,6 @@ struct FATAL_HIDE_SYMBOL s<Sequence<T, Values...>> {
 };
 
 } // namespace i_sz {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_size_h

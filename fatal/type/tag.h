@@ -16,7 +16,7 @@
 
 #include <cstddef>
 
-namespace fatal {
+namespace ftl {
 
 template <typename T> struct FATAL_HIDE_SYMBOL tag {
   using type = T;
@@ -55,6 +55,6 @@ Second tag_second(tag_pair<First, Second> const &);
 
 struct FATAL_HIDE_SYMBOL not_found {};
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_tag_h

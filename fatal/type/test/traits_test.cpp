@@ -18,7 +18,7 @@
 #include <utility>
 #include <vector>
 
-namespace fatal {
+namespace ftl {
 
 enum class Ell: long long { a = 5, b = 7, c = 9 };
 
@@ -900,4 +900,4 @@ FATAL_TEST(traits, safe_overload_variadic_t) {
   FATAL_EXPECT_EQ(ctor::universal, universal.type);
 }
 
-} // namespace fatal {
+} // namespace ftl {

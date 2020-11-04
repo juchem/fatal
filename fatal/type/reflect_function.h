@@ -15,7 +15,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Compile-time reflection for free and static member functions.
@@ -90,6 +90,6 @@ template <typename Result, typename... Args>
   using types = push_front<args, result>;
 };
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_reflect_function_h

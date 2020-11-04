@@ -14,7 +14,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Adds the const qualifier to a type.
@@ -49,6 +49,6 @@ struct constify {
   >;
 };
 
-} // namespace fatal
+} // namespace ftl
 
 #endif // FATAL_INCLUDE_fatal_type_constify_h

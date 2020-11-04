@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace fatal {
+namespace ftl {
 
 class poor_mans_variant {
   union storage {
@@ -299,4 +299,4 @@ FATAL_TEST(poor_mans_variant, by_type) {
 // TODO: empty
 // TODO: clear
 
-} // namespace fatal {
+} // namespace ftl {

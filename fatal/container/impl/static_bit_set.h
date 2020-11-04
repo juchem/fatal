@@ -9,7 +9,7 @@
 #ifndef FATAL_INCLUDE_fatal_container_impl_bit_set_h
 #define FATAL_INCLUDE_fatal_container_impl_bit_set_h
 
-namespace fatal {
+namespace ftl {
 namespace i_bs {
 
 template <std::size_t Size, bool = (Size > data_bits_v<last<known_fast_unsigned_integers>>)>
@@ -41,6 +41,6 @@ struct bit_set_decrement<bool> {
 };
 
 } // namespace i_bs {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_container_impl_bit_set_h

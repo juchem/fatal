@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_test_words_h
 #define FATAL_INCLUDE_fatal_test_words_h
 
-namespace fatal {
+namespace ftl {
 
 template <
   template <typename...> typename List,
@@ -3742,6 +3742,6 @@ using random_1000_words = List<
 	Sequence<char, 't', 'r', 'a', 'c', 'e'>
 >;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_test_words_h

@@ -12,7 +12,7 @@
 
 #include <chrono>
 
-namespace fatal {
+namespace ftl {
 
 template <
   typename Clock = std::chrono::system_clock,

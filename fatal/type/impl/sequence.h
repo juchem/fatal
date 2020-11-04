@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_sequence_h
 #define FATAL_INCLUDE_fatal_type_impl_sequence_h
 
-namespace fatal {
+namespace ftl {
 namespace impl_seq {
 
 template <typename...> struct FATAL_HIDE_SYMBOL cat;
@@ -83,12 +83,12 @@ static constexpr std::size_t size(T const (&)[Size]) {
   > Helper(Sequence<::std::size_t, Indexes...>); \
   \
   using Id = decltype(Helper( \
-    typename ::fatal::impl_seq::make_sequence< \
-      Sequence, ::std::size_t, ::fatal::impl_seq::size(__VA_ARGS__) \
+    typename ::ftl::impl_seq::make_sequence< \
+      Sequence, ::std::size_t, ::ftl::impl_seq::size(__VA_ARGS__) \
     >() \
   ))
 
 } // namespace impl_seq {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_sequence_h

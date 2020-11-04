@@ -10,7 +10,7 @@
 #ifndef FATAL_INCLUDE_fatal_type_impl_accumulate_h
 #define FATAL_INCLUDE_fatal_type_impl_accumulate_h
 
-namespace fatal {
+namespace ftl {
 namespace i_A {
 
 // TODO: Implement a version for  sequences
@@ -51,6 +51,6 @@ struct FATAL_HIDE_SYMBOL f {
 };
 
 } // namespace i_A {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_accumulate_h

@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 using id = get_identity;
 
@@ -247,4 +247,4 @@ FATAL_TEST(transform, 6 transforms) {
 FATAL_TEST(transform_if, transform_if) {
 }
 
-} // namespace fatal {
+} // namespace ftl {

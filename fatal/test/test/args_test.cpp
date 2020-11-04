@@ -21,7 +21,7 @@ FATAL_TEST(args, parse_args empty) {
   int const argc = sizeof(argv) / sizeof(*argv);
   FATAL_EXPECT_EQ(1, argc); // sanity
 
-  auto const args = fatal::test_impl::args::parse_args<Args>(argc, argv);
+  auto const args = ftl::test_impl::args::parse_args<Args>(argc, argv);
   FATAL_EXPECT_EQ(Args({}), args);
 }
 
@@ -30,7 +30,7 @@ FATAL_TEST(args, parse_args one basic) {
   int const argc = sizeof(argv) / sizeof(*argv);
   FATAL_EXPECT_EQ(2, argc); // sanity
 
-  auto const args = fatal::test_impl::args::parse_args<Args>(argc, argv);
+  auto const args = ftl::test_impl::args::parse_args<Args>(argc, argv);
   FATAL_EXPECT_EQ(Args({{"x", ""}}), args);
 }
 
@@ -39,7 +39,7 @@ FATAL_TEST(args, parse_args one key) {
   int const argc = sizeof(argv) / sizeof(*argv);
   FATAL_EXPECT_EQ(2, argc); // sanity
 
-  auto const args = fatal::test_impl::args::parse_args<Args>(argc, argv);
+  auto const args = ftl::test_impl::args::parse_args<Args>(argc, argv);
   FATAL_EXPECT_EQ(Args({{"y", ""}}), args);
 }
 
@@ -48,7 +48,7 @@ FATAL_TEST(args, parse_args one key-value) {
   int const argc = sizeof(argv) / sizeof(*argv);
   FATAL_EXPECT_EQ(2, argc); // sanity
 
-  auto const args = fatal::test_impl::args::parse_args<Args>(argc, argv);
+  auto const args = ftl::test_impl::args::parse_args<Args>(argc, argv);
   FATAL_EXPECT_EQ(Args({{"z", "a"}}), args);
 }
 
@@ -57,6 +57,6 @@ FATAL_TEST(args, parse_args multi) {
   int const argc = sizeof(argv) / sizeof(*argv);
   FATAL_EXPECT_EQ(4, argc); // sanity
 
-  auto const args = fatal::test_impl::args::parse_args<Args>(argc, argv);
+  auto const args = ftl::test_impl::args::parse_args<Args>(argc, argv);
   FATAL_EXPECT_EQ(Args({{"x", ""}, {"y", ""}, {"z", "a"}}), args);
 }

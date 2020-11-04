@@ -20,7 +20,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 template <typename> struct dummy_unit {};
 template <typename, typename> struct dummy_pair {};
@@ -82,7 +82,7 @@ FATAL_TEST(operation, cartesian_product) {
 # define TEST_IMPL(List, Pair, LHS, RHS, ...) \
   FATAL_EXPECT_SAME< \
     List<__VA_ARGS__>, \
-    fatal::bound::cartesian_product<List, Pair>::apply< \
+    ftl::bound::cartesian_product<List, Pair>::apply< \
       FATAL_UNPARENTHESIZE(LHS), \
       FATAL_UNPARENTHESIZE(RHS) \
     > \
@@ -634,4 +634,4 @@ FATAL_TEST(constant_sequence, int seq to joined string) {
 # undef TEST_IMPL
 }
 
-} // namespace fatal {
+} // namespace ftl {

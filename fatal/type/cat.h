@@ -14,7 +14,7 @@
 
 #include <fatal/type/impl/cat.h>
 
-namespace fatal {
+namespace ftl {
 
 // TODO: make it variadic
 template <typename... Args>
@@ -29,6 +29,6 @@ using vcat = impl_cat::v<LHS, RHS>;
 template <typename LHS, typename RHS, typename... Args>
 using lcat = typename impl_cat::l<LHS, RHS, Args...>::type;
 
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_cat_h

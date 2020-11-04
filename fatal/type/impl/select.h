@@ -15,7 +15,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 namespace impl_sl {
 
 template <typename LHS, typename RHS, typename Less = less>
@@ -191,6 +191,6 @@ template <
 struct FATAL_HIDE_SYMBOL lx<Less, List<Args...>, Filter>: vx<Less, Filter<Args>...> {};
 
 } // namespace impl_sl {
-} // namespace fatal {
+} // namespace ftl {
 
 #endif // FATAL_INCLUDE_fatal_type_impl_select_h

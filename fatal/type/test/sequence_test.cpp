@@ -10,7 +10,7 @@
 
 #include <fatal/test/driver.h>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_TEST(make_sequence, make_sequence) {
   FATAL_EXPECT_SAME<sequence<int>, make_sequence<int, 0>>();
@@ -23,4 +23,4 @@ FATAL_TEST(make_sequence, make_sequence) {
   FATAL_EXPECT_SAME<index_sequence<0, 1, 2, 3, 4>, make_index_sequence<5>>();
 }
 
-} // namespace fatal {
+} // namespace ftl {

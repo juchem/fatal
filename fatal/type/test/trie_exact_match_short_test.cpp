@@ -19,7 +19,7 @@
 
 #include <type_traits>
 
-namespace fatal {
+namespace ftl {
 
 FATAL_S(g, "g");
 FATAL_S(go, "go");
@@ -65,4 +65,4 @@ FATAL_TEST(trie_exact_match, exact) {
 
 #undef TEST_TRIE_FIND
 
-} // namespace fatal {
+} // namespace ftl {

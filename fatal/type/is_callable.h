@@ -17,7 +17,7 @@ FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
 #include <fatal/type/impl/is_callable.h>
 
-namespace fatal {
+namespace ftl {
 
 /**
  * Tells whether an instance of a given type supports the
@@ -75,7 +75,7 @@ constexpr bool is_callable(T &&, Arg &&, Args &&...) {
   return is_callable_t<T &&, Arg &&, Args &&...>::value;
 }
 
-} // namespace fatal {
+} // namespace ftl {
 
 FATAL_DIAGNOSTIC_POP
 
