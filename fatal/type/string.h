@@ -16,18 +16,14 @@
 FATAL_DIAGNOSTIC_PUSH
 FATAL_DIAGNOSTIC_IGNORE_ATTRIBUTES
 
-namespace ftl {
-namespace udl {
-namespace string {
+namespace ftl::udl::string {
 
 template <typename T, T... Values>
 constexpr std::integer_sequence<T, Values...> operator ""_str() {
   return {};
 }
 
-} // namespace string {
-} // namespace udl {
-} // namespace ftl {
+} // namespace ftl::udl::string
 
 FATAL_DIAGNOSTIC_POP
 
