@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019, Marcelo Juchem
+ *  Copyright (c) 2021, Marcelo Juchem
  *  All rights reserved.
  *
  *  This source code is licensed under the BSD-style license found in the
